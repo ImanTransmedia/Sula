@@ -1,0 +1,23 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e206e3dbca2bcdb4f8ff4e5aaa3802b7, type: 3}
+  m_Name: SO Hoddie 1
+  m_EditorClassIdentifier: 
+  clotheName: Baronas Hoddie
+  price: 20
+  imagen: {fileID: 21300000, guid: c11aeb83010bbf241b94989575716252, type: 3}
+  is3D: 1
+  materialColors:
+  - {r: 0.5723493, g: 0.9150943, b: 0.47912958, a: 0}
+  - {r: 0.9137255, g: 0.5173477, b: 0.47843137, a: 0}
+  - {r: 0.47843137, g: 0.66215163, b: 0.9137255, a: 0}
+  prefab: {fileID: 8178891483328917, guid: 03f0613a0eda97649914f3836f091dfa, type: 3}
