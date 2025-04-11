@@ -24,8 +24,8 @@ public class GameManager : MonoBehaviour
     }
 
     [Header("Actual Region")]
-    public Regions ActualRegion { get; set; }
-    public Clothes ActualClothe { get; set; }
+    public Regions actualRegion;
+    public Clothes actualClothe;
 
     
 
