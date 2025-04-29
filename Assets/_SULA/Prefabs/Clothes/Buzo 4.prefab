@@ -211,6 +211,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: Buso4
       objectReference: {fileID: 0}
+    - target: {fileID: 919132149155446097, guid: 191ece86b2826c64bad67046565f5a60, type: 3}
+      propertyPath: m_TagString
+      value: Model
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []

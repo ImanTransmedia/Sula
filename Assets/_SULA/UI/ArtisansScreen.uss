@@ -1,0 +1,32 @@
+VisualElement {
+}
+
+.Title {
+}
+
+.animacion {
+    flex-grow: 1;
+    transition-property: position;
+    transition-delay: 10s;
+    transition-duration: 0.7s;
+}
+
+.show {
+    flex-grow: 1;
+    transition-duration: 1s;
+    transition-timing-function: ease-in-cubic;
+}
+
+.hide-right {
+    flex-grow: 1;
+    transition-duration: 1s;
+    transition-timing-function: ease-in-cubic;
+    translate: 1080px 0;
+}
+
+.hide-down {
+    flex-grow: 1;
+    transition-duration: 1s;
+    transition-timing-function: ease-in-cubic;
+    translate: 0 1920px;
+}

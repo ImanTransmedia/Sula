@@ -10,5 +10,6 @@ public class Clothes : ScriptableObject
     public bool is3D;
     public Color[] materialColors;
     public GameObject prefab;
+    public string description;
     
 }

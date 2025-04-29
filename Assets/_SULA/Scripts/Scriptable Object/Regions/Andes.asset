@@ -12,7 +12,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6a1f8ab44da6eec4d92d7d4c07d5275e, type: 3}
   m_Name: Andes
   m_EditorClassIdentifier: 
-  regionName: Andes
-  darkColor: {r: 0.42745098, g: 0.29803923, b: 0.1882353, a: 0}
-  lightColor: {r: 0.454902, g: 0.35686275, b: 0.27058825, a: 0}
-  accentColor: {r: 1, g: 0.9529412, b: 0.9411765, a: 0}
+  regionName: ANDES
+  darkColor: {r: 0.42745098, g: 0.29803923, b: 0.1882353, a: 1}
+  lightColor: {r: 0.454902, g: 0.35686275, b: 0.27058825, a: 1}
+  accentColor: {r: 1, g: 0.9529412, b: 0.9411765, a: 1}
+  imagen: {fileID: 21300000, guid: 63fbfb27c1ee20b498e0a5bb5d4b43e8, type: 3}
+  clothes:
+  - {fileID: 11400000, guid: 705b925284e015c4e8cc1d6811bf1ee2, type: 2}

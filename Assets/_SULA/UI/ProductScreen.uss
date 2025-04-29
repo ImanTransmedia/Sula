@@ -1,0 +1,141 @@
+VisualElement {
+}
+
+.galapagos-image {
+    flex-grow: 1;
+    background-image: url("project://database/Assets/_SULA/Assets/2D/Menu/01.Galapagos.png?fileID=2800000&guid=f4d2dd2300346da4ba07cf7839b9dd89&type=3#01.Galapagos");
+    -unity-background-scale-mode: stretch-to-fill;
+    -unity-slice-scale: 0;
+    -unity-slice-left: 0;
+    -unity-slice-top: 0;
+    -unity-slice-right: 0;
+    -unity-slice-bottom: 0;
+    background-size: 150% 150%;
+    background-position-x: right 0;
+    background-position-y: center 0;
+}
+
+.andes-image {
+    background-image: url("project://database/Assets/_SULA/Assets/2D/Menu/03.%20Andes.png?fileID=2800000&guid=63fbfb27c1ee20b498e0a5bb5d4b43e8&type=3#03. Andes");
+    -unity-background-scale-mode: scale-and-crop;
+    background-position-x: center 0;
+    background-position-y: bottom -250px;
+}
+
+.container {
+    flex-grow: 1;
+}
+
+.show {
+    flex-grow: 1;
+    transition-duration: 1s;
+    transition-timing-function: ease-out-cubic;
+}
+
+.hide-down {
+    flex-grow: 1;
+    transition-duration: 1s;
+    translate: 0 1920px;
+    opacity: 1;
+    transition-timing-function: ease-in-cubic;
+}
+
+.hide-right {
+    flex-grow: 1;
+    transition-duration: 1s;
+    translate: 1080px 0;
+    transition-timing-function: ease-out-cubic;
+}
+
+.hide-up {
+    flex-grow: 1;
+    transition-duration: 1s;
+    translate: 0 -1920px;
+    transition-timing-function: ease-out-cubic;
+}
+
+.hide-left {
+    flex-grow: 1;
+    transition-duration: 1s;
+    translate: -1080px 0;
+    transition-timing-function: ease-out-cubic;
+}
+
+.button-item {
+    width: auto;
+    height: 80px;
+    margin: 10px 0;
+    padding: 10px 30px;
+    background-color: rgb(231, 241, 255);
+    border-radius: 25px;
+    align-items: center;
+    justify-content: center;
+    font-size: 30px;
+    border-left-color: rgb(42, 166, 197);
+    border-right-color: rgb(42, 166, 197);
+    border-top-color: rgb(42, 166, 197);
+    border-bottom-color: rgb(42, 166, 197);
+    border-top-width: 5px;
+    border-right-width: 5px;
+    border-bottom-width: 5px;
+    border-left-width: 5px;
+    border-top-left-radius: 50px;
+    border-top-right-radius: 50px;
+    border-bottom-right-radius: 50px;
+    border-bottom-left-radius: 50px;
+    margin-top: 10px;
+    margin-right: 30px;
+    margin-bottom: 10px;
+    margin-left: 30px;
+    padding-right: 50px;
+    padding-left: 50px;
+    -unity-font-definition: url("project://database/Assets/_SULA/Fonts/futura%20medium%20bt.ttf?fileID=12800000&guid=6bc41e0f58108fd489c36225caa9e6ca&type=3#futura medium bt");
+    -unity-font-style: bold;
+    color: rgb(42, 166, 197);
+}
+
+.button-item.selected {
+    background-color: rgb(42, 166, 197);
+    -unity-font-definition: url("project://database/Assets/_SULA/Fonts/futura%20medium%20bt.ttf?fileID=12800000&guid=6bc41e0f58108fd489c36225caa9e6ca&type=3#futura medium bt");
+    font-size: 30px;
+    -unity-font-style: bold;
+    -unity-text-align: middle-center;
+    color: rgb(231, 241, 255);
+}
+
+.item-template {
+    width: 100%;
+    height: 80px;
+    margin-bottom: 5px;
+    background-color: rgb(40, 40, 40);
+    border-radius: 4px;
+    flex-direction: row;
+    align-items: center;
+    padding: 10px;
+}
+
+.item-image {
+    width: 60px;
+    height: 60px;
+    background-size: contain;
+    background-repeat: no-repeat;
+    background-position: center;
+    margin-right: 15px;
+    border-radius: 3px;
+}
+
+.item-name {
+    color: white;
+    font-size: 16px;
+    unity-font-style: bold;
+}
+
+.infinite-scroll {
+    width: auto;
+    height: 650px;
+    flex-direction: row;
+    margin-top: 50px;
+    background-color: rgb(233, 87, 87);
+    margin-left: 30px;
+    margin-right: 30px;
+}

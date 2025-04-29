@@ -1,0 +1,41 @@
+VisualElement {
+}
+
+.image-panel {
+    background-image: url("project://database/Assets/_SULA/Assets/2D/Sprites/clothes_container.png?fileID=2800000&guid=4fb7f9f8622f4874082930d6e2a69d16&type=3#clothes_container");
+    width: 300px;
+    height: 400px;
+    position: absolute;
+}
+
+
+.image-content {
+    height: 70%;
+    width: 100%;
+    -unity-background-scale-mode: scale-to-fit;
+    margin-top: 20px;
+    margin-bottom: 20px;
+}
+
+.logo {
+    -unity-background-scale-mode: scale-to-fit;
+    position: absolute;
+    top: 20px;
+    right: 20px;
+    width: 75px;
+    height: 75px;
+}
+
+.item-name {
+    height: 10%;
+    font-size: 20px;
+    -unity-font-style: bold;
+    -unity-text-align: middle-center;
+}
+
+.colors-panel {
+    height: 20%;
+    bottom: 0;
+    left: 0;
+    right: 0;
+}

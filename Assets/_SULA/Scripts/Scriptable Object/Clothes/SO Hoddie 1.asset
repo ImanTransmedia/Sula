@@ -14,10 +14,11 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   clotheName: Baronas Hoddie
   price: 20
-  imagen: {fileID: 21300000, guid: c11aeb83010bbf241b94989575716252, type: 3}
+  imagen: {fileID: 21300000, guid: 4a8371d9d4456a440a0dfc73dd6750f4, type: 3}
   is3D: 1
   materialColors:
-  - {r: 0.5723493, g: 0.9150943, b: 0.47912958, a: 0}
-  - {r: 0.9137255, g: 0.5173477, b: 0.47843137, a: 0}
+  - {r: 0.5723493, g: 0.9150943, b: 0.47912958, a: 1}
+  - {r: 0.9137255, g: 0.5173477, b: 0.47843137, a: 1}
   - {r: 0.47843137, g: 0.66215163, b: 0.9137255, a: 0}
   prefab: {fileID: 7157997195170330493, guid: e27ddb3463e765342ac58813a6f5c8da, type: 3}
+  description: 

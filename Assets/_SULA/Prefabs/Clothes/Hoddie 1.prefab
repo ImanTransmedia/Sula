@@ -211,6 +211,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: Prenda1
       objectReference: {fileID: 0}
+    - target: {fileID: 919132149155446097, guid: 4455762efa7b5744a95e67ff1036efd7, type: 3}
+      propertyPath: m_TagString
+      value: Model
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []

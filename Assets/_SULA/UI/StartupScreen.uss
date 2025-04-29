@@ -1,0 +1,69 @@
+.panel-container {
+    flex-grow: 1;
+    position: absolute;
+    bottom: -500px;
+    right: auto;
+    left: auto;
+    width: auto;
+    height: 400px;
+    background-image: url("project://database/Assets/_SULA/Assets/2D/Sprites/Star%20Div.png?fileID=2800000&guid=26cf6eac2d586564ba0852a5d185589c&type=3#Star Div");
+    align-self: center;
+    padding-top: 20px;
+    padding-right: 20px;
+    padding-bottom: 20px;
+    padding-left: 20px;
+    margin-top: 50px;
+    margin-right: 50px;
+    margin-bottom: 50px;
+    margin-left: 50px;
+    opacity: 0;
+    transition-duration: 1s;
+    transition-timing-function: ease-in-circ;
+}
+
+.container {
+    flex-grow: 1;
+}
+
+.showup {
+    flex-grow: 1;
+    position: absolute;
+    bottom: 250px;
+    right: auto;
+    left: auto;
+    width: auto;
+    height: 400px;
+    background-image: url("project://database/Assets/_SULA/Assets/2D/Sprites/Star%20Div.png?fileID=2800000&guid=26cf6eac2d586564ba0852a5d185589c&type=3#Star Div");
+    align-self: center;
+    padding-top: 20px;
+    padding-right: 20px;
+    padding-bottom: 20px;
+    padding-left: 20px;
+    margin-top: 50px;
+    margin-right: 50px;
+    margin-bottom: 50px;
+    margin-left: 50px;
+    opacity: 1;
+    transition-duration: 1s;
+    transition-timing-function: ease-out-circ;
+    -unity-background-image-tint-color: rgb(255, 255, 255);
+    background-color: rgba(255, 255, 255, 0);
+}
+
+.fade-out {
+    flex-grow: 1;
+    translate: 0 -1920px;
+    transition-duration: 2s;
+    transition-timing-function: ease-out-cubic;
+    opacity: 0;
+    transition-property: opacity;
+}
+
+.hide {
+    flex-grow: 1;
+    translate: 0 -1920px;
+    transition-duration: 1s, 1s;
+    transition-timing-function: ease, ease-out-cubic;
+    transition-property: translate, opacity;
+    opacity: 0;
+}

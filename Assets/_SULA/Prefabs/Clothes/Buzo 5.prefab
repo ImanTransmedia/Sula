@@ -211,6 +211,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: BuzoMujerRosado
       objectReference: {fileID: 0}
+    - target: {fileID: 919132149155446097, guid: 169c285be70c61f4894eef7dc0104b52, type: 3}
+      propertyPath: m_TagString
+      value: Model
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []

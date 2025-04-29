@@ -1,0 +1,9 @@
+<engine:UXML xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:engine="UnityEngine.UIElements" xmlns:editor="UnityEditor.UIElements" noNamespaceSchemaLocation="../../../UIElementsSchema/UIElements.xsd" editor-extension-mode="False">
+    <Style src="project://database/Assets/_SULA/UI/ClotheItem.uss?fileID=7433441132597879392&amp;guid=e032a0be1e22d1b418e0d0d5bb2b91b9&amp;type=3#ClotheItem" />
+<engine:VisualElement name="ImageItem" class="image-panel">
+        <engine:VisualElement name="Image" class="image-content" />
+        <engine:VisualElement name="logo" class="logo" />
+        <engine:Label name="Name" class="item-name" />
+        <engine:VisualElement name="ColorsPanel" class="colors-panel" />
+    </engine:VisualElement>
+</engine:UXML>

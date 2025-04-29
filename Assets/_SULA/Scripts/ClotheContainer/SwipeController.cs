@@ -1,68 +1,199 @@
 using UnityEngine;
 using UnityEngine.InputSystem;
+using UnityEngine.EventSystems;
 
-public class SwipeController : MonoBehaviour
+public class SwipeController : MonoBehaviour, IBeginDragHandler, IDragHandler, IEndDragHandler
 {
     public ClotheContainerController carrusel;
 
-    private Vector2 inicioTacto;
-    private bool tocando;
+    [Header("Configuración")]
+    public float swipeThreshold = 100f;
+    public float swipeTimeThreshold = 0.5f;
 
-    void Update()
+    private Vector2 dragStartPosition;
+    private float dragStartTime;
+    private bool isDragging;
+    private bool isValidSwipeArea;
+
+    public void OnBeginDrag(PointerEventData eventData)
     {
-        if (Touchscreen.current != null && Touchscreen.current.primaryTouch.press.isPressed)
+        if (!RectTransformUtility.RectangleContainsScreenPoint(
+            GetComponent<RectTransform>(),
+            eventData.position,
+            eventData.pressEventCamera))
         {
-            Vector2 posicionActual = Touchscreen.current.primaryTouch.position.ReadValue();
+            isValidSwipeArea = false;
+            return;
+        }
 
-            if (!tocando)
+        isValidSwipeArea = true;
+        dragStartPosition = eventData.position;
+        dragStartTime = Time.time;
+        isDragging = true;
+    }
+
+    public void OnDrag(PointerEventData eventData)
+    {
+        // No necesitamos hacer nada durante el drag
+    }
+
+    public void OnEndDrag(PointerEventData eventData)
+    {
+        if (!isDragging || !isValidSwipeArea) return;
+        isDragging = false;
+
+        Vector2 dragEndPosition = eventData.position;
+        Vector2 dragVector = dragEndPosition - dragStartPosition;
+        float distance = dragVector.magnitude;
+
+        if (Time.time - dragStartTime > swipeTimeThreshold || distance < swipeThreshold)
+            return;
+
+        // Determinar dirección principal del swipe
+        bool isHorizontalSwipe = Mathf.Abs(dragVector.x) > Mathf.Abs(dragVector.y);
+
+        if (isHorizontalSwipe)
+        {
+            // Swipe horizontal
+            if (dragVector.x > 0)
             {
-                inicioTacto = posicionActual;
-                tocando = true;
+                Debug.Log("Swipe derecho detectado");
+                carrusel.MoveLeft();
             }
             else
             {
-                Vector2 desplazamiento = posicionActual - inicioTacto;
-
-                if (Mathf.Abs(desplazamiento.x) > 100) // Sensibilidad swipe
-                {
-                    if (desplazamiento.x > 0)
-                        carrusel.MoverIzquierda();
-                    else
-                        carrusel.MoverDerecha();
-
-                    tocando = false; // para evitar múltiples llamadas
-                }
+                Debug.Log("Swipe izquierdo detectado");
+                carrusel.MoveRight();
             }
         }
         else
         {
-            tocando = false;
-        }
-
-        // Alternativamente, para pruebas con mouse:
-        if (Mouse.current != null && Mouse.current.leftButton.wasPressedThisFrame)
-        {
-            Debug.Log("Esta TOCANDOMEEEE!!!");
-            inicioTacto = Mouse.current.position.ReadValue();
-            tocando = true;
-        }
-        else if (Mouse.current != null && Mouse.current.leftButton.isPressed && tocando)
-        {
-            Vector2 desplazamiento = Mouse.current.position.ReadValue() - inicioTacto;
-            if (Mathf.Abs(desplazamiento.x) > 100)
+            // Swipe vertical
+            if (dragVector.y > 0)
             {
-                if (desplazamiento.x > 0)
-                    carrusel.MoverIzquierda();
-                else
-                    carrusel.MoverDerecha();
-
-                tocando = false;
+                Debug.Log("Swipe arriba detectado");
+                // Aquí puedes agregar la funcionalidad para swipe arriba
+            }
+            else
+            {
+                Debug.Log("Swipe abajo detectado");
+                // Aquí puedes agregar la funcionalidad para swipe abajo
             }
         }
-        else if (Mouse.current != null && Mouse.current.leftButton.wasReleasedThisFrame)
+    }
+
+    void Update()
+    {
+        if (Application.isMobilePlatform)
         {
-            Debug.Log("NO TE ESTOY TOCANDO!");
-            tocando = false;
+            HandleTouchInput();
+        }
+        else
+        {
+            HandleMouseInput();
+        }
+    }
+
+    private void HandleTouchInput()
+    {
+        if (Touchscreen.current != null && Touchscreen.current.primaryTouch.press.isPressed)
+        {
+            Vector2 currentPosition = Touchscreen.current.primaryTouch.position.ReadValue();
+
+            if (!isDragging)
+            {
+                if (!RectTransformUtility.RectangleContainsScreenPoint(
+                    GetComponent<RectTransform>(),
+                    currentPosition,
+                    Camera.main))
+                {
+                    isValidSwipeArea = false;
+                    return;
+                }
+
+                isValidSwipeArea = true;
+                dragStartPosition = currentPosition;
+                dragStartTime = Time.time;
+                isDragging = true;
+            }
+        }
+        else if (isDragging)
+        {
+            isDragging = false;
+
+            if (Touchscreen.current != null && isValidSwipeArea)
+            {
+                Vector2 currentPosition = Touchscreen.current.primaryTouch.position.ReadValue();
+                ProcessSwipe(currentPosition);
+            }
+        }
+    }
+
+    private void HandleMouseInput()
+    {
+        if (Mouse.current.leftButton.wasPressedThisFrame)
+        {
+            Vector2 mousePosition = Mouse.current.position.ReadValue();
+
+            if (!RectTransformUtility.RectangleContainsScreenPoint(
+                GetComponent<RectTransform>(),
+                mousePosition,
+                Camera.main))
+            {
+                isValidSwipeArea = false;
+                return;
+            }
+
+            isValidSwipeArea = true;
+            dragStartPosition = mousePosition;
+            dragStartTime = Time.time;
+            isDragging = true;
+        }
+        else if (isDragging && Mouse.current.leftButton.wasReleasedThisFrame)
+        {
+            isDragging = false;
+
+            if (isValidSwipeArea)
+            {
+                ProcessSwipe(Mouse.current.position.ReadValue());
+            }
+        }
+    }
+
+    private void ProcessSwipe(Vector2 endPosition)
+    {
+        if (Time.time - dragStartTime > swipeTimeThreshold) return;
+
+        Vector2 dragVector = endPosition - dragStartPosition;
+        float distance = dragVector.magnitude;
+
+        if (distance < swipeThreshold) return;
+
+        bool isHorizontalSwipe = Mathf.Abs(dragVector.x) > Mathf.Abs(dragVector.y);
+
+        if (isHorizontalSwipe)
+        {
+            if (dragVector.x > 0)
+            {
+                carrusel.MoveLeft();
+            }
+            else
+            {
+                carrusel.MoveRight();
+            }
+        }
+        else
+        {
+            if (dragVector.y > 0)
+            {
+                // Funcionalidad para swipe arriba
+                Debug.Log("Swipe arriba ejecutado");
+            }
+            else
+            {
+                // Funcionalidad para swipe abajo
+                Debug.Log("Swipe abajo ejecutado");
+            }
         }
     }
 }

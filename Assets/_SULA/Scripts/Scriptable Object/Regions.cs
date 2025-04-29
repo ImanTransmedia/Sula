@@ -7,6 +7,6 @@ public class Regions : ScriptableObject
     public Color darkColor;
     public Color lightColor;
     public Color accentColor;
-
-    
+    public Sprite imagen;
+    public Clothes[] clothes;
 }

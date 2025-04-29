@@ -1,0 +1,61 @@
+VisualElement {
+}
+
+.title {
+    -unity-font-definition: url("project://database/Assets/_SULA/Fonts/futura%20medium%20bt.ttf?fileID=12800000&guid=6bc41e0f58108fd489c36225caa9e6ca&type=3#futura medium bt");
+    -unity-text-align: middle-center;
+    font-size: 60px;
+    -unity-font-style: bold;
+    top: 60px;
+}
+
+.container {
+    flex-grow: 1;
+    height: 1100px;
+    top: 90px;
+    align-self: center;
+    width: 950px;
+    -unity-background-image-tint-color: rgb(226, 226, 226);
+    background-color: rgb(226, 226, 226);
+    border-top-left-radius: 90px;
+    border-top-right-radius: 90px;
+    border-bottom-right-radius: 90px;
+    border-bottom-left-radius: 90px;
+}
+
+.parragraph {
+    -unity-text-align: upper-left;
+    white-space: normal;
+    font-size: 25px;
+    -unity-font-definition: url("project://database/Assets/_SULA/Fonts/Futura%20Book%20font.ttf?fileID=12800000&guid=60c2d7bb953b81541ad23b12d697d7bb&type=3#Futura Book font");
+}
+
+.show {
+    flex-grow: 1;
+    transition-property: translate;
+    transition-duration: 1s;
+    transition-timing-function: ease-in-cubic;
+}
+
+.hide-down {
+    flex-grow: 1;
+    transition-duration: 1s;
+    transition-timing-function: ease-out-cubic;
+    translate: 0 1920px;
+    transition-property: translate;
+}
+
+.hide-left {
+    flex-grow: 1;
+    transition-duration: 1s;
+    transition-timing-function: ease-out-cubic;
+    translate: -1080px 0;
+    transition-property: all;
+}
+
+.show {
+    flex-grow: 1;
+    transition-property: translate;
+    transition-duration: 1s;
+    transition-timing-function: ease-in-cubic;
+}

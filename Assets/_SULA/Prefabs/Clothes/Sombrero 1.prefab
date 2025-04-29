@@ -211,6 +211,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: SombreroGalapagos
       objectReference: {fileID: 0}
+    - target: {fileID: 919132149155446097, guid: d181f4ada8d4c724f82bc76386fc7c34, type: 3}
+      propertyPath: m_TagString
+      value: Model
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
