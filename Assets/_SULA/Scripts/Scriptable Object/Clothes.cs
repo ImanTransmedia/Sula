@@ -5,11 +5,12 @@ using UnityEngine;
 public class Clothes : ScriptableObject
 {
     public string clotheName;
-    public double price;
     public Sprite imagen;
+    public Sprite[] imagenes;
     public bool is3D;
     public Color[] materialColors;
     public GameObject prefab;
     public string description;
-    
+    public FilterOption[] filterOptions;
+
 }

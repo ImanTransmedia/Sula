@@ -1535,8 +1535,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e1bd6323d163e5e469b7d67e8dff174a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  defaulRegion: {fileID: 11400000, guid: ecee95e1f7d54c8488eb1fc67c2552d2, type: 2}
-  defaultClothe: {fileID: 11400000, guid: 278a3207759d8b049ad682f66dbf30a9, type: 2}
+  regions:
+  - {fileID: 11400000, guid: ecee95e1f7d54c8488eb1fc67c2552d2, type: 2}
+  - {fileID: 11400000, guid: ccb239b281ccf684aa35c9b5e533e246, type: 2}
+  - {fileID: 11400000, guid: 1f664fa29c056bb4d9c46d755d32bdb7, type: 2}
   actualRegion: {fileID: 0}
   actualClothe: {fileID: 0}
 --- !u!4 &418197682
@@ -7302,6 +7304,7 @@ GameObject:
   m_Component:
   - component: {fileID: 2135440667}
   - component: {fileID: 2135440666}
+  - component: {fileID: 2135440670}
   - component: {fileID: 2135440665}
   - component: {fileID: 2135440668}
   - component: {fileID: 2135440669}
@@ -7326,8 +7329,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   ourStory: {fileID: 1623676745}
   artisans: {fileID: 554699921}
-  imageItemTemplate: {fileID: 9197481963319205126, guid: eef2f968c5e7d6b4d9f838f7a4a25979, type: 3}
-  imageDataList: []
+  actualRegion: 0
+  infiniteScroll: {fileID: 0}
 --- !u!114 &2135440666
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -7391,8 +7394,72 @@ MonoBehaviour:
   uiDocument: {fileID: 2135440666}
   itemTemplate: {fileID: 9197481963319205126, guid: eef2f968c5e7d6b4d9f838f7a4a25979, type: 3}
   itemDataList: []
-  visibleItemsCount: 3
-  bufferSize: 100
+  visibleItemsCount: 1
+  itemWidth: 450
+  itemHeight: 600
+  detailsPanel: {fileID: 823976468}
+  bufferItems: 2
+--- !u!114 &2135440670
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2135440664}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7635b2526b59aff44880c216b2493885, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  targetDocument: {fileID: 2135440666}
+  returnAreaName: ReturnArea
+  navigateAreaName: NavigateArea
+  swipeThreshold: 25
+  OnReturnSwipeUp:
+    m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 2135440665}
+        m_TargetAssemblyTypeName: ProductScreen, Assembly-CSharp
+        m_MethodName: NavigateReturn
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+  OnNavigateSwipeLeft:
+    m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 2135440665}
+        m_TargetAssemblyTypeName: ProductScreen, Assembly-CSharp
+        m_MethodName: Navigateleft
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+  OnNavigateSwipeRight:
+    m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 2135440665}
+        m_TargetAssemblyTypeName: ProductScreen, Assembly-CSharp
+        m_MethodName: NavigateRight
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!1660057539 &9223372036854775807
 SceneRoots:
   m_ObjectHideFlags: 0

@@ -24,8 +24,7 @@ public class GameManager : MonoBehaviour
     }
 
     [Header("Default Configuration")]
-    public Regions defaulRegion;
-    public Clothes defaultClothe;
+    public Regions[] regions;
 
     [Header("Actual Region")]
     public Regions actualRegion;

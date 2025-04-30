@@ -12,6 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6a1f8ab44da6eec4d92d7d4c07d5275e, type: 3}
   m_Name: Galapagos
   m_EditorClassIdentifier: 
+  regionType: 2
   regionName: Galapagos
   darkColor: {r: 0.16470589, g: 0.6509804, b: 0.7725491, a: 1}
   lightColor: {r: 0.40000004, g: 0.8117648, b: 0.9215687, a: 1}
@@ -23,3 +24,8 @@ MonoBehaviour:
   - {fileID: 11400000, guid: 2f022219251489840918ab28ef77f062, type: 2}
   - {fileID: 11400000, guid: 48070604da16eb04aa2c18b828a706f1, type: 2}
   - {fileID: 11400000, guid: b654f5b0f0b06f24d9dd77ecb77630b8, type: 2}
+  - {fileID: 11400000, guid: 50448403e720ed14e910a1453135078d, type: 2}
+  - {fileID: 11400000, guid: da792b57e2c0c6148b33041de8ca529d, type: 2}
+  - {fileID: 11400000, guid: 278a3207759d8b049ad682f66dbf30a9, type: 2}
+  - {fileID: 11400000, guid: 47961706724747545a34d5b3cf9c0129, type: 2}
+  - {fileID: 11400000, guid: bd094f60ccdebe144b36ec719acc9a8a, type: 2}

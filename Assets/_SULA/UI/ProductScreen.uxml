@@ -13,7 +13,9 @@
                 <engine:VisualElement name="Image" style="flex-grow: 1; background-image: url(&quot;project://database/Assets/_SULA/Assets/2D/Sprites/Settings.png?fileID=2800000&amp;guid=9cf88d89583c5c144b5daf506c715ece&amp;type=3#Settings&quot;); background-size: 70% 70%;" />
             </engine:Button>
             <engine:ScrollView name="FilterScroll" mode="Horizontal" horizontal-scroller-visibility="Hidden" vertical-scroller-visibility="Hidden" touch-scroll-type="Elastic" style="top: 50px; width: 800px; height: 100px; bottom: auto; align-self: flex-start; left: 50px; background-color: rgba(130, 130, 130, 0); flex-direction: row; align-items: center; padding-bottom: 0; margin-bottom: 10px;" />
-            <engine:ScrollView name="ItemScroll" mode="Horizontal" horizontal-scroller-visibility="Hidden" vertical-scroller-visibility="Hidden" touch-scroll-type="Elastic" class="infinite-scroll" />
+            <engine:ScrollView name="ItemScroll" mode="Horizontal" horizontal-scroller-visibility="Hidden" vertical-scroller-visibility="Hidden" touch-scroll-type="Unrestricted" class="infinite-scroll" />
         </engine:VisualElement>
+        <engine:VisualElement name="ReturnArea" focusable="true" tabindex="10" class="swipe-area-return" />
+        <engine:VisualElement name="NavigateArea" focusable="true" tabindex="10" class="navigate-area" style="height: 750px; top: 300px;" />
     </engine:VisualElement>
 </engine:UXML>

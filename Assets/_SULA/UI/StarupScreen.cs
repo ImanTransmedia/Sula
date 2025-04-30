@@ -66,8 +66,8 @@ public class StarupScreen : MonoBehaviour
             regionPanel.RemoveFromClassList("hide-down");
         }
 
-        GameManager.Instance.actualRegion = GameManager.Instance.defaulRegion;
-        GameManager.Instance.actualClothe = GameManager.Instance.defaultClothe;
+        GameManager.Instance.actualRegion = GameManager.Instance.regions[0];
+        GameManager.Instance.actualClothe = GameManager.Instance.regions[0].clothes[0];
 
         productsPanel.GetComponent<InfiniteScroll>().FillInstance(new List<Clothes> (GameManager.Instance.actualRegion.clothes));
 

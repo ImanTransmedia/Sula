@@ -1,24 +1,30 @@
 using System.Collections.Generic;
+using System.Threading.Tasks;
+using UnityEditorInternal.Profiling.Memory.Experimental;
 using UnityEngine;
 using UnityEngine.UIElements;
+using UnityEngine.UIElements.Experimental;
 
 public class InfiniteScroll : MonoBehaviour
 {
-    [SerializeField] private VisualElement root;
     [SerializeField] private UIDocument uiDocument;
     [SerializeField] private VisualTreeAsset itemTemplate;
     [SerializeField] private List<Clothes> itemDataList;
-    [SerializeField] private int visibleItemsCount = 3; 
-    [SerializeField] private int bufferSize = 2; 
+    [SerializeField] private int visibleItemsCount = 1;
+    [SerializeField] private float itemWidth = 400f;
+    [SerializeField] private float itemHeight = 650f;
+    [SerializeField] private GameObject detailsPanel;
 
+
+    [SerializeField] private int bufferItems = 2;
+    private VisualElement root;
     private ScrollView scrollView;
     private List<VisualElement> visibleItems = new List<VisualElement>();
     private List<int> dataIndices = new List<int>();
-    private float itemWidth = 400f; 
-    private float itemHeight = 650f;
-    private int totalItems => itemDataList.Count;
+    private int totalItems => itemDataList?.Count ?? 0;
+    private float itemFullWidth;
+    private bool isInitializing = false;
 
-    [SerializeField] private GameObject detailsPanel;
 
     public void FillInstance(List<Clothes> clothesList)
     {
@@ -28,165 +34,247 @@ public class InfiniteScroll : MonoBehaviour
 
     private void InitializeScroller()
     {
-        if (itemDataList == null || itemDataList.Count == 0)
+        if (itemDataList == null || totalItems == 0)
         {
             Debug.LogWarning("No hay datos para mostrar en el scroller");
+            // Clear existing elements if re-initializing with no data
+            if (scrollView != null)
+            {
+                scrollView.Clear();
+                visibleItems.Clear();
+                dataIndices.Clear();
+            }
             return;
         }
+
+        isInitializing = true;
 
         root = uiDocument.rootVisualElement;
         scrollView = root.Q<ScrollView>("ItemScroll");
 
-        // Configuración crítica del ScrollView HORIZONTAL
-        scrollView.mode = ScrollViewMode.Horizontal;
-        scrollView.horizontalScrollerVisibility = ScrollerVisibility.AlwaysVisible;
-        scrollView.verticalScrollerVisibility = ScrollerVisibility.Hidden;
+        if (scrollView == null)
+        {
+            Debug.LogError("ScrollView con el nombre 'ItemScroll' no encontrado en el UIDocument.");
+            isInitializing = false;
+            return;
+        }
 
-        // Configurar el contenedor de contenido
+        // Configuración del ScrollView
+        scrollView.mode = ScrollViewMode.Horizontal;
+        scrollView.horizontalScrollerVisibility = ScrollerVisibility.Hidden;
+        scrollView.verticalScrollerVisibility = ScrollerVisibility.Hidden;
         scrollView.contentContainer.style.flexDirection = FlexDirection.Row;
         scrollView.contentContainer.style.flexWrap = Wrap.NoWrap;
         scrollView.contentContainer.style.height = Length.Percent(100);
 
-        // Configurar ancho total del contenido
-        scrollView.contentContainer.style.width = totalItems * itemWidth;
-       
-
-        // Limpiar items existentes
         scrollView.Clear();
         visibleItems.Clear();
         dataIndices.Clear();
 
-        // Configurar el callback del scroll
+        VisualElement dummyItem = itemTemplate.Instantiate();
+        scrollView.Add(dummyItem);
+        float marginRight = dummyItem.resolvedStyle.marginRight;
+        float marginLeft = dummyItem.resolvedStyle.marginLeft;
+        itemFullWidth = itemWidth + marginRight + marginLeft;
+        scrollView.Remove(dummyItem); // Remove dummy item
+
+        InitializeItems();
+
         scrollView.horizontalScroller.valueChanged -= OnScrollValueChanged;
         scrollView.horizontalScroller.valueChanged += OnScrollValueChanged;
 
-        // Inicializar items visibles
-        InitializeVisibleItems();
+        CenterInitialView();
+
+        isInitializing = false;
     }
 
-    private void InitializeVisibleItems()
+    private void InitializeItems()
     {
-        // Crear items iniciales (visibles + buffer)
-        int itemsToCreate = Mathf.Min(visibleItemsCount + bufferSize * 2, totalItems);
+        if (totalItems == 0) return;
 
-        for (int i = 0; i < itemsToCreate; i++)
+        int numVisualItems = Mathf.Min(totalItems + bufferItems * 2, totalItems > 0 ? totalItems * 2 : 0);
+
+        if (totalItems < visibleItemsCount + bufferItems * 2)
         {
-            AddNewItem(i);
+            numVisualItems = totalItems;
+        }
+        else
+        {
+            numVisualItems = visibleItemsCount + bufferItems * 2;
+        }
+        numVisualItems = Mathf.Max(numVisualItems, visibleItemsCount + bufferItems * 2);
+
+
+        for (int i = 0; i < numVisualItems; i++)
+        {
+            int dataIndex = i % totalItems;
+            AddNewItemAsync(dataIndex, i);
         }
     }
 
-    private void AddNewItem(int dataIndex)
+    private async Task AddNewItemAsync(int dataIndex, int visualPositionIndex)
     {
-        var newItem = itemTemplate.Instantiate();
+        if (dataIndex < 0 || dataIndex >= totalItems) return;
 
-        // Configurar tamaño y posición
+        var newItem = itemTemplate.Instantiate();
         newItem.style.width = itemWidth;
-        newItem.style.height = Length.Percent(100);
+        newItem.style.height = itemHeight;
         newItem.style.position = Position.Absolute;
-        newItem.style.left = dataIndex * itemWidth;
+        newItem.style.left = visualPositionIndex * itemFullWidth;
+        newItem.AddToClassList("show-item");
+        newItem.AddToClassList("hide-item");
 
         newItem.RegisterCallback<ClickEvent>(evt =>
         {
-            //Logica para llevar a nueva vista
-            Debug.Log($"Item {dataIndex} clicked");
-            GameManager.Instance.actualClothe = itemDataList[dataIndex];
-            root.AddToClassList("hide-up");
-            detailsPanel.SetActive(true);
+
+            int clickedVisualIndex = visibleItems.IndexOf(newItem);
+            if (clickedVisualIndex != -1 && clickedVisualIndex < dataIndices.Count)
+            {
+                int actualDataIndex = dataIndices[clickedVisualIndex];
+                Debug.Log($"Item {itemDataList[actualDataIndex].name} clicked (Data Index: {actualDataIndex})");
+                if (GameManager.Instance != null)
+                {
+                    GameManager.Instance.actualClothe = itemDataList[actualDataIndex];
+                    root.AddToClassList("hide-up");
+                    if (detailsPanel != null)
+                    {
+                        detailsPanel.SetActive(true);
+                    }
+                }
+                else
+                {
+                    Debug.LogWarning("GameManager.Instance is not available.");
+                }
+            }
         });
 
         scrollView.Add(newItem);
         visibleItems.Add(newItem);
         dataIndices.Add(dataIndex);
-
         UpdateItemContent(newItem, dataIndex);
+
+        await System.Threading.Tasks.Task.Delay(1);
+        newItem.RemoveFromClassList("hide-item");
+
     }
 
-    private void OnScrollValueChanged(float value)
-    {
-        if (totalItems == 0 || scrollView == null) return;
-
-        // Calcular índice visible basado en la posición del scroll
-        int firstVisibleIndex = Mathf.FloorToInt(value / itemWidth);
-
-        UpdateVisibleItems(firstVisibleIndex);
-    }
-
-    private void UpdateVisibleItems(int firstVisibleIndex)
+    private void CenterInitialView()
     {
         if (visibleItems.Count == 0) return;
 
-        // Scroll hacia la izquierda
-        while (firstVisibleIndex < dataIndices[0] && dataIndices[0] > 0)
+
+        float targetX = visibleItems[bufferItems].resolvedStyle.left - (scrollView.resolvedStyle.width / 2f - itemWidth / 2f);
+        float minScroll = 0;
+        float maxScroll = (visibleItems.Count - (scrollView.resolvedStyle.width / itemFullWidth)) * itemFullWidth;
+        targetX = Mathf.Clamp(targetX, minScroll, maxScroll);
+
+
+        scrollView.scrollOffset = new Vector2(targetX, 0);
+        scrollView.schedule.Execute(() => { scrollView.scrollOffset = new Vector2(targetX, 0); }).ExecuteLater(50);
+    }
+
+
+    private void OnScrollValueChanged(float value)
+    {
+        if (isInitializing || totalItems <= visibleItemsCount || visibleItems.Count == 0) return;
+
+        float scrollPosition = scrollView.scrollOffset.x;
+        float viewportWidth = scrollView.resolvedStyle.width;
+
+        foreach (var item in visibleItems)
         {
-            MoveLastItemToStart();
+            float itemLeft = item.resolvedStyle.left;
+            float itemRight = itemLeft + itemWidth;
+
+            // Si el item está completamente fuera de la vista (izquierda o derecha)
+            if (itemRight < scrollPosition || itemLeft > scrollPosition + viewportWidth)
+            {
+                if (!item.ClassListContains("hide-item"))
+                {
+                    item.AddToClassList("hide-item");
+                }
+            }
+            // Si el item está al menos parcialmente en la vista
+            else
+            {
+                if (item.ClassListContains("hide-item"))
+                {
+                    item.RemoveFromClassList("hide-item");
+                }
+            }
         }
 
-        // Scroll hacia la derecha
-        int lastVisibleIndex = firstVisibleIndex + visibleItemsCount;
-        while (lastVisibleIndex > dataIndices[dataIndices.Count - 1] &&
-               dataIndices[dataIndices.Count - 1] < totalItems - 1)
+        // Lógica de reciclaje (mantenerla como está)
+        float recycleThreshold = bufferItems * itemFullWidth;
+
+        if (visibleItems[0].resolvedStyle.left + itemFullWidth < scrollPosition - recycleThreshold)
         {
-            MoveFirstItemToEnd();
+            var itemToMove = visibleItems[0];
+            visibleItems.RemoveAt(0);
+            dataIndices.RemoveAt(0);
+
+            int newDataIndex = (dataIndices[dataIndices.Count - 1] + 1) % totalItems;
+            float newVisualPosition = visibleItems[visibleItems.Count - 1].resolvedStyle.left + itemFullWidth;
+
+            UpdateItemContent(itemToMove, newDataIndex);
+            itemToMove.style.left = newVisualPosition;
+
+            visibleItems.Add(itemToMove);
+            dataIndices.Add(newDataIndex);
+        }
+
+        if (visibleItems.Count > 1 && visibleItems[visibleItems.Count - 1].resolvedStyle.left > scrollPosition + viewportWidth + recycleThreshold)
+        {
+            var itemToMove = visibleItems[visibleItems.Count - 1];
+            visibleItems.RemoveAt(visibleItems.Count - 1);
+            dataIndices.RemoveAt(dataIndices.Count - 1);
+
+            int newDataIndex = (dataIndices[0] - 1 + totalItems) % totalItems;
+            float newVisualPosition = visibleItems[0].resolvedStyle.left - itemFullWidth;
+
+            UpdateItemContent(itemToMove, newDataIndex);
+            itemToMove.style.left = newVisualPosition;
+
+            visibleItems.Insert(0, itemToMove);
+            dataIndices.Insert(0, newDataIndex);
         }
     }
 
-    private void MoveLastItemToStart()
-    {
-        var lastItem = visibleItems[visibleItems.Count - 1];
-        visibleItems.RemoveAt(visibleItems.Count - 1);
-        visibleItems.Insert(0, lastItem);
-
-        int newIndex = dataIndices[0] - 1;
-        dataIndices.Insert(0, newIndex);
-        dataIndices.RemoveAt(dataIndices.Count - 1);
-
-        UpdateItemPosition(lastItem, newIndex);
-        UpdateItemContent(lastItem, newIndex);
-    }
-
-    private void MoveFirstItemToEnd()
-    {
-        var firstItem = visibleItems[0];
-        visibleItems.RemoveAt(0);
-        visibleItems.Add(firstItem);
-
-        int newIndex = dataIndices[dataIndices.Count - 1] + 1;
-        dataIndices.Add(newIndex);
-        dataIndices.RemoveAt(0);
-
-        UpdateItemPosition(firstItem, newIndex);
-        UpdateItemContent(firstItem, newIndex);
-    }
-
-    private void UpdateItemPosition(VisualElement item, int index)
-    {
-        item.style.left = index * itemWidth;
-    }
 
     private void UpdateItemContent(VisualElement item, int dataIndex)
     {
         if (dataIndex < 0 || dataIndex >= totalItems) return;
 
+
         var itemData = itemDataList[dataIndex];
 
-        // Actualizar nombre
         var nameLabel = item.Q<Label>("Name");
         if (nameLabel != null)
         {
             nameLabel.text = itemData.name;
         }
 
-        // Actualizar imagen
         var imageElement = item.Q<VisualElement>("Image");
         if (imageElement != null && itemData.imagen != null)
         {
-            imageElement.style.backgroundImage = new StyleBackground(itemData.imagen);
+
+            if (itemData.imagen is Sprite sprite)
+            {
+                imageElement.style.backgroundImage = new StyleBackground(sprite);
+            }
+            else
+            {
+                Debug.LogWarning($"Image data for item {itemData.name} is not a recognized type (Sprite or Texture2D).");
+                imageElement.style.backgroundImage = null;
+            }
+
+        }
+        else if (imageElement != null)
+        {
+
+            imageElement.style.backgroundImage = null;
         }
     }
 
-    public void SetData(List<Clothes> newData)
-    {
-        itemDataList = newData;
-        InitializeScroller();
-    }
+
 }

@@ -12,6 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6a1f8ab44da6eec4d92d7d4c07d5275e, type: 3}
   m_Name: Andes
   m_EditorClassIdentifier: 
+  regionType: 1
   regionName: ANDES
   darkColor: {r: 0.42745098, g: 0.29803923, b: 0.1882353, a: 1}
   lightColor: {r: 0.454902, g: 0.35686275, b: 0.27058825, a: 1}
