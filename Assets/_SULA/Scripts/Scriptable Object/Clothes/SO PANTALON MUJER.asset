@@ -13,9 +13,9 @@ MonoBehaviour:
   m_Name: SO PANTALON MUJER
   m_EditorClassIdentifier: 
   clotheName: SELVA PANT
+  is3D: 0
   menuImage: {fileID: 21300000, guid: afdd4f7c16022d346bf479cf77ee9f9d, type: 3}
   imagenes: []
-  is3D: 0
   materialColors:
   - {r: 0.5723493, g: 0.9150943, b: 0.47912958, a: 1}
   prefab: {fileID: 0}
@@ -25,4 +25,5 @@ MonoBehaviour:
   ahorro: Each pair of Adventure Pants is made from 6-7 recycled PET bottles.                                                                      
     By using recycled PET polyester in the production of our pants, we help reduce
     CO2 emissions by 1.5 kg
+  materialType: 2
   filterOptions: 0100000006000000

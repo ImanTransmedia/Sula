@@ -41,6 +41,7 @@ public enum FilterNames
 {
     Hombre,
     Mujer,
+    ClearAll,
     Buffs,
     Rashguard,
     Hoodies,
