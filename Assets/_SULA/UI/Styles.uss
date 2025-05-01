@@ -1,0 +1,317 @@
+VisualElement {
+}
+
+.panel-container {
+    flex-grow: 1;
+    position: absolute;
+    bottom: -500px;
+    right: auto;
+    left: auto;
+    width: auto;
+    height: 400px;
+    background-image: url("project://database/Assets/_SULA/Assets/2D/Sprites/Star%20Div.png?fileID=2800000&guid=26cf6eac2d586564ba0852a5d185589c&type=3#Star Div");
+    align-self: center;
+    padding-top: 20px;
+    padding-right: 20px;
+    padding-bottom: 20px;
+    padding-left: 20px;
+    margin-top: 50px;
+    margin-right: 50px;
+    margin-bottom: 50px;
+    margin-left: 50px;
+    opacity: 0;
+    transition-duration: 1s;
+    transition-timing-function: ease-in-circ;
+}
+
+.showup {
+    flex-grow: 1;
+    position: absolute;
+    bottom: 250px;
+    right: auto;
+    left: auto;
+    width: auto;
+    height: 400px;
+    background-image: url("project://database/Assets/_SULA/Assets/2D/Sprites/Star%20Div.png?fileID=2800000&guid=26cf6eac2d586564ba0852a5d185589c&type=3#Star Div");
+    align-self: center;
+    padding-top: 20px;
+    padding-right: 20px;
+    padding-bottom: 20px;
+    padding-left: 20px;
+    margin-top: 50px;
+    margin-right: 50px;
+    margin-bottom: 50px;
+    margin-left: 50px;
+    opacity: 1;
+    transition-duration: 1s;
+    transition-timing-function: ease-out-cubic;
+    -unity-background-image-tint-color: rgb(255, 255, 255);
+    background-color: rgba(255, 255, 255, 0);
+    -unity-font-definition: url("project://database/Assets/_SULA/Fonts/futura%20medium%20bt.ttf?fileID=12800000&guid=6bc41e0f58108fd489c36225caa9e6ca&type=3#futura medium bt");
+    font-size: 20px;
+}
+
+.show {
+    width: 1080px;
+    height: 1920px;
+    transition-duration: 1s, 1s;
+    transition-property: opacity, translate;
+    position: absolute;
+    opacity: 1;
+    visibility: visible;
+    overflow: visible;
+    display: flex;
+    transition-timing-function: ease-out-cubic, ease-out-cubic;
+}
+
+.hide-up {
+    flex-grow: 1;
+    translate: 0 -1920px;
+    transition-duration: 1s, 1s;
+    transition-timing-function: ease-out-cubic, ease-out-cubic;
+    transition-property: translate, opacity;
+    opacity: 0;
+}
+
+.hide-left {
+    flex-grow: 1;
+    translate: -1080px 0;
+    transition-duration: 1s, 1s;
+    transition-timing-function: ease-out-cubic, ease-out-cubic;
+    transition-property: translate, opacity;
+    opacity: 0;
+}
+
+.hide-right {
+    flex-grow: 1;
+    translate: 1080px 0;
+    transition-duration: 1s, 1s;
+    transition-timing-function: ease-out-cubic, ease-out-cubic;
+    transition-property: translate, opacity;
+    opacity: 0;
+}
+
+.hide-down {
+    flex-grow: 1;
+    translate: 0 1920px;
+    transition-duration: 1s, 1s;
+    transition-timing-function: ease-out-cubic, ease-out-cubic;
+    transition-property: translate, opacity;
+    opacity: 0;
+}
+
+.container {
+    flex-grow: 1;
+    height: 1100px;
+    top: 90px;
+    align-self: center;
+    width: 950px;
+    -unity-background-image-tint-color: rgb(226, 226, 226);
+    background-color: rgb(226, 226, 226);
+    border-top-left-radius: 90px;
+    border-top-right-radius: 90px;
+    border-bottom-right-radius: 90px;
+    border-bottom-left-radius: 90px;
+}
+
+.parragraph {
+    -unity-text-align: upper-left;
+    white-space: normal;
+    font-size: 25px;
+    -unity-font-definition: url("project://database/Assets/_SULA/Fonts/Futura%20Book%20font.ttf?fileID=12800000&guid=60c2d7bb953b81541ad23b12d697d7bb&type=3#Futura Book font");
+}
+
+.title {
+    -unity-font-definition: url("project://database/Assets/_SULA/Fonts/futura%20medium%20bt.ttf?fileID=12800000&guid=6bc41e0f58108fd489c36225caa9e6ca&type=3#futura medium bt");
+    -unity-text-align: middle-center;
+    font-size: 60px;
+    -unity-font-style: bold;
+    top: 10px;
+}
+
+.show {
+    width: 1080px;
+    height: 1920px;
+    transition-duration: 1s, 1s;
+    transition-property: opacity, translate;
+}
+
+.Title {
+}
+
+.artisans {
+    flex-grow: 1;
+    position: absolute;
+    width: 100%;
+    height: 1920px;
+    background-image: url("project://database/Assets/_SULA/Assets/2D/Render%20Textures/RTEX%20Video%202.renderTexture?fileID=8400000&guid=77046d35380b66a4089442cecdb49790&type=2#RTEX Video 2");
+    scale: 0.1 0.1;
+    opacity: 0;
+    transition-duration: 0.7s;
+}
+
+.carbono {
+    flex-grow: 1;
+    position: absolute;
+    width: 100%;
+    height: 1920px;
+    background-image: url("project://database/Assets/_SULA/Assets/2D/Render%20Textures/RTEX%20Video%203.renderTexture?fileID=8400000&guid=f241387751c08a04e8c77cab10ea82a6&type=2#RTEX Video 3");
+    scale: 0.1 0.1;
+    opacity: 0;
+}
+
+.full-artisans {
+    flex-grow: 1;
+    position: absolute;
+    width: 100%;
+    height: 1920px;
+    background-image: url("project://database/Assets/_SULA/Assets/2D/Render%20Textures/RTEX%20Video%202.renderTexture?fileID=8400000&guid=77046d35380b66a4089442cecdb49790&type=2#RTEX Video 2");
+    transition-duration: 0.5s;
+}
+
+.full-carbono {
+    flex-grow: 1;
+    position: absolute;
+    width: 100%;
+    height: 1920px;
+    background-image: url("project://database/Assets/_SULA/Assets/2D/Render%20Textures/RTEX%20Video%203.renderTexture?fileID=8400000&guid=f241387751c08a04e8c77cab10ea82a6&type=2#RTEX Video 3");
+    transition-duration: 0.5s;
+}
+
+.button-item {
+    width: auto;
+    height: 80px;
+    margin: 10px 0;
+    padding: 10px 30px;
+    background-color: rgb(231, 241, 255);
+    border-radius: 25px;
+    align-items: center;
+    justify-content: center;
+    font-size: 30px;
+    border-left-color: rgb(42, 166, 197);
+    border-right-color: rgb(42, 166, 197);
+    border-top-color: rgb(42, 166, 197);
+    border-bottom-color: rgb(42, 166, 197);
+    border-top-width: 5px;
+    border-right-width: 5px;
+    border-bottom-width: 5px;
+    border-left-width: 5px;
+    border-top-left-radius: 50px;
+    border-top-right-radius: 50px;
+    border-bottom-right-radius: 50px;
+    border-bottom-left-radius: 50px;
+    margin-top: 10px;
+    margin-right: 30px;
+    margin-bottom: 10px;
+    margin-left: 30px;
+    padding-right: 50px;
+    padding-left: 50px;
+    -unity-font-definition: url("project://database/Assets/_SULA/Fonts/futura%20medium%20bt.ttf?fileID=12800000&guid=6bc41e0f58108fd489c36225caa9e6ca&type=3#futura medium bt");
+    -unity-font-style: bold;
+    color: rgb(42, 166, 197);
+}
+
+.button-item.selected {
+    background-color: rgb(42, 166, 197);
+    -unity-font-definition: url("project://database/Assets/_SULA/Fonts/futura%20medium%20bt.ttf?fileID=12800000&guid=6bc41e0f58108fd489c36225caa9e6ca&type=3#futura medium bt");
+    font-size: 30px;
+    -unity-font-style: bold;
+    -unity-text-align: middle-center;
+    color: rgb(231, 241, 255);
+}
+
+.item-template {
+    width: 100%;
+    height: 80px;
+    margin-bottom: 5px;
+    background-color: rgb(40, 40, 40);
+    border-radius: 4px;
+    flex-direction: row;
+    align-items: center;
+    padding: 10px;
+}
+
+.item-image {
+    width: 60px;
+    height: 60px;
+    background-size: contain;
+    background-repeat: no-repeat;
+    background-position: center;
+    margin-right: 15px;
+    border-radius: 3px;
+}
+
+.image-content {
+    height: 70%;
+    width: 100%;
+    -unity-background-scale-mode: scale-to-fit;
+    margin-top: 20px;
+    margin-bottom: 20px;
+}
+
+.logo {
+    -unity-background-scale-mode: scale-to-fit;
+    position: absolute;
+    top: 20px;
+    right: 20px;
+    width: 75px;
+    height: 75px;
+    background-image: url("project://database/Assets/_SULA/Assets/2D/Sprites/carbono_neutro.png?fileID=2800000&guid=0639131bb177ce743af91534e0b74dca&type=3#carbono_neutro");
+}
+
+.item-name {
+    height: 10%;
+    font-size: 20px;
+    -unity-font-style: bold;
+    -unity-text-align: middle-center;
+}
+
+.show-item {
+    transition-duration: 0.4s, 0.8s;
+    transition-timing-function: ease-out, ease-out;
+    transition-property: translate, opacity;
+}
+
+.hide-item {
+    translate: 0 200px;
+    opacity: 0;
+}
+
+.infinite-scroll {
+    width: auto;
+    height: 650px;
+    flex-direction: row;
+    margin-top: 50px;
+    background-color: rgba(255, 255, 255, 0);
+    margin-left: 30px;
+    margin-right: 30px;
+    align-items: stretch;
+    justify-content: space-between;
+    align-content: stretch;
+    align-self: auto;
+}
+
+.leafs {
+    flex-grow: 1;
+    background-image: url("project://database/Assets/_SULA/Assets/2D/Sprites/leafss.png?fileID=2800000&guid=68a23e600fed5c6428dec440d6d1c01d&type=3#leafss");
+    background-color: rgba(255, 255, 255, 0);
+    -unity-background-image-tint-color: rgb(102, 207, 235);
+    -unity-background-scale-mode: scale-to-fit;
+    top: -50px;
+    right: -50px;
+}
+
+.filter-container {
+    width: 80%;
+    margin-left: 50px;
+    margin-top: 50px;
+    height: 131px;
+}
+
+.hide-panel {
+    flex-grow: 1;
+    opacity: 0;
+    transition-duration: 0.7s;
+    transition-timing-function: ease-in-elastic;
+    scale: 0 0;
+}

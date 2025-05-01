@@ -1,9 +1,7 @@
 using System.Collections.Generic;
 using System.Threading.Tasks;
-using UnityEditorInternal.Profiling.Memory.Experimental;
 using UnityEngine;
 using UnityEngine.UIElements;
-using UnityEngine.UIElements.Experimental;
 
 public class InfiniteScroll : MonoBehaviour
 {
@@ -123,7 +121,8 @@ public class InfiniteScroll : MonoBehaviour
         newItem.style.left = visualPositionIndex * itemFullWidth;
         newItem.AddToClassList("show-item");
         newItem.AddToClassList("hide-item");
-
+         var leaf = newItem.Q<VisualElement>("LeafElement");
+        leaf.style.unityBackgroundImageTintColor = GameManager.Instance.actualRegion.darkColor;
         newItem.RegisterCallback<ClickEvent>(evt =>
         {
 
@@ -251,7 +250,7 @@ public class InfiniteScroll : MonoBehaviour
         var nameLabel = item.Q<Label>("Name");
         if (nameLabel != null)
         {
-            nameLabel.text = itemData.clotheName;
+            nameLabel.text = itemData.clotheName.ToUpper();
         }
 
         var imageElement = item.Q<VisualElement>("Image");

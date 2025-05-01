@@ -13,11 +13,11 @@ MonoBehaviour:
   m_Name: SO CAMISETA MUJER 1
   m_EditorClassIdentifier: 
   clotheName: WHALE SHARK T-SHIRT
-  menuImage: {fileID: 21300000, guid: aa390a5e3b560c1488d68a305e94bd62, type: 3}
+  is3D: 0
+  menuImage: {fileID: 21300000, guid: 8b60c1ede6533144a8e79de57ec3c337, type: 3}
   imagenes:
   - {fileID: 21300000, guid: 8b60c1ede6533144a8e79de57ec3c337, type: 3}
   - {fileID: 21300000, guid: 12295488e2ec45142ab6c76f50480d1d, type: 3}
-  is3D: 0
   materialColors:
   - {r: 0.5723493, g: 0.9150943, b: 0.47912958, a: 1}
   prefab: {fileID: 0}
@@ -26,4 +26,5 @@ MonoBehaviour:
   ahorro: Compared to a conventional cotton t-shirt, our 100% organic cotton t-shirt
     saves 2,700 liters of water.   Using organic cotton instead of conventional cotton
     reduces CO2 emissions by 1.5 kg per t-shirt
+  materialType: 0
   filterOptions: 0100000007000000

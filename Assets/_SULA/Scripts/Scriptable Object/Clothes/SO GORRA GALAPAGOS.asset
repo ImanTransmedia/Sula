@@ -13,12 +13,13 @@ MonoBehaviour:
   m_Name: SO GORRA GALAPAGOS
   m_EditorClassIdentifier: 
   clotheName: FLOREANA CAP
-  menuImage: {fileID: 21300000, guid: 726476a78e60e4845b2807c27c7350f4, type: 3}
-  imagenes: []
   is3D: 1
+  menuImage: {fileID: 21300000, guid: 0dd4c15bfc99c184ca02e91001c42736, type: 3}
+  imagenes: []
   materialColors:
   - {r: 0.9137255, g: 0.58181393, b: 0.47843137, a: 1}
   prefab: {fileID: 7157997195170330493, guid: 62b851166caabf840a94d5f1b9a164b8, type: 3}
   description: 100% COTTON
   ahorro: 
+  materialType: 0
   filterOptions: 050000000000000001000000

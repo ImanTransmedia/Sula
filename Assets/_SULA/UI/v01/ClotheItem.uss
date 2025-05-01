@@ -29,9 +29,14 @@ VisualElement {
 
 .item-name {
     height: 10%;
-    font-size: 20px;
+    font-size: 30px;
     -unity-font-style: bold;
     -unity-text-align: middle-center;
+    -unity-font-definition: url("project://database/Assets/_SULA/Fonts/futura%20medium%20bt.ttf?fileID=12800000&guid=6bc41e0f58108fd489c36225caa9e6ca&type=3#futura medium bt");
+    padding-top: 30px;
+    padding-right: 30px;
+    padding-bottom: 30px;
+    padding-left: 30px;
 }
 
 .colors-panel {

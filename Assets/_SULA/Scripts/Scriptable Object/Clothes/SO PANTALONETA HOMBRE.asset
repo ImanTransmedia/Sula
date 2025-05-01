@@ -15,9 +15,7 @@ MonoBehaviour:
   clotheName: BLUE-FOOTED BOOBY SHORTS
   is3D: 0
   menuImage: {fileID: 21300000, guid: 18c1a92060916bb408212cf0d3ab77de, type: 3}
-  imagenes:
-  - {fileID: 21300000, guid: 8b60c1ede6533144a8e79de57ec3c337, type: 3}
-  - {fileID: 21300000, guid: 12295488e2ec45142ab6c76f50480d1d, type: 3}
+  imagenes: []
   materialColors:
   - {r: 0.5723493, g: 0.9150943, b: 0.47912958, a: 1}
   prefab: {fileID: 0}
