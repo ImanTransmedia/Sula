@@ -1,5 +1,7 @@
+using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.EventSystems;
+using UnityEngine.UIElements;
 
 
 public class SwipeDownDetector : MonoBehaviour, IPointerDownHandler, IDragHandler
@@ -18,6 +20,18 @@ public class SwipeDownDetector : MonoBehaviour, IPointerDownHandler, IDragHandle
     private Vector2 startTouchPosition;
     private bool swipeStarted = false;
 
+    [SerializeField] private GameObject prendaContainer;
+
+    [SerializeField] private VisualElement prendaRoot   ;
+    [SerializeField] private VisualElement prendaPanel;
+
+    private void Start()
+    {
+
+        prendaRoot = prendaContainer.GetComponent<UIDocument>().rootVisualElement;
+        prendaPanel = prendaRoot.Q<VisualElement>("mainContainer");
+
+    }
     void Update()
     {
         // Detección para touch en móviles
@@ -81,18 +95,10 @@ public class SwipeDownDetector : MonoBehaviour, IPointerDownHandler, IDragHandle
 
 
                 //FUNCIONALIDAD
-                 CanvasManager canvasManager = FindFirstObjectByType<CanvasManager>();
-                if (canvasManager != null)
-                {
-                    GameObject obj = canvasManager.gameObject;
-                    Debug.Log("Objeto encontrado: " + obj.name);
-                    canvasManager.GoBackToMiddleFromEnd();
-                }
-                else
-                {
-                    Debug.Log("No se encontró ningún objeto con CanvasManager.");
-                }
 
+
+                prendaRoot.RemoveFromClassList("hide-up");
+                gameObject.SetActive(false);
                
             }
         }

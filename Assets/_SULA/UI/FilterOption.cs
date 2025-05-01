@@ -14,6 +14,13 @@ public class FilterOption : MonoBehaviour
     private Dictionary<Button, FilterNames> filterNames = new Dictionary<Button, FilterNames>();
     private Dictionary<Button, bool> buttonStates = new Dictionary<Button, bool>();
 
+    [SerializeField] private InfiniteScroll infiniteScroll;
+
+    private void Start()
+    {
+        infiniteScroll = GetComponent<InfiniteScroll>();
+        OnEnable();
+    }
 
     private void OnEnable()
     {
@@ -32,6 +39,10 @@ public class FilterOption : MonoBehaviour
         // Crear un botón para cada tipo en la enumeración
         foreach (var type in buttonTypesList)
         {
+            if (type == FilterNames.Hombre || type == FilterNames.Mujer)
+            {
+                continue; // Saltar a la siguiente iteración del bucle
+            }
             var button = new Button();
             button.AddToClassList("button-item");
             button.text = type.ToString();
@@ -47,6 +58,7 @@ public class FilterOption : MonoBehaviour
             scrollView.Add(button);
             buttons.Add(button);
         }
+
     }
 
     private void OnButtonClicked(Button clickedButton)
@@ -65,9 +77,37 @@ public class FilterOption : MonoBehaviour
             clickedButton.RemoveFromClassList("selected");
         }
 
-        // Aquí puedes agregar lógica adicional basada en el tipo de botón
         FilterNames type = filterNames[clickedButton];
         Debug.Log($"Botón {type} clickeado. Estado: {(isSelected ? "seleccionado" : "no seleccionado")}");
+
+        // Actualizar la lista cada vez que se hace clic en un botón de filtro
+        UpdateList();
+    }
+
+    private void UpdateList()
+    {
+
+        // Obtener la lista completa de prendas del GameManager
+        List<Clothes> allClothes = new List<Clothes> (GameManager.Instance.actualRegion.clothes);
+
+        List<FilterNames> selectedFilters = buttonStates
+            .Where(pair => pair.Value) 
+            .Select(pair => filterNames[pair.Key]) 
+            .ToList();
+
+        List<Clothes> filteredClothes;
+
+        if (selectedFilters.Count == 0)
+        {
+            filteredClothes = allClothes;
+        }
+        else
+        {
+            filteredClothes = allClothes.Where(clothe =>
+                clothe.filterOptions.Any(filter => selectedFilters.Contains(filter))
+            ).ToList();
+        }
+
+        infiniteScroll.FillInstance(filteredClothes);
     }
 }
-

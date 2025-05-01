@@ -1,0 +1,29 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e206e3dbca2bcdb4f8ff4e5aaa3802b7, type: 3}
+  m_Name: SO HOODIE UNISEX
+  m_EditorClassIdentifier: 
+  clotheName: VOLCANO HOODIE
+  menuImage: {fileID: 21300000, guid: fd0acb0ff7ea388439a9461cba1b5c0f, type: 3}
+  imagenes:
+  - {fileID: 21300000, guid: fd0acb0ff7ea388439a9461cba1b5c0f, type: 3}
+  - {fileID: 21300000, guid: 6563b03df7c22904cacd01e75bb9c786, type: 3}
+  is3D: 0
+  materialColors:
+  - {r: 0.5723493, g: 0.9150943, b: 0.47912958, a: 1}
+  prefab: {fileID: 0}
+  description: Made from 100% certified organic cotton. . Made in Ecuador. Thick
+    fabric for cold weahter
+  ahorro: Compared to a conventional hoodie, our sustainable hoodie saves 2,500 liters
+    of water.                              Our hoodie made with organic cotton or
+    recycled materials helps reduce CO2 emissions by 3 kg per hoodie
+  filterOptions: 000000000100000004000000

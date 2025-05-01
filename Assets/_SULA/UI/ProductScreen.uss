@@ -29,7 +29,7 @@ VisualElement {
 .show {
     flex-grow: 1;
     transition-duration: 1s;
-    transition-timing-function: ease-out-cubic;
+    transition-timing-function: ease-in-cubic;
 }
 
 .hide-down {
@@ -44,21 +44,21 @@ VisualElement {
     flex-grow: 1;
     transition-duration: 1s;
     translate: 1080px 0;
-    transition-timing-function: ease-out-cubic;
+    transition-timing-function: ease-in-cubic;
 }
 
 .hide-up {
     flex-grow: 1;
     transition-duration: 1s;
     translate: 0 -1920px;
-    transition-timing-function: ease-out-cubic;
+    transition-timing-function: ease-in-cubic;
 }
 
 .hide-left {
     flex-grow: 1;
     transition-duration: 1s;
     translate: -1080px 0;
-    transition-timing-function: ease-out-cubic;
+    transition-timing-function: ease-in-cubic;
 }
 
 .button-item {

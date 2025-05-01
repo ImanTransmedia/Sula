@@ -12,12 +12,15 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6a1f8ab44da6eec4d92d7d4c07d5275e, type: 3}
   m_Name: Amazonia
   m_EditorClassIdentifier: 
+  regionType: 0
   regionName: AMAZONIA
   darkColor: {r: 0.49411768, g: 0.72156864, b: 0.28627452, a: 1}
   lightColor: {r: 0.4156863, g: 0.65882355, b: 0.19607845, a: 1}
   accentColor: {r: 0.90196085, g: 1, b: 0.854902, a: 1}
   imagen: {fileID: 21300000, guid: f9431edc174fc0647ad251139851ccff, type: 3}
   clothes:
-  - {fileID: 11400000, guid: 705b925284e015c4e8cc1d6811bf1ee2, type: 2}
-  - {fileID: 11400000, guid: 2f022219251489840918ab28ef77f062, type: 2}
-  - {fileID: 11400000, guid: 48070604da16eb04aa2c18b828a706f1, type: 2}
+  - {fileID: 11400000, guid: 956d39c0b62ecb540bcab27f4e72f1cd, type: 2}
+  - {fileID: 11400000, guid: f142124476a48d744be1142d213b46d1, type: 2}
+  - {fileID: 11400000, guid: 4e5fc6123cb1f48418d32923369fa392, type: 2}
+  - {fileID: 11400000, guid: ddcdfd782b983bf4ba18f6d04105ad01, type: 2}
+  - {fileID: 11400000, guid: 32144338c05547f47bcbac1f2f12c7a6, type: 2}

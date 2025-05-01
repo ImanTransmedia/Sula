@@ -17,16 +17,39 @@ VisualElement {
     transition-timing-function: ease-in-cubic;
 }
 
-.hide-right {
-    flex-grow: 1;
-    transition-duration: 1s;
-    transition-timing-function: ease-in-cubic;
-    translate: 1080px 0;
-}
-
 .hide-down {
     flex-grow: 1;
     transition-duration: 1s;
     transition-timing-function: ease-in-cubic;
     translate: 0 1920px;
+}
+
+.swipe-area-return {
+    flex-grow: 1;
+    position: absolute;
+    top: 0;
+    background-color: rgba(255, 105, 105, 0.41);
+    height: 400px;
+    max-height: none;
+    width: 100%;
+}
+
+.navigate-area {
+    flex-grow: 1;
+    position: absolute;
+    top: 215px;
+    background-color: rgba(123, 255, 105, 0.41);
+    height: 850px;
+    max-height: none;
+    width: 100%;
+    bottom: auto;
+    left: 0;
+    right: 0;
+}
+
+.hide-right {
+    flex-grow: 1;
+    transition-duration: 1s;
+    transition-timing-function: ease-in-cubic;
+    translate: 1080px 0;
 }

@@ -1,0 +1,27 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e206e3dbca2bcdb4f8ff4e5aaa3802b7, type: 3}
+  m_Name: SO CAMISA LINO MUJER
+  m_EditorClassIdentifier: 
+  clotheName: IGUANA SHIRT
+  is3D: 1
+  menuImage: {fileID: 21300000, guid: 4a8371d9d4456a440a0dfc73dd6750f4, type: 3}
+  imagenes: []
+  materialColors:
+  - {r: 0.5723493, g: 0.9150943, b: 0.47912958, a: 1}
+  prefab: {fileID: 7157997195170330493, guid: 4d5a17940d1ff0141a7d4bb20a2f3f6a, type: 3}
+  description: 100% LINEN
+  ahorro: The production of a 100% linen shirt saves 2,100 liters of water compared
+    to a traditional cotton shirt.      Linen production generates 30-40% less CO2
+    emissions than conventional cotton farming
+  materialType: 1
+  filterOptions: 0100000007000000

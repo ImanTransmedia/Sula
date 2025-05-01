@@ -112,6 +112,8 @@
                 <engine:VisualElement name="Separator" style="flex-grow: 1; top: 0; height: 50px;" />
             </engine:VisualElement>
             <engine:VisualElement name="Separator" style="flex-grow: 1; top: 0; height: 50px;" />
+            <engine:VisualElement name="ReturnArea" focusable="true" tabindex="10" enabled="true" class="swipe-area-return" style="background-color: rgb(255, 105, 105); opacity: 0.34;" />
+            <engine:VisualElement name="NavigateArea" focusable="true" tabindex="10" enabled="true" class="navigate-area" style="height: 2863px; top: 428px; right: 0; left: 0; background-color: rgba(123, 255, 105, 0.38);" />
         </engine:ScrollView>
     </engine:VisualElement>
 </engine:UXML>

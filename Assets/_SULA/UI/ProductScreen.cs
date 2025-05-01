@@ -18,6 +18,11 @@ public class ProductScreen : MonoBehaviour
 
 
     [Header("Other Screens")]
+    [SerializeField] private GameObject start;
+    [SerializeField] private VisualElement startRoot;
+    [SerializeField] private VisualElement startPanel;
+
+
     [SerializeField] private GameObject ourStory;
     [SerializeField] private VisualElement ourStoryRoot;
     [SerializeField] private VisualElement ourStoryPanel;
@@ -34,7 +39,7 @@ public class ProductScreen : MonoBehaviour
 
     void Start()
     {
-        root = GetComponent<UIDocument>().rootVisualElement;
+        root = GetComponent<UIDocument>().rootVisualElement.Q<VisualElement>("mainContainer");
 
         backgroundImage = root.Q<VisualElement>("ImageContainer");
         helpButton = root.Q<VisualElement>("HelpButton");
@@ -43,6 +48,8 @@ public class ProductScreen : MonoBehaviour
         scrollContainer = root.Q<VisualElement>("ScrollContainer");
 
 
+        startRoot = start.GetComponent<UIDocument>().rootVisualElement;
+        startPanel = startRoot.Q<VisualElement>("mainContainer");
 
         ourStoryRoot = ourStory.GetComponent<UIDocument>().rootVisualElement;
         ourStoryPanel = ourStoryRoot.Q<VisualElement>("mainContainer");
@@ -56,6 +63,8 @@ public class ProductScreen : MonoBehaviour
     public void NavigateReturn()
     {
         Debug.Log("Return");
+        root.AddToClassList("hide-down");
+        startRoot.RemoveFromClassList("hide");
     }
     
 
@@ -73,14 +82,13 @@ public class ProductScreen : MonoBehaviour
                 infiniteScroll.FillInstance(new List<Clothes>(GameManager.Instance.actualRegion.clothes));
                 break;
             case RegionType.Andes:
-                if (!root.ClassListContains("hide-right"))
-                {
-                    root.AddToClassList("hide-right");
-                }
-                if (ourStoryPanel.ClassListContains("hide-left"))
-                {
-                    ourStoryPanel.RemoveFromClassList("hide-left");
-                }
+
+                root.AddToClassList("hide-right");
+                ourStoryPanel.ClearClassList();
+                ourStoryPanel.AddToClassList("show");
+
+                ourStoryPanel.ClearClassList();
+                ourStoryPanel.AddToClassList("show");
                 break;
             case RegionType.Galapagos:
                 GameManager.Instance.actualRegion = GameManager.Instance.regions[1];
@@ -103,14 +111,12 @@ public class ProductScreen : MonoBehaviour
         switch (actualRegion)
         {
             case RegionType.Amazonia:
-                if (!root.ClassListContains("hide-left"))
-                {
-                    root.AddToClassList("hide-left");
-                }
-                if (artisansPanel.ClassListContains("hide-right"))
-                {
-                    artisansPanel.RemoveFromClassList("hide-right");
-                }
+                root.AddToClassList("hide-left");
+                artisansPanel.ClearClassList();
+                artisansPanel.AddToClassList("show");
+
+                artisansRoot.ClearClassList();
+                artisansRoot.AddToClassList("show");
                 break;
             case RegionType.Andes:
                 GameManager.Instance.actualRegion = GameManager.Instance.regions[0];

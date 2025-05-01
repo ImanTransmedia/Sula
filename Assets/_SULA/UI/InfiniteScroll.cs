@@ -251,14 +251,14 @@ public class InfiniteScroll : MonoBehaviour
         var nameLabel = item.Q<Label>("Name");
         if (nameLabel != null)
         {
-            nameLabel.text = itemData.name;
+            nameLabel.text = itemData.clotheName;
         }
 
         var imageElement = item.Q<VisualElement>("Image");
-        if (imageElement != null && itemData.imagen != null)
+        if (imageElement != null && itemData.menuImage != null)
         {
 
-            if (itemData.imagen is Sprite sprite)
+            if (itemData.menuImage is Sprite sprite)
             {
                 imageElement.style.backgroundImage = new StyleBackground(sprite);
             }

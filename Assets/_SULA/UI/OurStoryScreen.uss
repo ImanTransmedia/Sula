@@ -30,17 +30,10 @@ VisualElement {
     -unity-font-definition: url("project://database/Assets/_SULA/Fonts/Futura%20Book%20font.ttf?fileID=12800000&guid=60c2d7bb953b81541ad23b12d697d7bb&type=3#Futura Book font");
 }
 
-.show {
-    flex-grow: 1;
-    transition-property: translate;
-    transition-duration: 1s;
-    transition-timing-function: ease-in-cubic;
-}
-
 .hide-down {
     flex-grow: 1;
     transition-duration: 1s;
-    transition-timing-function: ease-out-cubic;
+    transition-timing-function: ease-in-cubic;
     translate: 0 1920px;
     transition-property: translate;
 }
@@ -48,7 +41,7 @@ VisualElement {
 .hide-left {
     flex-grow: 1;
     transition-duration: 1s;
-    transition-timing-function: ease-out-cubic;
+    transition-timing-function: ease-in-cubic;
     translate: -1080px 0;
     transition-property: all;
 }
@@ -58,4 +51,27 @@ VisualElement {
     transition-property: translate;
     transition-duration: 1s;
     transition-timing-function: ease-in-cubic;
+}
+
+.swipe-area-return {
+    flex-grow: 1;
+    position: absolute;
+    top: 0;
+    background-color: rgba(255, 105, 105, 0.41);
+    height: 400px;
+    max-height: none;
+    width: 100%;
+}
+
+.navigate-area {
+    flex-grow: 1;
+    position: absolute;
+    top: 215px;
+    background-color: rgba(123, 255, 105, 0.41);
+    height: 850px;
+    max-height: none;
+    width: 100%;
+    bottom: auto;
+    left: 0;
+    right: 0;
 }

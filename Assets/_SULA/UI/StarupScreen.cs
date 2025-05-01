@@ -31,43 +31,24 @@ public class StarupScreen : MonoBehaviour
         regionPanelRoot = productsPanel.GetComponent<UIDocument>().rootVisualElement;
         regionPanel = regionPanelRoot.Q<VisualElement>("mainContainer");
 
-
     }
 
 
     private void OnVideoTap(ClickEvent clickEvent)
     {
-        Debug.Log("Video tapped");
-        if (panel.ClassListContains("showup"))
-        {
-            panel.RemoveFromClassList("showup");
-        }
-        else
-        {
-            panel.AddToClassList("showup");
-        }
-
+            panel.ToggleInClassList("showup");
     }
 
     private void OnButtonTap(ClickEvent clickEvent)
     {
-        Debug.Log("ButtonTap");
-        if (!root.ClassListContains("hide"))
-        {
+        Debug.Log("Start Button Tap");
 
-            root.AddToClassList("hide");
-            //root.AddToClassList("fade-out");
-            videoPlayer.Stop();
-
-        }
-
-        if (regionPanel.ClassListContains("hide-down"))
-        {
-            regionPanel.RemoveFromClassList("hide-down");
-        }
-
+        root.AddToClassList("hide");
+        videoPlayer.Stop();
         GameManager.Instance.actualRegion = GameManager.Instance.regions[0];
-        GameManager.Instance.actualClothe = GameManager.Instance.regions[0].clothes[0];
+        regionPanel.ClearClassList();
+        regionPanel.AddToClassList("show");
+
 
         productsPanel.GetComponent<InfiniteScroll>().FillInstance(new List<Clothes> (GameManager.Instance.actualRegion.clothes));
 

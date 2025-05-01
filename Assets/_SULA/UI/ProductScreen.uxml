@@ -1,9 +1,7 @@
 <engine:UXML xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:engine="UnityEngine.UIElements" xmlns:editor="UnityEditor.UIElements" noNamespaceSchemaLocation="../../../UIElementsSchema/UIElements.xsd" editor-extension-mode="False">
     <Style src="project://database/Assets/_SULA/UI/ProductScreen.uss?fileID=7433441132597879392&amp;guid=bd77e37aacc1d5548b4d39b06fca93ab&amp;type=3#ProductScreen" />
     <engine:VisualElement name="mainContainer" class="show hide-down">
-        <engine:Button name="HelpButton" class="button" style="width: 125px; height: 125px; position: absolute; align-self: flex-end; top: 70px; right: 70px; border-top-left-radius: 100px; border-top-right-radius: 100px; border-bottom-right-radius: 100px; border-bottom-left-radius: 100px; background-color: rgb(42, 166, 197); border-left-width: 0; border-top-width: 0; border-right-width: 0; border-bottom-width: 0;">
-            <engine:VisualElement name="Image" style="flex-grow: 1; background-image: url(&quot;project://database/Assets/_SULA/Assets/2D/Sprites/Settings.png?fileID=2800000&amp;guid=9cf88d89583c5c144b5daf506c715ece&amp;type=3#Settings&quot;); background-size: 70% 70%;" />
-        </engine:Button>
+        <engine:Button name="HelpButton" class="button" style="width: 125px; height: 125px; position: absolute; align-self: flex-end; top: 70px; right: 70px; border-top-left-radius: 100px; border-top-right-radius: 100px; border-bottom-right-radius: 100px; border-bottom-left-radius: 100px; background-color: rgb(42, 166, 197); border-left-width: 0; border-top-width: 0; border-right-width: 0; border-bottom-width: 0; background-image: url(&quot;project://database/Assets/_SULA/Assets/2D/Sprites/help.png?fileID=2800000&amp;guid=396434ef9aae7f44388b4f104235384a&amp;type=3#help&quot;);" />
         <engine:VisualElement name="Logo" style="flex-grow: 1; top: 50px; left: auto; right: auto; background-image: url(&quot;project://database/Assets/_SULA/Assets/2D/Sprites/sula_black.png?fileID=2800000&amp;guid=fdb1f35b6749201479ae2bd20be70238&amp;type=3#sula_black&quot;); height: 30px; width: 100%; max-height: 150px; -unity-background-scale-mode: scale-to-fit;" />
         <engine:Label text="GALAPAGOS" name="Region" style="top: 70px; -unity-text-align: middle-center; font-size: 130px; -unity-font-definition: url(&quot;project://database/Assets/_SULA/Fonts/futura%20medium%20bt.ttf?fileID=12800000&amp;guid=6bc41e0f58108fd489c36225caa9e6ca&amp;type=3#futura medium bt&quot;); -unity-font-style: bold; color: rgb(42, 166, 197);" />
         <engine:Label text="COLLECTION" name="collection" style="-unity-font-definition: url(&quot;project://database/Assets/_SULA/Fonts/Futura%20Book%20font.ttf?fileID=12800000&amp;guid=60c2d7bb953b81541ad23b12d697d7bb&amp;type=3#Futura Book font&quot;); -unity-text-align: middle-center; font-size: 60px; top: 30px;" />
@@ -15,7 +13,7 @@
             <engine:ScrollView name="FilterScroll" mode="Horizontal" horizontal-scroller-visibility="Hidden" vertical-scroller-visibility="Hidden" touch-scroll-type="Elastic" style="top: 50px; width: 800px; height: 100px; bottom: auto; align-self: flex-start; left: 50px; background-color: rgba(130, 130, 130, 0); flex-direction: row; align-items: center; padding-bottom: 0; margin-bottom: 10px;" />
             <engine:ScrollView name="ItemScroll" mode="Horizontal" horizontal-scroller-visibility="Hidden" vertical-scroller-visibility="Hidden" touch-scroll-type="Unrestricted" class="infinite-scroll" />
         </engine:VisualElement>
-        <engine:VisualElement name="ReturnArea" focusable="true" tabindex="10" class="swipe-area-return" />
-        <engine:VisualElement name="NavigateArea" focusable="true" tabindex="10" class="navigate-area" style="height: 750px; top: 300px;" />
+        <engine:VisualElement name="ReturnArea" focusable="true" tabindex="10" class="swipe-area-return" style="background-color: rgba(255, 105, 105, 0);" />
+        <engine:VisualElement name="NavigateArea" focusable="true" tabindex="10" class="navigate-area" style="height: 750px; top: 300px; background-color: rgba(123, 255, 105, 0);" />
     </engine:VisualElement>
 </engine:UXML>

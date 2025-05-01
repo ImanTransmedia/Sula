@@ -23,6 +23,8 @@ public class ColorSwitcher : MonoBehaviour
 
     private void OnEnable()
     {
+
+        if (!GameManager.Instance.actualClothe.is3D) return;
         FindAndSetupModel();
         targetColor = GetComponent<Image>().color;
     }

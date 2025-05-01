@@ -20,12 +20,16 @@ MonoBehaviour:
   imagen: {fileID: 21300000, guid: f4d2dd2300346da4ba07cf7839b9dd89, type: 3}
   clothes:
   - {fileID: 11400000, guid: 705b925284e015c4e8cc1d6811bf1ee2, type: 2}
-  - {fileID: 11400000, guid: e27a2d47aed008f45b29c3b6fa662672, type: 2}
-  - {fileID: 11400000, guid: 2f022219251489840918ab28ef77f062, type: 2}
-  - {fileID: 11400000, guid: 48070604da16eb04aa2c18b828a706f1, type: 2}
-  - {fileID: 11400000, guid: b654f5b0f0b06f24d9dd77ecb77630b8, type: 2}
-  - {fileID: 11400000, guid: 50448403e720ed14e910a1453135078d, type: 2}
-  - {fileID: 11400000, guid: da792b57e2c0c6148b33041de8ca529d, type: 2}
-  - {fileID: 11400000, guid: 278a3207759d8b049ad682f66dbf30a9, type: 2}
-  - {fileID: 11400000, guid: 47961706724747545a34d5b3cf9c0129, type: 2}
-  - {fileID: 11400000, guid: bd094f60ccdebe144b36ec719acc9a8a, type: 2}
+  - {fileID: 11400000, guid: 93369da584bdc5e468768d40edb0ec90, type: 2}
+  - {fileID: 11400000, guid: 839c3d44c58c688458a2e9b9bec6895c, type: 2}
+  - {fileID: 11400000, guid: 3d9a1f78154500d4485d63d6a251c24b, type: 2}
+  - {fileID: 11400000, guid: 25755ed9818c813459ca8ac63a50804b, type: 2}
+  - {fileID: 11400000, guid: 9bfc769e34c867e41abe057aec491104, type: 2}
+  - {fileID: 11400000, guid: f1e1b63c8eabe1645b515e91c85361f9, type: 2}
+  - {fileID: 11400000, guid: 4c6403a97bd5da14daac8e18dd934319, type: 2}
+  - {fileID: 11400000, guid: ef57c94847d8c30499b890d6d728fe1a, type: 2}
+  - {fileID: 11400000, guid: 1145a0ec3ac070746af8d6bbdfba3f75, type: 2}
+  - {fileID: 11400000, guid: fd1a46c3d9fd38e4dbe87cd7c67486cd, type: 2}
+  - {fileID: 11400000, guid: f486787af50ac644e9aeb64e6a7f0478, type: 2}
+  - {fileID: 11400000, guid: 90bc266520844fd4b9b4c16990b02b4b, type: 2}
+  - {fileID: 11400000, guid: 2376bc2d52518ec4a8914f18b1905372, type: 2}

@@ -12,7 +12,7 @@ public class ItemCarrousel : MonoBehaviour
 
     public void Configurar(Clothes prenda)
     {
-        prendaImage.sprite = prenda.imagen;
+        prendaImage.sprite = prenda.menuImage;
         prendaName.text = prenda.clotheName;
     }
 }

@@ -1,0 +1,28 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e206e3dbca2bcdb4f8ff4e5aaa3802b7, type: 3}
+  m_Name: SO RASHGUARD MUJER 1
+  m_EditorClassIdentifier: 
+  clotheName: RABIDA RASHGUARD
+  menuImage: {fileID: 21300000, guid: 4a8371d9d4456a440a0dfc73dd6750f4, type: 3}
+  imagenes: []
+  is3D: 1
+  materialColors:
+  - {r: 0.5723493, g: 0.9150943, b: 0.47912958, a: 1}
+  prefab: {fileID: 7157997195170330493, guid: 236c8935a286810458ae7d6310caf004, type: 3}
+  description: Made with 69% recycled polyester and 31% elastane. Chlorine-resistant
+    and antibacterial, ensuring long-lasting wear and protection during water sports
+    or outdoor activities.Made in Ecuador
+  ahorro: Each Sula rashguard is made from 6-7 recycled PET bottles                                                                            
+    By using recycled polyester instead of virgin material, we reduce CO2 emissions
+    by 2.5 kg per rashguard produced
+  filterOptions: 0100000003000000

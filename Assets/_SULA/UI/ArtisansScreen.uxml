@@ -1,8 +1,8 @@
 <engine:UXML xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:engine="UnityEngine.UIElements" xmlns:editor="UnityEditor.UIElements" noNamespaceSchemaLocation="../../../UIElementsSchema/UIElements.xsd" editor-extension-mode="False">
     <Style src="project://database/Assets/_SULA/UI/ArtisansScreen.uss?fileID=7433441132597879392&amp;guid=b54f3910478481f49abd8b1db836a370&amp;type=3#ArtisansScreen" />
-    <engine:VisualElement name="mainContainer" class="show hide-right">
+    <engine:VisualElement name="mainContainer" class="show hide-right" style="transition-timing-function: ease-in;">
         <engine:VisualElement name="Background" style="flex-grow: 1; position: absolute; height: 100%; width: 100%; background-image: url(&quot;project://database/Assets/_SULA/Assets/2D/Menu/01.Galapagos.png?fileID=2800000&amp;guid=f4d2dd2300346da4ba07cf7839b9dd89&amp;type=3#01.Galapagos&quot;); background-size: 250% 250%; background-position-x: left -200px; background-position-y: top 0;" />
-        <engine:ScrollView name="ScrollView" horizontal-scroller-visibility="Hidden" vertical-scroller-visibility="Hidden" touch-scroll-type="Elastic" style="height: 100%;">
+        <engine:ScrollView name="ScrollView" horizontal-scroller-visibility="Hidden" vertical-scroller-visibility="Hidden" touch-scroll-type="Elastic" nested-interaction-kind="StopScrolling" style="height: 100%;">
             <engine:VisualElement name="Logo" style="flex-grow: 1; background-image: url(&quot;project://database/Assets/_SULA/Assets/2D/Sprites/sula_black.png?fileID=2800000&amp;guid=fdb1f35b6749201479ae2bd20be70238&amp;type=3#sula_black&quot;); height: 300px; top: 100px; -unity-background-scale-mode: scale-to-fit; left: auto; right: auto; width: 900px; align-self: center;" />
             <engine:VisualElement name="Separator" style="flex-grow: 1; top: 0; height: 300px;" />
             <engine:Label text="ARTISANS" name="Artisans" class="title Title" style="font-size: 50px; -unity-text-align: middle-center; -unity-font-definition: url(&quot;project://database/Assets/_SULA/Fonts/futura%20medium%20bt.ttf?fileID=12800000&amp;guid=6bc41e0f58108fd489c36225caa9e6ca&amp;type=3#futura medium bt&quot;);" />
@@ -23,6 +23,8 @@
                 </engine:VisualElement>
                 <engine:VisualElement name="Column" style="flex-grow: 1; height: 70%; background-image: url(&quot;project://database/Assets/_SULA/Assets/2D/Render%20Textures/RTEX%20Video%203.renderTexture?fileID=8400000&amp;guid=f241387751c08a04e8c77cab10ea82a6&amp;type=2#RTEX Video 3&quot;); -unity-background-scale-mode: scale-and-crop; border-top-left-radius: 0; border-top-right-radius: 0; border-bottom-right-radius: 50px; border-bottom-left-radius: 50px; -unity-slice-left: -1; -unity-slice-top: -1; -unity-slice-right: -1; -unity-slice-bottom: -1;" />
             </engine:VisualElement>
+            <engine:VisualElement name="ReturnArea" focusable="true" tabindex="10" enabled="true" class="swipe-area-return" style="background-color: rgb(255, 105, 105); opacity: 0.34;" />
+            <engine:VisualElement name="NavigateArea" focusable="true" tabindex="10" enabled="true" class="navigate-area" style="height: 2863px; top: 428px; right: 0; left: 0; background-color: rgba(123, 255, 105, 0.38);" />
         </engine:ScrollView>
     </engine:VisualElement>
 </engine:UXML>

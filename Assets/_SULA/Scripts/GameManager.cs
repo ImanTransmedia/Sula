@@ -29,6 +29,12 @@ public class GameManager : MonoBehaviour
     [Header("Actual Region")]
     public Regions actualRegion;
     public Clothes actualClothe;
+
+    private void Start()
+    {
+        GameManager.Instance.actualRegion = GameManager.Instance.regions[0];
+        GameManager.Instance.actualClothe = GameManager.Instance.regions[0].clothes[0];
+    }
 }
 
 public enum FilterNames
@@ -40,5 +46,6 @@ public enum FilterNames
     Hoodies,
     Hats,
     Shorts,
-    Shirts
+    Shirts,
+    Pants
 }

@@ -1,0 +1,28 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e206e3dbca2bcdb4f8ff4e5aaa3802b7, type: 3}
+  m_Name: SO BUFF PIQUEROS
+  m_EditorClassIdentifier: 
+  clotheName: BLUE-FOOTED BOOBY BUFF
+  is3D: 0
+  menuImage: {fileID: 21300000, guid: 95a2bbc82f0ca8d4f9c6b0e03cf4131e, type: 3}
+  imagenes: []
+  materialColors:
+  - {r: 0.5723493, g: 0.9150943, b: 0.47912958, a: 1}
+  prefab: {fileID: 0}
+  description: Made from recycled polyester. With built-in antibacterial properties
+    and UV protection of SPF 35protection. Made in Ecuador
+  ahorro: Each Sula buff is made from 2-3 recycled PET bottles                                                  
+    By using recycled polyester instead of virgin material, we reduce CO2 emissions
+    by 1.5 kg per buff produced
+  materialType: 2
+  filterOptions: 000000000100000002000000
