@@ -102,7 +102,7 @@ public class InfiniteScroll : MonoBehaviour
 
         for (int i = 0; i < numVisualItems; i++)
         {
-            AddNewItemAsync(i, i); // En modo elástico, el índice visual coincide con el índice de datos
+            _ = AddNewItemAsync(i, i); // En modo elástico, el índice visual coincide con el índice de datos
         }
     }
 
@@ -129,11 +129,7 @@ public class InfiniteScroll : MonoBehaviour
                 if (GameManager.Instance != null)
                 {
                     GameManager.Instance.actualClothe = itemDataList[actualDataIndex];
-                    root.AddToClassList("hide-up");
-                    if (detailsPanel != null)
-                    {
-                        detailsPanel.SetActive(true);
-                    }
+                    NavigationManager.Instance.ShowDetails();
                 }
                 else
                 {

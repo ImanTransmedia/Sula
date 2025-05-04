@@ -26,6 +26,7 @@ public class NavigationManager : MonoBehaviour
     //----------------------------------------------------
 
     [SerializeField] private UIDocument uiDocument;
+    [SerializeField] private GameObject UIComponent;
     public ScreenOptions actualScren = ScreenOptions.Start;
 
     private VisualElement startContainer;
@@ -35,8 +36,8 @@ public class NavigationManager : MonoBehaviour
     private VisualElement andesContainer;
     private VisualElement ourStoryContainer;
     private VisualElement artisansContainer;
-    private GameObject detailsContainer;
-
+    private VisualElement detailContainer;
+    private DetailScreen detailReference;
 
 
     private void Start()
@@ -50,7 +51,9 @@ public class NavigationManager : MonoBehaviour
         amazoniaContainer = root.Q<VisualElement>("AmazoniaScreen");
         ourStoryContainer = root.Q<VisualElement>("OurStoryScreen");
         artisansContainer = root.Q<VisualElement>("ArtisansScreen");
+        detailContainer = root.Q<VisualElement>("DetailsScreen");
 
+        detailReference = UIComponent.GetComponent<DetailScreen>();
     }
 
     public void ResetReturn()
@@ -70,6 +73,8 @@ public class NavigationManager : MonoBehaviour
         artisansContainer.AddToClassList("hide-right");
     }
 
+
+    // START
     public void StartToGalapagos()
     {
         startContainer.AddToClassList("hide-up");
@@ -129,6 +134,8 @@ public class NavigationManager : MonoBehaviour
 
 
 
+    // GALAPAGOS
+
     public void GalapagosToAmazonia()
     {
         galapagosContainer.AddToClassList("hide-left");
@@ -136,8 +143,6 @@ public class NavigationManager : MonoBehaviour
         amazoniaContainer.AddToClassList("show");
         actualScren = ScreenOptions.Amazonia;
         GameManager.Instance.actualRegion = GameManager.Instance.regions[2];
-
-
     }
 
     public void GalapagosToAndes()
@@ -150,6 +155,19 @@ public class NavigationManager : MonoBehaviour
 
     }
 
+    public void GalapagosToDetails()
+    {
+        galapagosContainer.AddToClassList("hide-up");
+        clotheContainer.AddToClassList("hide-up");
+        detailContainer.ClearClassList();
+        detailContainer.AddToClassList("show");
+        actualScren = ScreenOptions.Details;
+        GameManager.Instance.actualRegion = GameManager.Instance.regions[0];
+        detailReference.ActiveLoad();
+    }
+
+
+    // ANDES
     public void AndesToGalapagos()
     {
         andesContainer.AddToClassList("hide-left");
@@ -157,8 +175,6 @@ public class NavigationManager : MonoBehaviour
         galapagosContainer.AddToClassList("show");
         actualScren = ScreenOptions.Galapagos;
         GameManager.Instance.actualRegion = GameManager.Instance.regions[0];
-
-
     }
     public void AndesToOurStory()
     {
@@ -168,6 +184,19 @@ public class NavigationManager : MonoBehaviour
         ourStoryContainer.AddToClassList("show");
         actualScren = ScreenOptions.OurStory;
     }
+
+    public void AndesToDetails()
+    {
+        andesContainer.AddToClassList("hide-up");
+        clotheContainer.AddToClassList("hide-up");
+        detailContainer.ClearClassList();
+        detailContainer.AddToClassList("show");
+        actualScren = ScreenOptions.Details;
+        GameManager.Instance.actualRegion = GameManager.Instance.regions[1];
+        detailReference.ActiveLoad();
+    }
+
+    // AMAZONIA
 
     public void AmazoniaToGalapagos()
     {
@@ -188,6 +217,19 @@ public class NavigationManager : MonoBehaviour
     }
 
 
+    public void AmazoniaToDetails()
+    {
+        amazoniaContainer.AddToClassList("hide-up");
+        clotheContainer.AddToClassList("hide-up");
+        detailContainer.ClearClassList();
+        detailContainer.AddToClassList("show");
+        actualScren = ScreenOptions.Details;
+        GameManager.Instance.actualRegion = GameManager.Instance.regions[2];
+        detailReference.ActiveLoad();
+    }
+
+
+    // ARTISANS & OUR STORY
 
     public void OurStoryToAndes()
     {
@@ -211,6 +253,61 @@ public class NavigationManager : MonoBehaviour
         GameManager.Instance.actualRegion = GameManager.Instance.regions[2];
     }
 
+    // DETAILS
+
+    public void ShowDetails()
+    {
+
+        switch ( actualScren)
+        {
+            case ScreenOptions.Galapagos:
+                GalapagosToDetails();
+                break;
+            case ScreenOptions.Andes:
+                AndesToDetails();
+                break;
+            case ScreenOptions.Amazonia:
+                AmazoniaToDetails();
+                break;
+            default:
+                break;
+        }
+
+    }
+
+
+    public void DetailsToGalapagos()
+    {
+        detailContainer.AddToClassList("hide-down");
+        galapagosContainer.ClearClassList();
+        galapagosContainer.AddToClassList("show");
+        clotheContainer.ClearClassList();
+        clotheContainer.AddToClassList("show");
+        actualScren = ScreenOptions.Galapagos;
+        GameManager.Instance.actualRegion = GameManager.Instance.regions[0];
+    }
+
+    public void DetailsToAndes()
+    {
+        detailContainer.AddToClassList("hide-down");
+        andesContainer.ClearClassList();
+        andesContainer.AddToClassList("show");
+        clotheContainer.ClearClassList();
+        clotheContainer.AddToClassList("show");
+        actualScren = ScreenOptions.Andes;
+        GameManager.Instance.actualRegion = GameManager.Instance.regions[1];
+    }
+
+    public void DetailsToAmazonia()
+    {
+        detailContainer.AddToClassList("hide-down");
+        amazoniaContainer.ClearClassList();
+        amazoniaContainer.AddToClassList("show");
+        clotheContainer.ClearClassList();
+        clotheContainer.AddToClassList("show");
+        actualScren = ScreenOptions.Amazonia;
+        GameManager.Instance.actualRegion = GameManager.Instance.regions[2];
+    }
 
 
 
@@ -234,6 +331,20 @@ public class NavigationManager : MonoBehaviour
                 AndesToStart();
                 break;
             case ScreenOptions.Details:
+                switch (GameManager.Instance.actualRegion.regionType)
+                {
+                    case RegionType.Galapagos:
+                        DetailsToGalapagos();
+                        break;
+                    case RegionType.Andes:
+                        DetailsToAndes();
+                        break;
+                    case RegionType.Amazonia:
+                        DetailsToAmazonia();
+                        break;
+                    default:
+                        break;
+                }
                 break;
             case ScreenOptions.Start:
                 break;

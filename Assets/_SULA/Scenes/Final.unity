@@ -1547,6 +1547,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   uiDocument: {fileID: 1916053447}
+  UIComponent: {fileID: 1916053445}
   actualScren: 0
 --- !u!4 &703512591
 Transform:
@@ -4967,6 +4968,13 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 8e72e902a8ba95349ab7fdd8455c15b9, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  uniqueSize: {fileID: 21300000, guid: c2a5808c7ab6a174fbc43aecadb53730, type: 3}
+  allSize: {fileID: 21300000, guid: 25b6d01528a799c4d895ded15dd553d1, type: 3}
+  materialDataList:
+  - {fileID: 11400000, guid: 1dd867a6740441646adbf87cda2f1c67, type: 2}
+  - {fileID: 11400000, guid: 51134245a526f334f9804d32cf4a0d1e, type: 2}
+  - {fileID: 11400000, guid: 90bfd8037f9ee154ea99a977b3796b8f, type: 2}
+  - {fileID: 11400000, guid: 940f91413b21a104fa958b8d2fc3f4f6, type: 2}
 --- !u!1 &1964419391
 GameObject:
   m_ObjectHideFlags: 0
@@ -5475,10 +5483,10 @@ SceneRoots:
   m_Roots:
   - {fileID: 1831525233}
   - {fileID: 1884415807}
+  - {fileID: 1916053446}
   - {fileID: 703512591}
   - {fileID: 2047575548}
   - {fileID: 776808779}
-  - {fileID: 1916053446}
   - {fileID: 1686193250}
   - {fileID: 1550836456}
   - {fileID: 2023534730}

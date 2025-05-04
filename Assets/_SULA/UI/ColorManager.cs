@@ -44,6 +44,7 @@ public class ColorManager : MonoBehaviour
     private VisualElement buttonSelected;
     private VisualElement leaflement;
     // Start is called once before the first execution of Update after the MonoBehaviour is created
+    private VisualElement regionName;
     void Start()
     {
         root = uiDocument.rootVisualElement;
@@ -52,6 +53,9 @@ public class ColorManager : MonoBehaviour
         clothesPanel = root.Q<VisualElement>("ScrollContainer");
         helpButton = root.Q<VisualElement>("HelpButton");
         settingsButton = root.Q<VisualElement>("SettingsButton");
+
+        regionName = root.Q<VisualElement>("DetailRegionName");
+
 
 
 
@@ -82,6 +86,7 @@ public class ColorManager : MonoBehaviour
         arrow.style.unityBackgroundImageTintColor = GameManager.Instance.actualRegion.darkColor;
         arrow2.style.unityBackgroundImageTintColor = GameManager.Instance.actualRegion.darkColor;
         arrow3.style.unityBackgroundImageTintColor = GameManager.Instance.actualRegion.darkColor;
+        regionName.style.color = GameManager.Instance.actualRegion.darkColor;
 
     }
 
