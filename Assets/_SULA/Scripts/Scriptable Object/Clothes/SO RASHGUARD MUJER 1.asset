@@ -16,8 +16,6 @@ MonoBehaviour:
   is3D: 1
   menuImage: {fileID: 21300000, guid: 04238b49950029547bd375745f824385, type: 3}
   imagenes: []
-  materialColors:
-  - {r: 0.5723493, g: 0.9150943, b: 0.47912958, a: 1}
   prefab: {fileID: 7157997195170330493, guid: 236c8935a286810458ae7d6310caf004, type: 3}
   description: Made with 69% recycled polyester and 31% elastane. Chlorine-resistant
     and antibacterial, ensuring long-lasting wear and protection during water sports
@@ -26,4 +24,4 @@ MonoBehaviour:
     By using recycled polyester instead of virgin material, we reduce CO2 emissions
     by 2.5 kg per rashguard produced
   materialType: 2
-  filterOptions: 0100000003000000
+  filterOptions: 0100000004000000

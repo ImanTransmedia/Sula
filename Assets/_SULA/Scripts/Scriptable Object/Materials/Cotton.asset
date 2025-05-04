@@ -1,0 +1,20 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e00a490b31556c54b8b91b99c9c64b9b, type: 3}
+  m_Name: Cotton
+  m_EditorClassIdentifier: 
+  materialName: Certified Organic Cotton
+  materialDescription: Certified organic cotton is grown without synthetic chemicals,
+    preserving soil health and using 90% less water than conventional cotton. It
+    supports biodiversity and reduces environmental impact, making it a sustainable
+    choice for fashion.
+  image: {fileID: 21300000, guid: b70e50cc2d8f3274197dc9ecb0469a34, type: 3}

@@ -16,12 +16,10 @@ MonoBehaviour:
   is3D: 1
   menuImage: {fileID: 21300000, guid: eefbeb73cfa268348ae9c469fca8148f, type: 3}
   imagenes: []
-  materialColors:
-  - {r: 0.5723493, g: 0.9150943, b: 0.47912958, a: 1}
   prefab: {fileID: 7157997195170330493, guid: a000994d11352ac44850f3d756b8b8d7, type: 3}
-  description: 100% LINEN
+  description: 100% Linen
   ahorro: The production of a 100% linen shirt saves 2,100 liters of water compared
     to a traditional cotton shirt.      Linen production generates 30-40% less CO2
     emissions than conventional cotton farming
   materialType: 1
-  filterOptions: 0000000007000000
+  filterOptions: 0000000008000000

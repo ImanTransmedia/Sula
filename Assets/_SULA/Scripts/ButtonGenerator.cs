@@ -21,11 +21,7 @@ public class ButtonGenerator : MonoBehaviour
 
     private List<GameObject> createdButtons = new List<GameObject>();
 
-    private void OnEnable()
-    {
-        colors = GameManager.Instance.actualClothe.materialColors;
-        GenerateColorButtons();
-    }
+
 
     public void GenerateColorButtons()
     {

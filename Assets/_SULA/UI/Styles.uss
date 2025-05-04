@@ -53,7 +53,7 @@ VisualElement {
 
 .show {
     width: 1080px;
-    height: 1920px;
+    height: 2279px;
     transition-duration: 1s, 1s;
     transition-property: opacity, translate;
     position: absolute;
@@ -62,6 +62,8 @@ VisualElement {
     overflow: visible;
     display: flex;
     transition-timing-function: ease-out-cubic, ease-out-cubic;
+    -unity-background-scale-mode: scale-and-crop;
+    margin-top: 0;
 }
 
 .hide-up {
@@ -208,7 +210,6 @@ VisualElement {
     padding-left: 50px;
     -unity-font-definition: url("project://database/Assets/_SULA/Fonts/futura%20medium%20bt.ttf?fileID=12800000&guid=6bc41e0f58108fd489c36225caa9e6ca&type=3#futura medium bt");
     -unity-font-style: bold;
-    color: rgb(42, 166, 197);
 }
 
 .button-item.selected {
@@ -217,7 +218,6 @@ VisualElement {
     font-size: 30px;
     -unity-font-style: bold;
     -unity-text-align: middle-center;
-    color: rgb(231, 241, 255);
 }
 
 .item-template {
@@ -314,4 +314,22 @@ VisualElement {
     transition-duration: 0.7s;
     transition-timing-function: ease-in-elastic;
     scale: 0 0;
+}
+
+.container-gray {
+    flex-grow: 1;
+    margin-left: 50px;
+    margin-right: 50px;
+    margin-top: 20px;
+    margin-bottom: 20px;
+    padding-top: 40px;
+    padding-left: 40px;
+    padding-right: 40px;
+    padding-bottom: 40px;
+    -unity-font-definition: url("project://database/Assets/_SULA/Fonts/futura%20medium%20bt.ttf?fileID=12800000&guid=6bc41e0f58108fd489c36225caa9e6ca&type=3#futura medium bt");
+    background-color: rgb(214, 214, 214);
+    border-top-left-radius: 50px;
+    border-top-right-radius: 50px;
+    border-bottom-right-radius: 50px;
+    border-bottom-left-radius: 50px;
 }

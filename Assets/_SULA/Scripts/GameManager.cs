@@ -39,8 +39,8 @@ public class GameManager : MonoBehaviour
 
 public enum FilterNames
 {
-    Hombre,
-    Mujer,
+    Men,
+    Women,
     ClearAll,
     Buffs,
     Rashguard,
@@ -48,5 +48,8 @@ public enum FilterNames
     Hats,
     Shorts,
     Shirts,
-    Pants
+    Pants,
+    Vests,
+    Caps,
+    TShirts
 }

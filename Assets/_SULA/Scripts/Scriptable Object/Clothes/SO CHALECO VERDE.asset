@@ -13,15 +13,14 @@ MonoBehaviour:
   m_Name: SO CHALECO VERDE
   m_EditorClassIdentifier: 
   clotheName: EXPEDITION VEST
+  is3D: 0
   menuImage: {fileID: 21300000, guid: c33ebecc476fd11429c46aef5c7af0cd, type: 3}
   imagenes: []
-  is3D: 0
-  materialColors:
-  - {r: 0.5723493, g: 0.9150943, b: 0.47912958, a: 1}
   prefab: {fileID: 0}
-  description: MADE FROM 90% RECYCLED POLYESTER 10% ELASTANE. UV PROTECTION 40. ANTIFLUID
-    FABRIC
+  description: Made from 90% recycled polyester 10% elastane. Uv protection 40. Antifluid
+    fabric
   ahorro: Each pair of Adventure Pants is made from 4-5 recycled PET bottles.                                                                      
     By using recycled PET polyester in the production of our pants, we help reduce
     CO2 emissions by 1.5 kg
-  filterOptions: 0000000001000000
+  materialType: 0
+  filterOptions: 00000000010000000a000000

@@ -10,16 +10,71 @@ public class DetailController : MonoBehaviour
     [SerializeField] private TextMeshProUGUI reduction;
     [SerializeField] private TextMeshProUGUI nombre;
 
+    [SerializeField] private TextMeshProUGUI regionName;
+
+    [SerializeField] private Image sizeImage;
+    [SerializeField] private Sprite allSize;
+    [SerializeField] private Sprite uniqueImage;
+    [SerializeField] private Image colorImage;
+
+    [SerializeField] private Materials[] materialList;
+    [SerializeField] private Image materialContainer;
+    [SerializeField] private Image materialImage;
+    [SerializeField] private TextMeshProUGUI materialName;
+    [SerializeField] private TextMeshProUGUI materialDescription;
+
+
+    [SerializeField] private Image washingInstruction;
+
+
+
 
     private int currentImageIndex = 0;
 
-    private void OnEnable()
-    {
-        ActiveLoad();
-    }
+
 
     public void ActiveLoad()
     {
+
+        regionName.text = GameManager.Instance.actualRegion.regionName.ToUpper();
+        regionName.color = GameManager.Instance.actualRegion.darkColor;
+        sizeImage.GetComponent<Image>().sprite = GameManager.Instance.actualClothe.isUniqueSize ? uniqueImage : allSize;
+        colorImage.GetComponent<Image>().color = GameManager.Instance.actualRegion.darkColor;
+
+        washingInstruction.GetComponent<Image>().color = GameManager.Instance.actualRegion.darkColor;
+
+        materialContainer.GetComponent<Image>().color = GameManager.Instance.actualRegion.accentColor;
+        materialImage.GetComponent<Image>().color = GameManager.Instance.actualRegion.darkColor;
+
+
+        switch (GameManager.Instance.actualClothe.materialType)
+        {
+            case MaterialType.Cotton:
+                materialName.text = materialList[0].materialName;
+                materialDescription.text = materialList[0].materialDescription;
+                materialImage.GetComponent<Image>().sprite = materialList[0].image;
+                break;
+            case MaterialType.Linen:
+                materialName.text = materialList[1].materialName;
+                materialDescription.text = materialList[1].materialDescription;
+                materialImage.GetComponent<Image>().sprite = materialList[1].image;
+                break;
+            case MaterialType.Polyamide:
+                materialName.text = materialList[2].materialName;
+                materialDescription.text = materialList[2].materialDescription;
+                materialImage.GetComponent<Image>().sprite = materialList[2].image;
+                break;
+            case MaterialType.Polyester:
+                materialName.text = materialList[3].materialName;
+                materialDescription.text = materialList[3].materialDescription;
+                materialImage.GetComponent<Image>().sprite = materialList[3].image;
+                break;
+            default:
+                break;
+        }
+
+
+
         ClearContainer();
         var prendaActual = GameManager.Instance.actualClothe.name;
 
@@ -54,6 +109,13 @@ public class DetailController : MonoBehaviour
 
             GameObject instancia = Instantiate(GameManager.Instance.actualClothe.prefab, prendaContainer.transform);
             instancia.transform.localPosition = Vector3.zero;
+            var targetLayer = "RenderObjects";
+            instancia.layer = LayerMask.NameToLayer(targetLayer);
+            Renderer[] renderers = instancia.GetComponentsInChildren<Renderer>();
+            foreach (Renderer renderer in renderers)
+            {
+                renderer.gameObject.layer = LayerMask.NameToLayer(targetLayer);
+            }
         }
 
 

@@ -937,10 +937,10 @@
                 {
                     "name": "",
                     "id": "38c99815-14ea-4617-8627-164d27641299",
-                    "path": "<Mouse>/scroll",
+                    "path": "<Touchscreen>/delta",
                     "interactions": "",
                     "processors": "",
-                    "groups": ";Keyboard&Mouse",
+                    "groups": ";Keyboard&Mouse;Touch",
                     "action": "ScrollWheel",
                     "isComposite": false,
                     "isPartOfComposite": false

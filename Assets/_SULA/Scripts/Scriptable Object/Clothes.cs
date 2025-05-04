@@ -13,8 +13,6 @@ public class Clothes : ScriptableObject
     public Sprite menuImage;
     public Sprite[] imagenes;
 
-
-    public Color[] materialColors;
     public GameObject prefab;
 
     [Header("descriptions & filter")]
@@ -23,6 +21,8 @@ public class Clothes : ScriptableObject
     [TextArea]public string ahorro;
     public MaterialType materialType;
     public FilterNames[] filterOptions;
+
+    public bool isUniqueSize;
 
 }
 

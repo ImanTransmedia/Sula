@@ -1,202 +1,134 @@
 using UnityEngine;
+using UnityEngine.EventSystems;
 using DG.Tweening;
 
-public class PrendaController : MonoBehaviour
+public class PrendaController : MonoBehaviour, IBeginDragHandler, IDragHandler, IEndDragHandler, IScrollHandler
 {
     public float rotationSpeed = 0.3f;
     public float bounceAmount = 10f;
     public float bounceDuration = 0.3f;
 
-    public float idleTimeToTrigger = 4f;
-    public float autoRotationSpeed = 20f;
-    public Transform cameraTransform;
-    public Vector3 lastPosition;
-    public Vector3 zoomInPosition = new Vector3(0, 1, -7);
-    public float zoomDuration = 1.5f;
-    public float pinchZoomSensitivity = 0.05f;
-    public float minZoomDistance = 3f;
-    public float maxZoomDistance = 10f;
+    public float zoomSensitivity = 0.05f;
+    public float panSpeed = 0.02f;
+    public float minZoomDistance = 1f; // Ajusta según necesites
+    public float maxZoomDistance = 5f; // Ajusta según necesites
 
-    private Vector2 startTouchPos;
+    public Transform targetObject; // La prenda 3D o el GameObject del sprite 2D
+    public Transform uiCameraTransform; // La Transform de la UICamera
+    private Camera uiCamera;
+
+    private Vector2 startDragPosition;
+    private Vector2 currentDragDelta;
+    private Vector3 initialObjectRotation;
+    private Vector3 initialObjectPosition;
+    private float currentZoomFactor = 1f;
+
     private bool isDragging = false;
-    private bool isIdle = false;
-    private float lastInteractionTime;
-
-    private Tween zoomTween;
-    private Tween autoRotationTween;
-    private float currentZoomDistance;
-    private Vector2 initialPinchDistance;
-    private Vector3 initialCameraPosition;
-
-    public bool is3D;
-
-    private void OnEnable()
-    {
-        is3D = GameManager.Instance.actualClothe.is3D;
-    }
 
     void Start()
     {
-        lastInteractionTime = Time.time;
-        if (cameraTransform == null)
-            cameraTransform = Camera.main.transform;
-        lastPosition = cameraTransform.position;
-        currentZoomDistance = Vector3.Distance(transform.position, cameraTransform.position);
-        initialCameraPosition = cameraTransform.position;
+        if (targetObject == null)
+        {
+            Debug.LogError("¡Error! No se ha asignado el objeto objetivo (prenda).");
+            enabled = false;
+            return;
+        }
+
+        if (uiCameraTransform == null)
+        {
+            Debug.LogError("¡Error! No se ha asignado la cámara de la UI.");
+            enabled = false;
+            return;
+        }
+
+        uiCamera = uiCameraTransform.GetComponent<Camera>();
+        if (uiCamera == null)
+        {
+            Debug.LogError("¡Error! El uiCameraTransform no tiene un componente Camera.");
+            enabled = false;
+            return;
+        }
+
+        initialObjectRotation = targetObject.localEulerAngles;
+        initialObjectPosition = targetObject.localPosition;
     }
 
-    void Update()
+    // Implementación de la interfaz IBeginDragHandler
+    public void OnBeginDrag(PointerEventData eventData)
     {
-        if (!is3D) return;
-        HandleInput();
-
-        // Verifica si está inactivo
-        if (!isIdle && Time.time - lastInteractionTime > idleTimeToTrigger)
-        {
-            StartIdleMode();
-        }
-
-        // Para probar el zoom con el ratón en PC
-        if (Input.GetKey(KeyCode.LeftControl))
-        {
-            float scrollDelta = Input.GetAxis("Mouse ScrollWheel");
-            if (Mathf.Abs(scrollDelta) > 0.01f)
-            {
-                HandleMouseZoom(scrollDelta);
-                lastInteractionTime = Time.time;
-                if (isIdle)
-                    ExitIdleMode();
-            }
-        }
+        startDragPosition = eventData.position;
+        isDragging = true;
     }
 
-    void HandleInput()
+    // Implementación de la interfaz IDragHandler
+    public void OnDrag(PointerEventData eventData)
     {
-        bool interacted = false;
+        if (!isDragging) return;
 
-        if (Input.touchCount == 1)
+        currentDragDelta = eventData.position - startDragPosition;
+
+        // Rotación en 3D (ajusta los ejes según tu necesidad)
+        if (GameManager.Instance.actualClothe.is3D)
         {
-            Touch touch = Input.GetTouch(0);
-            interacted = HandleTouch(touch.phase, touch.position);
+            float rotY = -currentDragDelta.x * rotationSpeed;
+            float rotX = currentDragDelta.y * rotationSpeed;
+            targetObject.Rotate(uiCameraTransform.up, rotY, Space.World);
+            targetObject.Rotate(uiCameraTransform.right, rotX, Space.World);
         }
-        else if (Input.touchCount == 2)
+        // Traslación (Pan) para 2D o 3D
+        else
         {
-            interacted = HandlePinchZoom();
+            Vector3 panDirection = uiCameraTransform.right * -currentDragDelta.x * panSpeed + uiCameraTransform.up * currentDragDelta.y * panSpeed;
+            targetObject.localPosition = initialObjectPosition + panDirection * currentZoomFactor; // El zoom afecta el pan
+        }
+
+        startDragPosition = eventData.position;
+    }
+
+    // Implementación de la interfaz IEndDragHandler
+    public void OnEndDrag(PointerEventData eventData)
+    {
+        isDragging = false;
+        BounceEffect(); // Opcional
+    }
+
+    // Implementación de la interfaz IScrollHandler (para el zoom)
+    public void OnScroll(PointerEventData eventData)
+    {
+        if (GameManager.Instance.actualClothe.is3D)
+        {
+            float zoomDelta = eventData.scrollDelta.y * zoomSensitivity;
+            Vector3 localPosition = targetObject.localPosition;
+            localPosition.z = Mathf.Clamp(localPosition.z + zoomDelta, -maxZoomDistance, -minZoomDistance); // Ajusta el eje Z según tu configuración de cámara
+            targetObject.localPosition = localPosition;
         }
         else
         {
-            if (Input.GetMouseButtonDown(0))
-                interacted = HandleTouch(TouchPhase.Began, Input.mousePosition);
-            else if (Input.GetMouseButton(0))
-                interacted = HandleTouch(TouchPhase.Moved, Input.mousePosition);
-            else if (Input.GetMouseButtonUp(0))
-                interacted = HandleTouch(TouchPhase.Ended, Input.mousePosition);
+            // Para sprites 2D, podrías ajustar la escala con el zoom
+            currentZoomFactor = Mathf.Clamp01(currentZoomFactor + eventData.scrollDelta.y * zoomSensitivity * 0.1f); // Factor de escala
+            targetObject.localScale = Vector3.one * currentZoomFactor;
         }
-
-        if (interacted)
-        {
-            lastInteractionTime = Time.time;
-            if (isIdle)
-                ExitIdleMode();
-        }
-    }
-
-    bool HandleTouch(TouchPhase phase, Vector2 position)
-    {
-        switch (phase)
-        {
-            case TouchPhase.Began:
-                startTouchPos = position;
-                isDragging = true;
-                return true;
-
-            case TouchPhase.Moved:
-                if (isDragging)
-                {
-                    Vector2 delta = position - startTouchPos;
-                    float rotY = -delta.x * rotationSpeed;
-                    transform.Rotate(Vector3.up, rotY, Space.World);
-                    startTouchPos = position;
-                    return true;
-                }
-                break;
-
-            case TouchPhase.Ended:
-                isDragging = false;
-                BounceEffect();
-                return true;
-        }
-        return false;
-    }
-
-    bool HandlePinchZoom()
-    {
-        Touch touchZero = Input.GetTouch(0);
-        Touch touchOne = Input.GetTouch(1);
-
-        Vector2 touchZeroPrevPos = touchZero.position - touchZero.deltaPosition;
-        Vector2 touchOnePrevPos = touchOne.position - touchOne.deltaPosition;
-
-        float prevMagnitude = (touchZeroPrevPos - touchOnePrevPos).magnitude;
-        float currentMagnitude = (touchZero.position - touchOne.position).magnitude;
-
-        float difference = currentMagnitude - prevMagnitude;
-
-        currentZoomDistance -= difference * pinchZoomSensitivity;
-        currentZoomDistance = Mathf.Clamp(currentZoomDistance, minZoomDistance, maxZoomDistance);
-
-        Vector3 targetPosition = transform.position - cameraTransform.forward * currentZoomDistance;
-        cameraTransform.position = targetPosition;
-
-        lastInteractionTime = Time.time;
-        return true;
-    }
-
-    void HandleMouseZoom(float delta)
-    {
-        currentZoomDistance -= delta * 10f; // Ajusta la sensibilidad del scroll del ratón si es necesario
-        currentZoomDistance = Mathf.Clamp(currentZoomDistance, minZoomDistance, maxZoomDistance);
-
-        Vector3 targetPosition = transform.position - cameraTransform.forward * currentZoomDistance;
-        cameraTransform.position = targetPosition;
     }
 
     void BounceEffect()
     {
-        float bounceDirection = Random.Range(-1f, 1f) > 0 ? 1f : -1f;
-        float bounce = bounceAmount * bounceDirection;
+        if (GameManager.Instance.actualClothe.is3D)
+        {
+            float bounceDirection = Random.Range(-1f, 1f) > 0 ? 1f : -1f;
+            float bounce = bounceAmount * bounceDirection;
 
-        transform.DORotate(new Vector3(transform.rotation.eulerAngles.x, transform.rotation.eulerAngles.y + bounce, transform.rotation.eulerAngles.z), bounceDuration)
-            .SetEase(Ease.OutBack);
+            targetObject.DORotate(new Vector3(targetObject.rotation.eulerAngles.x, targetObject.rotation.eulerAngles.y + bounce, targetObject.rotation.eulerAngles.z), bounceDuration)
+                .SetEase(Ease.OutBack);
+        }
     }
 
-    void StartIdleMode()
+    // Función para cambiar la prenda mostrada (3D o 2D)
+    public void SetTargetObject(GameObject newTarget)
     {
-        isIdle = true;
-
-        autoRotationTween = transform.DORotate(
-            new Vector3(0, -360, 0),
-            10f,
-            RotateMode.LocalAxisAdd)
-            .SetEase(Ease.Linear)
-            .SetLoops(-1);
-
-        // Zoom in cámara
-        zoomTween = cameraTransform.DOMove(zoomInPosition, zoomDuration).SetEase(Ease.InOutSine);
-    }
-
-    void ExitIdleMode()
-    {
-        isIdle = false;
-
-        // Detener rotación y zoom
-        if (autoRotationTween != null && autoRotationTween.IsActive())
-            autoRotationTween.Kill();
-
-        if (zoomTween != null && zoomTween.IsActive())
-            zoomTween.Kill();
-
-        // Volver la cámara a su posición original
-        cameraTransform.DOMove(lastPosition, zoomDuration).SetEase(Ease.OutSine);
+        targetObject = newTarget.transform;
+        initialObjectRotation = targetObject.localEulerAngles;
+        initialObjectPosition = targetObject.localPosition;
+        currentZoomFactor = 1f; // Reset de zoom al cambiar prenda
+        targetObject.localScale = Vector3.one; // Reset de escala para sprites
     }
 }

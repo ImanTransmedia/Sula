@@ -21,17 +21,12 @@ public class TopSwipeDetector : MonoBehaviour
         root.RegisterCallback<PointerMoveEvent>(OnPointerMove);
     }
 
-    private void OnDisable()
-    {
-        root = GetComponent<UIDocument>().rootVisualElement;
-        root.UnregisterCallback<PointerDownEvent>(OnPointerDown);
-        root.UnregisterCallback<PointerUpEvent>(OnPointerUp);
-        root.UnregisterCallback<PointerMoveEvent>(OnPointerMove);
-    }
+
+
 
     private void OnPointerDown(PointerDownEvent evt)
     {
-        if (evt.position.y <= 50f) // Consideramos la parte superior como los primeros 50 píxeles en Y
+        if (evt.position.y <= 50f) 
         {
             _isDraggingFromTop = true;
             _startPosition = evt.position;

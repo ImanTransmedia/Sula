@@ -16,8 +16,6 @@ MonoBehaviour:
   is3D: 0
   menuImage: {fileID: 21300000, guid: 5d0201ea355e9c9428232bba18baa73d, type: 3}
   imagenes: []
-  materialColors:
-  - {r: 0.5723493, g: 0.9150943, b: 0.47912958, a: 1}
   prefab: {fileID: 0}
   description: Made from recycled polyester. With built-in antibacterial properties
     and UV protection of SPF 35protection. Made in Ecuador
@@ -25,4 +23,5 @@ MonoBehaviour:
     By using recycled polyester instead of virgin material, we reduce CO2 emissions
     by 1.5 kg per buff produced
   materialType: 2
-  filterOptions: 000000000100000002000000
+  filterOptions: 000000000100000003000000
+  isUniqueSize: 1

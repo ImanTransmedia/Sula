@@ -16,8 +16,6 @@ MonoBehaviour:
   is3D: 0
   menuImage: {fileID: 21300000, guid: afdd4f7c16022d346bf479cf77ee9f9d, type: 3}
   imagenes: []
-  materialColors:
-  - {r: 0.5723493, g: 0.9150943, b: 0.47912958, a: 1}
   prefab: {fileID: 0}
   description: 'Our adventure pants are designed for ultimate versatility and comfort,
     crafted from 96% recycled polyester and 4% Lycra. These lightweight pants feature
@@ -26,4 +24,4 @@ MonoBehaviour:
     By using recycled PET polyester in the production of our pants, we help reduce
     CO2 emissions by 1.5 kg
   materialType: 2
-  filterOptions: 0100000006000000
+  filterOptions: 0100000009000000

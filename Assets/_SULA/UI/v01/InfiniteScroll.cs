@@ -13,7 +13,6 @@ public class InfiniteScroll : MonoBehaviour
     [SerializeField] private float itemHeight = 650f;
     [SerializeField] private GameObject detailsPanel;
 
-
     [SerializeField] private int bufferItems = 2;
     private VisualElement root;
     private ScrollView scrollView;
@@ -22,7 +21,7 @@ public class InfiniteScroll : MonoBehaviour
     private int totalItems => itemDataList?.Count ?? 0;
     private float itemFullWidth;
     private bool isInitializing = false;
-
+    private bool isElastic = false; // Nueva variable para controlar el modo de scroll
 
     public void FillInstance(List<Clothes> clothesList)
     {
@@ -46,6 +45,7 @@ public class InfiniteScroll : MonoBehaviour
         }
 
         isInitializing = true;
+        isElastic = totalItems <= 4; // Establecer el modo elástico basado en la cantidad de elementos
 
         root = uiDocument.rootVisualElement;
         scrollView = root.Q<ScrollView>("ItemScroll");
@@ -59,7 +59,7 @@ public class InfiniteScroll : MonoBehaviour
 
         // Configuración del ScrollView
         scrollView.mode = ScrollViewMode.Horizontal;
-        scrollView.horizontalScrollerVisibility = ScrollerVisibility.Hidden;
+        scrollView.horizontalScrollerVisibility = ScrollerVisibility.Auto; // Mostrar la barra de scroll en modo elástico
         scrollView.verticalScrollerVisibility = ScrollerVisibility.Hidden;
         scrollView.contentContainer.style.flexDirection = FlexDirection.Row;
         scrollView.contentContainer.style.flexWrap = Wrap.NoWrap;
@@ -81,7 +81,15 @@ public class InfiniteScroll : MonoBehaviour
         scrollView.horizontalScroller.valueChanged -= OnScrollValueChanged;
         scrollView.horizontalScroller.valueChanged += OnScrollValueChanged;
 
-        CenterInitialView();
+        if (!isElastic)
+        {
+            CenterInitialView();
+        }
+        else
+        {
+            // En modo elástico, asegúrate de que el contenido se ajuste al tamaño
+            scrollView.contentContainer.style.width = new StyleLength(totalItems * itemFullWidth);
+        }
 
         isInitializing = false;
     }
@@ -90,23 +98,11 @@ public class InfiniteScroll : MonoBehaviour
     {
         if (totalItems == 0) return;
 
-        int numVisualItems = Mathf.Min(totalItems + bufferItems * 2, totalItems > 0 ? totalItems * 2 : 0);
-
-        if (totalItems < visibleItemsCount + bufferItems * 2)
-        {
-            numVisualItems = totalItems;
-        }
-        else
-        {
-            numVisualItems = visibleItemsCount + bufferItems * 2;
-        }
-        numVisualItems = Mathf.Max(numVisualItems, visibleItemsCount + bufferItems * 2);
-
+        int numVisualItems = totalItems; // En modo elástico, solo necesitamos instanciar todos los items
 
         for (int i = 0; i < numVisualItems; i++)
         {
-            int dataIndex = i % totalItems;
-            AddNewItemAsync(dataIndex, i);
+            AddNewItemAsync(i, i); // En modo elástico, el índice visual coincide con el índice de datos
         }
     }
 
@@ -121,11 +117,10 @@ public class InfiniteScroll : MonoBehaviour
         newItem.style.left = visualPositionIndex * itemFullWidth;
         newItem.AddToClassList("show-item");
         newItem.AddToClassList("hide-item");
-         var leaf = newItem.Q<VisualElement>("LeafElement");
+        var leaf = newItem.Q<VisualElement>("LeafElement");
         leaf.style.unityBackgroundImageTintColor = GameManager.Instance.actualRegion.darkColor;
         newItem.RegisterCallback<ClickEvent>(evt =>
         {
-
             int clickedVisualIndex = visibleItems.IndexOf(newItem);
             if (clickedVisualIndex != -1 && clickedVisualIndex < dataIndices.Count)
             {
@@ -154,28 +149,24 @@ public class InfiniteScroll : MonoBehaviour
 
         await System.Threading.Tasks.Task.Delay(1);
         newItem.RemoveFromClassList("hide-item");
-
     }
 
     private void CenterInitialView()
     {
         if (visibleItems.Count == 0) return;
 
-
         float targetX = visibleItems[bufferItems].resolvedStyle.left - (scrollView.resolvedStyle.width / 2f - itemWidth / 2f);
         float minScroll = 0;
         float maxScroll = (visibleItems.Count - (scrollView.resolvedStyle.width / itemFullWidth)) * itemFullWidth;
         targetX = Mathf.Clamp(targetX, minScroll, maxScroll);
 
-
         scrollView.scrollOffset = new Vector2(targetX, 0);
         scrollView.schedule.Execute(() => { scrollView.scrollOffset = new Vector2(targetX, 0); }).ExecuteLater(50);
     }
 
-
     private void OnScrollValueChanged(float value)
     {
-        if (isInitializing || totalItems <= visibleItemsCount || visibleItems.Count == 0) return;
+        if (isInitializing || totalItems <= visibleItemsCount || visibleItems.Count == 0 || isElastic) return;
 
         float scrollPosition = scrollView.scrollOffset.x;
         float viewportWidth = scrollView.resolvedStyle.width;
@@ -203,7 +194,7 @@ public class InfiniteScroll : MonoBehaviour
             }
         }
 
-        // Lógica de reciclaje (mantenerla como está)
+        // Lógica de reciclaje (mantenerla como está para el modo infinito)
         float recycleThreshold = bufferItems * itemFullWidth;
 
         if (visibleItems[0].resolvedStyle.left + itemFullWidth < scrollPosition - recycleThreshold)
@@ -239,11 +230,9 @@ public class InfiniteScroll : MonoBehaviour
         }
     }
 
-
     private void UpdateItemContent(VisualElement item, int dataIndex)
     {
         if (dataIndex < 0 || dataIndex >= totalItems) return;
-
 
         var itemData = itemDataList[dataIndex];
 
@@ -256,7 +245,6 @@ public class InfiniteScroll : MonoBehaviour
         var imageElement = item.Q<VisualElement>("Image");
         if (imageElement != null && itemData.menuImage != null)
         {
-
             if (itemData.menuImage is Sprite sprite)
             {
                 imageElement.style.backgroundImage = new StyleBackground(sprite);
@@ -266,14 +254,10 @@ public class InfiniteScroll : MonoBehaviour
                 Debug.LogWarning($"Image data for item {itemData.name} is not a recognized type (Sprite or Texture2D).");
                 imageElement.style.backgroundImage = null;
             }
-
         }
         else if (imageElement != null)
         {
-
             imageElement.style.backgroundImage = null;
         }
     }
-
-
 }
