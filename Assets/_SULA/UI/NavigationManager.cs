@@ -1,6 +1,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UIElements;
+using UnityEngine.Video;
 
 public class NavigationManager : MonoBehaviour
 {
@@ -31,6 +32,9 @@ public class NavigationManager : MonoBehaviour
 
     [SerializeField] private InfiniteScroll infiniteScroll;
 
+    [SerializeField] private VideoPlayer videoPlayer;
+
+
 
     public ScreenOptions actualScren = ScreenOptions.Start;
 
@@ -43,6 +47,19 @@ public class NavigationManager : MonoBehaviour
     private VisualElement artisansContainer;
     private VisualElement detailContainer;
     private DetailScreen detailReference;
+
+    private VisualElement rightAnimation;
+    private VisualElement leftAnimation;
+
+
+    private ScrollView artisansScroll;
+    private ScrollView ourStoryScroll;
+    private ScrollView detailsScroll;
+
+
+
+    private Coroutine animationHintCoroutine;
+    private float animationHintDelay = 5f;
 
 
     private void Start()
@@ -58,8 +75,14 @@ public class NavigationManager : MonoBehaviour
         artisansContainer = root.Q<VisualElement>("ArtisansScreen");
         detailContainer = root.Q<VisualElement>("DetailsScreen");
 
+        rightAnimation = root.Q<VisualElement>("RighAnimation");
+        leftAnimation = root.Q<VisualElement>("LefthAnimation");
+
         detailReference = UIComponent.GetComponent<DetailScreen>();
 
+        artisansScroll = root.Q<ScrollView>("ArtisansScroll");
+        ourStoryScroll = root.Q<ScrollView>("OurStoryScroll");
+        detailsScroll = root.Q<ScrollView>("DetailScroll");
 
 
 
@@ -71,6 +94,7 @@ public class NavigationManager : MonoBehaviour
                 {
                     
                     ResetReturn();
+                    videoPlayer.Play();
                 }
             }
         });
@@ -211,6 +235,8 @@ public class NavigationManager : MonoBehaviour
         actualScren = ScreenOptions.Details;
         GameManager.Instance.actualRegion = GameManager.Instance.regions[0];
         detailReference.ActiveLoad();
+        if (detailsScroll != null)
+            detailsScroll.scrollOffset = Vector2.zero;
     }
 
 
@@ -230,6 +256,8 @@ public class NavigationManager : MonoBehaviour
         ourStoryContainer.ClearClassList();
         ourStoryContainer.AddToClassList("show");
         actualScren = ScreenOptions.OurStory;
+        if (ourStoryScroll != null)
+            ourStoryScroll.scrollOffset = Vector2.zero;
     }
 
     public void AndesToDetails()
@@ -241,6 +269,9 @@ public class NavigationManager : MonoBehaviour
         actualScren = ScreenOptions.Details;
         GameManager.Instance.actualRegion = GameManager.Instance.regions[1];
         detailReference.ActiveLoad();
+
+        if (detailsScroll != null)
+            detailsScroll.scrollOffset = Vector2.zero;
     }
 
     // AMAZONIA
@@ -261,6 +292,9 @@ public class NavigationManager : MonoBehaviour
         artisansContainer.ClearClassList();
         artisansContainer.AddToClassList("show");
         actualScren = ScreenOptions.Artisans;
+
+        if (artisansScroll != null)
+            artisansScroll.scrollOffset = Vector2.zero;
     }
 
 
@@ -273,6 +307,9 @@ public class NavigationManager : MonoBehaviour
         actualScren = ScreenOptions.Details;
         GameManager.Instance.actualRegion = GameManager.Instance.regions[2];
         detailReference.ActiveLoad();
+
+        if (detailsScroll != null)
+            detailsScroll.scrollOffset = Vector2.zero;
     }
 
 
@@ -319,6 +356,9 @@ public class NavigationManager : MonoBehaviour
             default:
                 break;
         }
+
+        if (detailsScroll != null)
+            detailsScroll.scrollOffset = Vector2.zero;
 
     }
 
@@ -497,16 +537,61 @@ public class NavigationManager : MonoBehaviour
     private void ResetInactivityTimer()
     {
         if (inactivityCoroutine != null)
-        {
             StopCoroutine(inactivityCoroutine);
-        }
+        if (animationHintCoroutine != null)
+            StopCoroutine(animationHintCoroutine);
 
-        // Solo activa el contador si no estamos ya en la pantalla de inicio
+        HideAnimationHints();
+
         if (actualScren != ScreenOptions.Start)
         {
             inactivityCoroutine = StartCoroutine(StartInactivityTimer());
+            animationHintCoroutine = StartCoroutine(StartAnimationHintTimer());
         }
     }
+
+    private System.Collections.IEnumerator StartAnimationHintTimer()
+    {
+        yield return new WaitForSeconds(animationHintDelay);
+
+        ShowAnimationHints();
+        animationHintCoroutine = null;
+    }
+
+
+    private void ShowAnimationHints()
+    {
+        switch (actualScren)
+        {
+            case ScreenOptions.Galapagos:
+            case ScreenOptions.Amazonia:
+            case ScreenOptions.Andes:
+                leftAnimation.RemoveFromClassList("hide-left");
+                rightAnimation.RemoveFromClassList("hide-right");
+                break;
+            case ScreenOptions.Artisans:
+                leftAnimation.RemoveFromClassList("hide-left");
+                rightAnimation.AddToClassList("hide-right");
+                break;
+            case ScreenOptions.OurStory:
+                rightAnimation.RemoveFromClassList("hide-right");
+                leftAnimation.AddToClassList("hide-left");
+                break;
+            default: // Start, Details or any other
+                leftAnimation.AddToClassList("hide-left");
+                rightAnimation.AddToClassList("hide-right");
+                break;
+        }
+    }
+
+
+    private void HideAnimationHints()
+    {
+        if (leftAnimation != null) leftAnimation.AddToClassList("hide-left");
+        if (rightAnimation != null) rightAnimation.AddToClassList("hide-right");
+    }
+
+
 
     private System.Collections.IEnumerator StartInactivityTimer()
     {

@@ -1,51 +1,63 @@
-using System.Collections.Generic;
+using System.Collections;
 using UnityEngine;
 using UnityEngine.UIElements;
 using UnityEngine.Video;
 
 public class StartController : MonoBehaviour
 {
-
     private VisualElement root;
     private VisualElement video;
     private VisualElement panel;
     private VisualElement startButtom;
 
-
     [SerializeField] private VideoPlayer videoPlayer;
 
+    private Coroutine hidePanelCoroutine;
 
-
-    // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
     {
         root = GetComponent<UIDocument>().rootVisualElement;
 
         video = root.Q<VisualElement>("Video");
+        panel = root.Q<VisualElement>("PanelContainer");
+        startButtom = root.Q<VisualElement>("StartBurron");
+
+        panel.RemoveFromClassList("showup");
+
         video.RegisterCallback<ClickEvent>(evt =>
         {
-            Debug.Log("Video Taped");
-            panel.ToggleInClassList("showup");
+            Debug.Log("Video Tapped");
+
+            // Mostrar el panel
+            panel.AddToClassList("showup");
+
+            // Reiniciar temporizador de ocultamiento
+            if (hidePanelCoroutine != null)
+                StopCoroutine(hidePanelCoroutine);
+
+            hidePanelCoroutine = StartCoroutine(HidePanelAfterDelay());
         });
 
-        panel = root.Q<VisualElement>("PanelContainer");
-        panel.RemoveFromClassList("showup");
-        startButtom = root.Q<VisualElement>("StartBurron");
         startButtom.RegisterCallback<ClickEvent>(OnButtonTap);
     }
-
 
     private void OnButtonTap(ClickEvent clickEvent)
     {
         Debug.Log("Start Button Tap");
         videoPlayer.Stop();
         NavigationManager.Instance.StartToGalapagos();
+    }
 
+    private IEnumerator HidePanelAfterDelay()
+    {
+        yield return new WaitForSeconds(5f);
 
-        
+        if (panel.ClassListContains("showup"))
+        {
+            panel.RemoveFromClassList("showup");
+            Debug.Log("Panel auto-hidden after 5s.");
+        }
 
-
-        //productsPanel.GetComponent<InfiniteScroll>().FillInstance(new List<Clothes>(GameManager.Instance.actualRegion.clothes));
-
+        hidePanelCoroutine = null;
     }
 }

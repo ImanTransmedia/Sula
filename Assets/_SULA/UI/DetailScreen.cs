@@ -54,6 +54,10 @@ public class DetailScreen : MonoBehaviour
         clotheMaterialContainer = root.Q<VisualElement>("MaterialsContainer");
         washInstructionsContainer = root.Q<VisualElement>("WashingContainer");
         returnButton = root.Q<VisualElement>("ReturnButton");
+        returnButton.RegisterCallback<ClickEvent>(evt =>
+        {
+            NavigationManager.Instance.ReturnFrom(ScreenOptions.Details);
+        });
     }
 
     public void ActiveLoad()
@@ -176,7 +180,7 @@ public class DetailScreen : MonoBehaviour
         Transform obj = prendaContainer.transform.GetChild(0);
         rotationY += -delta.x * 0.3f;
         elasticRotation = Mathf.Clamp(elasticRotation - delta.y * 0.4f, -25f, 25f);
-        obj.localRotation = Quaternion.Euler(elasticRotation, rotationY, 0);
+        obj.localRotation = Quaternion.Euler(elasticRotation, 0, 0) * Quaternion.Euler(0, rotationY, 0);
         evt.StopPropagation();
     }
 
@@ -197,7 +201,7 @@ public class DetailScreen : MonoBehaviour
         DOTween.To(() => elasticRotation, x =>
         {
             elasticRotation = x;
-            obj.localRotation = Quaternion.Euler(elasticRotation, rotationY, 0);
+            obj.localRotation = Quaternion.Euler(elasticRotation, 0, 0) * Quaternion.Euler(0, rotationY, 0);
         }, 0f, 0.5f).SetEase(Ease.OutExpo);
 
         evt.StopPropagation();
