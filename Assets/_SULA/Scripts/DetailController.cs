@@ -82,7 +82,15 @@ public class DetailController : MonoBehaviour
         description.text = GameManager.Instance.actualClothe.description;
         reduction.text = GameManager.Instance.actualClothe.ahorro;
         nombre.text = GameManager.Instance.actualClothe.clotheName;
-
+        GameObject instancia = Instantiate(GameManager.Instance.actualClothe.prefab, prendaContainer.transform);
+        instancia.transform.localPosition = Vector3.zero;
+        var targetLayer = "RenderObjects";
+        instancia.layer = LayerMask.NameToLayer(targetLayer);
+        Renderer[] renderers = instancia.GetComponentsInChildren<Renderer>();
+        foreach (Renderer renderer in renderers)
+        {
+            renderer.gameObject.layer = LayerMask.NameToLayer(targetLayer);
+        }
 
         if (!GameManager.Instance.actualClothe.is3D)
         {
@@ -107,15 +115,7 @@ public class DetailController : MonoBehaviour
             prendaContainer.SetActive(true);
             imageContainer.gameObject.SetActive(false);
 
-            GameObject instancia = Instantiate(GameManager.Instance.actualClothe.prefab, prendaContainer.transform);
-            instancia.transform.localPosition = Vector3.zero;
-            var targetLayer = "RenderObjects";
-            instancia.layer = LayerMask.NameToLayer(targetLayer);
-            Renderer[] renderers = instancia.GetComponentsInChildren<Renderer>();
-            foreach (Renderer renderer in renderers)
-            {
-                renderer.gameObject.layer = LayerMask.NameToLayer(targetLayer);
-            }
+
         }
 
 

@@ -44,7 +44,7 @@
         <engine:VisualElement name="Background" style="flex-grow: 1; position: absolute; height: 100%; width: 100%; background-image: url(&quot;project://database/Assets/_SULA/Assets/2D/Menu/01.Galapagos.png?fileID=2800000&amp;guid=f4d2dd2300346da4ba07cf7839b9dd89&amp;type=3#01.Galapagos&quot;); background-size: 250% 250%; background-position-x: right -200px; background-position-y: top 0;">
             <engine:VisualElement name="VisualElement" style="flex-grow: 1; background-image: url(&quot;project://database/Assets/_SULA/Assets/2D/Menu/GradientVertical.png?fileID=2800000&amp;guid=72fd02defa7b2b549a32b226221aeb60&amp;type=3#GradientVertical&quot;); -unity-background-scale-mode: stretch-to-fill;" />
         </engine:VisualElement>
-        <engine:ScrollView horizontal-scroller-visibility="Hidden" vertical-scroller-visibility="Hidden" touch-scroll-type="Elastic" style="height: 100%;">
+        <engine:ScrollView horizontal-scroller-visibility="Hidden" vertical-scroller-visibility="Hidden" touch-scroll-type="Elastic" name="OurStoryScroll" nested-interaction-kind="ForwardScrolling" style="height: 100%;">
             <engine:VisualElement name="Logo" style="flex-grow: 1; background-image: url(&quot;project://database/Assets/_SULA/Assets/2D/Sprites/sula_black.png?fileID=2800000&amp;guid=fdb1f35b6749201479ae2bd20be70238&amp;type=3#sula_black&quot;); height: 300px; top: 100px; -unity-background-scale-mode: scale-to-fit; left: auto; right: auto; width: 900px; align-self: center;" />
             <engine:VisualElement name="Separator" style="flex-grow: 1; top: 0; height: 300px;" />
             <engine:Label text="OUR STORY" name="OurStory" class="title" />
@@ -212,7 +212,7 @@
         </engine:VisualElement>
     </engine:VisualElement>
     <engine:VisualElement name="DetailsScreen" class="show hide-down" style="flex-grow: 1; height: auto;">
-        <engine:ScrollView nested-interaction-kind="ForwardScrolling" horizontal-scroller-visibility="Hidden" vertical-scroller-visibility="Hidden" touch-scroll-type="Elastic" style="height: 1920px;">
+        <engine:ScrollView nested-interaction-kind="ForwardScrolling" horizontal-scroller-visibility="Hidden" vertical-scroller-visibility="Hidden" touch-scroll-type="Elastic" name="DetailScroll" style="height: 1920px;">
             <engine:VisualElement style="flex-grow: 1; width: 100%; background-image: url(&quot;project://database/Assets/_SULA/Assets/2D/Sprites/logo_black.png?fileID=2800000&amp;guid=96d700c24f7ab2d48a9ed0011e5cd1fd&amp;type=3#logo_black&quot;); height: 200px; -unity-background-scale-mode: scale-to-fit;" />
             <engine:Label text="AMAZONIA" name="DetailRegionName" style="top: 0; -unity-text-align: middle-center; font-size: 130px; -unity-font-definition: url(&quot;project://database/Assets/_SULA/Fonts/futura%20medium%20bt.ttf?fileID=12800000&amp;guid=6bc41e0f58108fd489c36225caa9e6ca&amp;type=3#futura medium bt&quot;); -unity-font-style: bold; color: rgb(106, 168, 50);" />
             <engine:Label text="COLLECTION" style="top: 0; -unity-text-align: middle-center; font-size: 50px; -unity-font-definition: url(&quot;project://database/Assets/_SULA/Fonts/futura%20medium%20bt.ttf?fileID=12800000&amp;guid=6bc41e0f58108fd489c36225caa9e6ca&amp;type=3#futura medium bt&quot;); -unity-font-style: normal; color: rgb(0, 0, 0); height: auto; width: 100%;" />
