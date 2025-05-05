@@ -1,3 +1,4 @@
+using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UIElements;
 
@@ -27,6 +28,10 @@ public class NavigationManager : MonoBehaviour
 
     [SerializeField] private UIDocument uiDocument;
     [SerializeField] private GameObject UIComponent;
+
+    [SerializeField] private InfiniteScroll infiniteScroll;
+
+
     public ScreenOptions actualScren = ScreenOptions.Start;
 
     private VisualElement startContainer;
@@ -54,6 +59,24 @@ public class NavigationManager : MonoBehaviour
         detailContainer = root.Q<VisualElement>("DetailsScreen");
 
         detailReference = UIComponent.GetComponent<DetailScreen>();
+
+
+
+
+        startContainer.RegisterCallback<TransitionEndEvent>(evt =>
+        {
+            if (evt.stylePropertyNames.Contains("opacity") || evt.stylePropertyNames.Contains("transform"))
+            {
+                if (startContainer.ClassListContains("show") && actualScren == ScreenOptions.Start)
+                {
+                    
+                    ResetReturn();
+                }
+            }
+        });
+
+        ResetInactivityTimer();
+
     }
 
     public void ResetReturn()
@@ -71,6 +94,9 @@ public class NavigationManager : MonoBehaviour
         ourStoryContainer.AddToClassList("hide-left");
         artisansContainer.ClearClassList();
         artisansContainer.AddToClassList("hide-right");
+        detailContainer.ClearClassList();
+        detailContainer.AddToClassList("hide-down");
+
     }
 
 
@@ -84,6 +110,23 @@ public class NavigationManager : MonoBehaviour
         clotheContainer.AddToClassList("show");
         actualScren= ScreenOptions.Galapagos;
         GameManager.Instance.actualRegion = GameManager.Instance.regions[0];
+        ColorManager.Instance.UpdateColors();
+        infiniteScroll.FillInstance(new List<Clothes>(GameManager.Instance.actualRegion.clothes));
+
+    }
+
+    public void BackToStart()
+    {
+        startContainer.ClearClassList();
+        startContainer.AddToClassList("show");
+        galapagosContainer.AddToClassList("hide-down");
+        clotheContainer.AddToClassList("hide-down");
+        andesContainer.AddToClassList("hide-down");
+        amazoniaContainer.AddToClassList("hide-down");
+        ourStoryContainer.AddToClassList("hide-down");
+        artisansContainer.AddToClassList("hide-down");
+        detailContainer.AddToClassList("hide-down");
+        actualScren = ScreenOptions.Start;
     }
 
 
@@ -119,6 +162,8 @@ public class NavigationManager : MonoBehaviour
     public void OurStoryToStart()
     {
         ourStoryContainer.AddToClassList("hide-down");
+        clotheContainer.AddToClassList("hide-down");
+
         startContainer.ClearClassList();
         startContainer.AddToClassList("show");
         actualScren = ScreenOptions.Start;
@@ -127,6 +172,8 @@ public class NavigationManager : MonoBehaviour
     public void ArtisansToStart()
     {
         artisansContainer.AddToClassList("hide-down");
+        clotheContainer.AddToClassList("hide-down");
+
         startContainer.ClearClassList();
         startContainer.AddToClassList("show");
         actualScren = ScreenOptions.Start;
@@ -353,8 +400,8 @@ public class NavigationManager : MonoBehaviour
         }
 
         //ResetReturn();
-        GameManager.Instance.actualRegion = GameManager.Instance.regions[0];
         ColorManager.Instance.UpdateColors();
+        infiniteScroll.FillInstance(new List<Clothes>(GameManager.Instance.actualRegion.clothes));
 
 
 
@@ -389,6 +436,7 @@ public class NavigationManager : MonoBehaviour
                 break;
         }
         ColorManager.Instance.UpdateColors();
+        infiniteScroll.FillInstance(new List<Clothes>(GameManager.Instance.actualRegion.clothes));
 
 
     }
@@ -422,7 +470,58 @@ public class NavigationManager : MonoBehaviour
         }
         ColorManager.Instance.UpdateColors();
 
+        infiniteScroll.FillInstance(new List<Clothes>(GameManager.Instance.actualRegion.clothes));
+
     }
+
+    private Coroutine inactivityCoroutine;
+    private float inactivityTimeLimit = 20f;
+
+    private void OnEnable()
+    {
+        uiDocument.rootVisualElement.RegisterCallback<PointerDownEvent>(OnUserInteraction);
+        uiDocument.rootVisualElement.RegisterCallback<PointerMoveEvent>(OnUserInteraction);
+    }
+
+    private void OnDisable()
+    {
+        uiDocument.rootVisualElement.UnregisterCallback<PointerDownEvent>(OnUserInteraction);
+        uiDocument.rootVisualElement.UnregisterCallback<PointerMoveEvent>(OnUserInteraction);
+    }
+
+    private void OnUserInteraction(EventBase evt)
+    {
+        ResetInactivityTimer();
+    }
+
+    private void ResetInactivityTimer()
+    {
+        if (inactivityCoroutine != null)
+        {
+            StopCoroutine(inactivityCoroutine);
+        }
+
+        // Solo activa el contador si no estamos ya en la pantalla de inicio
+        if (actualScren != ScreenOptions.Start)
+        {
+            inactivityCoroutine = StartCoroutine(StartInactivityTimer());
+        }
+    }
+
+    private System.Collections.IEnumerator StartInactivityTimer()
+    {
+        yield return new WaitForSeconds(inactivityTimeLimit);
+
+        if (actualScren != ScreenOptions.Start)
+        {
+            Debug.Log("Inactividad detectada. Regresando a inicio...");
+            BackToStart();
+            ResetReturn();
+        }
+
+        inactivityCoroutine = null;
+    }
+
 
 }
 

@@ -22,6 +22,12 @@ public class SideSwipeDetector : MonoBehaviour
         _root.RegisterCallback<PointerMoveEvent>(OnPointerMove);
     }
 
+    public bool IsSwipeZone(Vector2 position)
+    {
+        return (position.x <= edgeThreshold || position.x >= Screen.width - edgeThreshold);
+    }
+
+
     private void OnDisable()
     {
         _root.UnregisterCallback<PointerDownEvent>(OnPointerDown);
@@ -31,15 +37,16 @@ public class SideSwipeDetector : MonoBehaviour
 
     private void OnPointerDown(PointerDownEvent evt)
     {
-        if (evt.position.x <= edgeThreshold || evt.position.x >= Screen.width - edgeThreshold)
+        PointerZoneManager.Instance.EvaluatePointerZone(evt.position);
+        if (PointerZoneManager.Instance.IsZone(DragZoneType.Left) || PointerZoneManager.Instance.IsZone(DragZoneType.Right))
         {
             _isDraggingFromSide = true;
-            _isDraggingFromLeft = (evt.position.x <= edgeThreshold);
+            _isDraggingFromLeft = (evt.position.x <= PointerZoneManager.Instance.edgeThreshold);
             _startPosition = evt.position;
             _startTime = Time.time;
-            Debug.Log($"Inicio de posible swipe/drag desde {(evt.position.x <= edgeThreshold ? "la izquierda" : "la derecha")}.");
         }
     }
+
 
     private void OnPointerMove(PointerMoveEvent evt)
     {
@@ -101,5 +108,8 @@ public class SideSwipeDetector : MonoBehaviour
                 // Aquí puedes añadir lógica para un drag lateral incompleto.
             }
         }
+
+        PointerZoneManager.Instance.ResetZone();
+
     }
 }

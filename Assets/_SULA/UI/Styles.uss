@@ -66,15 +66,6 @@ VisualElement {
     margin-top: 0;
 }
 
-.hide-up {
-    flex-grow: 1;
-    translate: 0 -1920px;
-    transition-duration: 1s, 1s;
-    transition-timing-function: ease-out-cubic, ease-out-cubic;
-    transition-property: translate, opacity;
-    opacity: 0;
-}
-
 .hide-left {
     flex-grow: 1;
     translate: -1080px 0;
@@ -96,6 +87,15 @@ VisualElement {
 .hide-down {
     flex-grow: 1;
     translate: 0 1920px;
+    transition-duration: 1s, 1s;
+    transition-timing-function: ease-out-cubic, ease-out-cubic;
+    transition-property: translate, opacity;
+    opacity: 0;
+}
+
+.hide-up {
+    flex-grow: 1;
+    translate: 0 -1920px;
     transition-duration: 1s, 1s;
     transition-timing-function: ease-out-cubic, ease-out-cubic;
     transition-property: translate, opacity;

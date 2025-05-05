@@ -46,7 +46,6 @@ public class FilterOption : MonoBehaviour
         var root = uiDocument.rootVisualElement;
         scrollView = root.Q<ScrollView>("FilterScroll");
 
-        // Limpiar cualquier contenido existente
         scrollView.Clear();
         buttons.Clear();
         filterNames.Clear();
@@ -57,31 +56,29 @@ public class FilterOption : MonoBehaviour
         hombreSelected = false;
         mujerSelected = false;
 
-        // Obtener todos los valores de la enumeración
         var buttonTypesList = System.Enum.GetValues(typeof(FilterNames)).Cast<FilterNames>().ToList();
 
-        // Crear el botón "Clear All" como el primer elemento
         clearAllButton = new Button { text = "Clear All" };
         clearAllButton.AddToClassList("button-item");
         SetButtonDefaultStyle(clearAllButton);
-        SetButtonSelectedStyle(clearAllButton); // Aplicar estilo seleccionado inicial
+        SetButtonSelectedStyle(clearAllButton);
         clearAllButton.clicked += ClearAllFilters;
         scrollView.Add(clearAllButton);
-        buttons.Insert(0, clearAllButton); // Insertar al principio de la lista
+        buttons.Insert(0, clearAllButton);
 
-        // Crear un botón para cada tipo en la enumeración
         foreach (var type in buttonTypesList)
         {
             Button button;
+
             if (type == FilterNames.Men)
             {
-                button = new Button { text = "Hombre" };
+                button = new Button { text = "Men" };
                 hombreButton = button;
                 button.clicked += () => OnGenderButtonClicked(FilterNames.Men);
             }
             else if (type == FilterNames.Women)
             {
-                button = new Button { text = "Mujer" };
+                button = new Button { text = "Women" };
                 mujerButton = button;
                 button.clicked += () => OnGenderButtonClicked(FilterNames.Women);
             }
@@ -93,24 +90,13 @@ public class FilterOption : MonoBehaviour
                 button.clicked += () => OnButtonClicked(button);
             }
 
-            if (type != FilterNames.Men && type != FilterNames.Women)
-            {
-                button.AddToClassList("button-item");
-                SetButtonDefaultStyle(button);
-                scrollView.Add(button);
-                buttons.Add(button);
-            }
-            else
-            {
-                button.AddToClassList("button-item");
-                SetButtonDefaultStyle(button);
-                scrollView.Add(button);
-                buttons.Add(button);
-            }
+            button.AddToClassList("button-item");
+            SetButtonDefaultStyle(button);
+            scrollView.Add(button);
+            buttons.Add(button);
         }
-
-
     }
+
 
     private void OnButtonClicked(Button clickedButton)
     {
@@ -222,7 +208,7 @@ public class FilterOption : MonoBehaviour
         button.style.color = fontSelected;
     }
 
-    private void UpdateList()
+    public void UpdateList()
     {
 
         defaultBackgroundColor = GameManager.Instance.actualRegion.accentColor;

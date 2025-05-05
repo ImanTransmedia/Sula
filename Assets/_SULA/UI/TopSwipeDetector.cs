@@ -26,14 +26,16 @@ public class TopSwipeDetector : MonoBehaviour
 
     private void OnPointerDown(PointerDownEvent evt)
     {
-        if (evt.position.y <= 50f) 
+        PointerZoneManager.Instance.EvaluatePointerZone(evt.position);
+        if (PointerZoneManager.Instance.IsZone(DragZoneType.Top))
         {
             _isDraggingFromTop = true;
             _startPosition = evt.position;
             _startTime = Time.time;
-            Debug.Log("Inicio de posible swipe/drag desde la parte superior.");
         }
     }
+
+
 
     private void OnPointerMove(PointerMoveEvent evt)
     {
@@ -85,5 +87,8 @@ public class TopSwipeDetector : MonoBehaviour
                 Debug.Log("Drag desde la parte superior no superó el umbral.");
             }
         }
+
+        PointerZoneManager.Instance.ResetZone();
+
     }
 }

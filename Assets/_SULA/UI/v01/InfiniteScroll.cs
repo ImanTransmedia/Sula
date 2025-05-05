@@ -21,7 +21,10 @@ public class InfiniteScroll : MonoBehaviour
     private int totalItems => itemDataList?.Count ?? 0;
     private float itemFullWidth;
     private bool isInitializing = false;
-    private bool isElastic = false; // Nueva variable para controlar el modo de scroll
+    private bool isElastic = false;
+
+    public bool IsElastic => isElastic;
+
 
     public void FillInstance(List<Clothes> clothesList)
     {
@@ -119,24 +122,43 @@ public class InfiniteScroll : MonoBehaviour
         newItem.AddToClassList("hide-item");
         var leaf = newItem.Q<VisualElement>("LeafElement");
         leaf.style.unityBackgroundImageTintColor = GameManager.Instance.actualRegion.darkColor;
-        newItem.RegisterCallback<ClickEvent>(evt =>
+        Vector2 pressPosition = Vector2.zero;
+        float pressTime = 0f;
+
+        newItem.RegisterCallback<PointerDownEvent>(evt =>
         {
-            int clickedVisualIndex = visibleItems.IndexOf(newItem);
-            if (clickedVisualIndex != -1 && clickedVisualIndex < dataIndices.Count)
+            pressPosition = evt.position;
+            pressTime = Time.time;
+        });
+
+        newItem.RegisterCallback<PointerUpEvent>(evt =>
+        {
+            Vector2 releasePosition = evt.position;
+            float releaseTime = Time.time;
+
+            float distance = Vector2.Distance(pressPosition, releasePosition);
+            float timeElapsed = releaseTime - pressTime;
+
+            if (distance < 10f && timeElapsed < 0.3f) // Umbral de distancia y tiempo para considerar "click"
             {
-                int actualDataIndex = dataIndices[clickedVisualIndex];
-                Debug.Log($"Item {itemDataList[actualDataIndex].name} clicked (Data Index: {actualDataIndex})");
-                if (GameManager.Instance != null)
+                int clickedVisualIndex = visibleItems.IndexOf(newItem);
+                if (clickedVisualIndex != -1 && clickedVisualIndex < dataIndices.Count)
                 {
-                    GameManager.Instance.actualClothe = itemDataList[actualDataIndex];
-                    NavigationManager.Instance.ShowDetails();
-                }
-                else
-                {
-                    Debug.LogWarning("GameManager.Instance is not available.");
+                    int actualDataIndex = dataIndices[clickedVisualIndex];
+                    Debug.Log($"Item {itemDataList[actualDataIndex].name} clicked (Data Index: {actualDataIndex})");
+                    if (GameManager.Instance != null)
+                    {
+                        GameManager.Instance.actualClothe = itemDataList[actualDataIndex];
+                        NavigationManager.Instance.ShowDetails();
+                    }
+                    else
+                    {
+                        Debug.LogWarning("GameManager.Instance is not available.");
+                    }
                 }
             }
         });
+
 
         scrollView.Add(newItem);
         visibleItems.Add(newItem);
