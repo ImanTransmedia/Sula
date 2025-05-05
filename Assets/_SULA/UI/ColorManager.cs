@@ -56,7 +56,7 @@ public class ColorManager : MonoBehaviour
 
         regionName = root.Q<VisualElement>("DetailRegionName");
 
-
+        filterPanel = root.Q<VisualElement>("FilterPanel");
 
 
         instructionPanel = root.Q<VisualElement>("instructionsPanel");
@@ -87,6 +87,8 @@ public class ColorManager : MonoBehaviour
         arrow2.style.unityBackgroundImageTintColor = GameManager.Instance.actualRegion.darkColor;
         arrow3.style.unityBackgroundImageTintColor = GameManager.Instance.actualRegion.darkColor;
         regionName.style.color = GameManager.Instance.actualRegion.darkColor;
+        filterPanel.style.backgroundColor = GameManager.Instance.actualRegion.accentColor;
+        filterPanel.style.unityBackgroundImageTintColor = GameManager.Instance.actualRegion.accentColor;
 
     }
 

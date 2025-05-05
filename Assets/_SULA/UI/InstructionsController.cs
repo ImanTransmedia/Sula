@@ -32,9 +32,4 @@ public class InstructionsController : MonoBehaviour
 
     }
 
-    // Update is called once per frame
-    void Update()
-    {
-        
-    }
 }

@@ -17,14 +17,14 @@ MonoBehaviour:
     overrideState: 1
     value: 1
   mode:
-    overrideState: 0
-    value: 1
+    overrideState: 1
+    value: 0
   intensity:
     overrideState: 1
     value: 3.23
   color:
-    overrideState: 0
-    value: {r: 0, g: 0, b: 0, a: 1}
+    overrideState: 1
+    value: {r: 1, g: 1, b: 1, a: 1}
   ambientOnly:
     overrideState: 0
     value: 1
@@ -38,14 +38,14 @@ MonoBehaviour:
     overrideState: 0
     value: -12
   thicknessModifier:
-    overrideState: 0
-    value: 1
+    overrideState: 1
+    value: 6.6
   zBias:
     overrideState: 0
     value: 0.0001
   directLightingStrength:
-    overrideState: 0
-    value: 0
+    overrideState: 1
+    value: 0.6
   radius:
     overrideState: 0
     value: 0.25

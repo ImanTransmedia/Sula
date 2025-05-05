@@ -13,7 +13,19 @@ public class HorizontalScrollController : MonoBehaviour, ICustomScrollHandler
     private const float dragThreshold = 10f;
 
     [SerializeField] private InfiniteScroll infiniteScroll;
+    public static HorizontalScrollController Instance;
 
+
+    private void Awake()
+    {
+        Instance = this;
+    }
+
+    public void ForceCancelDragging()
+    {
+        isDragging = false;
+        currentScrollView = null;
+    }
     void OnEnable()
     {
         var root = uiDocument.rootVisualElement;
@@ -29,6 +41,24 @@ public class HorizontalScrollController : MonoBehaviour, ICustomScrollHandler
         scrollView.RegisterCallback<PointerDownEvent>(evt => OnPointerDown(evt, scrollView));
         scrollView.RegisterCallback<PointerMoveEvent>(evt => OnPointerMove(evt, scrollView));
         scrollView.RegisterCallback<PointerUpEvent>(evt => OnPointerUp(evt, scrollView));
+
+        // SOLO aplicar mejoras adicionales al FilterScroll
+        if (scrollView.name == "FilterScroll")
+        {
+            scrollView.RegisterCallback<PointerDownEvent>(evt => OnPointerDown(evt, scrollView), TrickleDown.TrickleDown);
+            scrollView.RegisterCallback<PointerMoveEvent>(evt => OnPointerMove(evt, scrollView), TrickleDown.TrickleDown);
+            scrollView.RegisterCallback<PointerUpEvent>(evt => OnPointerUp(evt, scrollView), TrickleDown.TrickleDown);
+
+            scrollView.RegisterCallback<BlurEvent>(evt => CancelDragging());
+            scrollView.RegisterCallback<DetachFromPanelEvent>(evt => CancelDragging());
+        }
+    }
+
+
+    void CancelDragging()
+    {
+        isDragging = false;
+        currentScrollView = null;
     }
 
     void OnPointerDown(PointerDownEvent evt, ScrollView scrollView)
@@ -37,6 +67,20 @@ public class HorizontalScrollController : MonoBehaviour, ICustomScrollHandler
         draggedEnough = false;
         lastMousePosition = evt.position;
         currentScrollView = scrollView;
+
+        // Solo capturar el puntero si es el FilterScroll
+        if (scrollView.name == "FilterScroll")
+            scrollView.CapturePointer(evt.pointerId);
+    }
+
+
+    void OnPointerUp(PointerUpEvent evt, ScrollView scrollView)
+    {
+        if (!isDragging || currentScrollView != scrollView) return;
+
+        isDragging = false;
+        scrollView.ReleasePointer(evt.pointerId);
+        currentScrollView = null;
     }
 
     void OnPointerMove(PointerMoveEvent evt, ScrollView scrollView)
@@ -58,14 +102,7 @@ public class HorizontalScrollController : MonoBehaviour, ICustomScrollHandler
         lastMousePosition = currentMousePosition;
     }
 
-    void OnPointerUp(PointerUpEvent evt, ScrollView scrollView)
-    {
-        if (!isDragging || currentScrollView != scrollView) return;
 
-        isDragging = false;
-        scrollView.ReleasePointer(evt.pointerId);
-        currentScrollView = null;
-    }
 
     private void ClampScroll(ScrollView scrollView)
     {

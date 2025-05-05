@@ -1,4 +1,5 @@
 using DG.Tweening;
+using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UIElements;
 
@@ -19,6 +20,8 @@ public class DetailScreen : MonoBehaviour
     private VisualElement washInstructionsContainer;
     private VisualElement returnButton;
 
+    private VisualElement reductionDetaisl;
+
     [SerializeField] private Sprite uniqueSize;
     [SerializeField] private Sprite allSize;
     [SerializeField] private Materials[] materialDataList;
@@ -38,8 +41,19 @@ public class DetailScreen : MonoBehaviour
 
     private Coroutine autoRotateCoroutine;
 
+    private int currentSpriteIndex = 0;
+    private List<Sprite> spriteGallery = null;
+
+    private Coroutine autoImageCycleCoroutine;
+    private float imageCycleDelay = 3f;
+
+
+
     void Start()
     {
+
+        
+
         root = GetComponent<UIDocument>().rootVisualElement;
         regionName = root.Q<Label>("DetailRegionName");
         clotheName = root.Q<Label>("ClotheName");
@@ -47,6 +61,7 @@ public class DetailScreen : MonoBehaviour
         clotheSize = root.Q<VisualElement>("Sizes");
         clotheDescription = root.Q<Label>("clotheDescription");
         clotheReduction = root.Q<Label>("ReductionDescription");
+        reductionDetaisl = root.Q<VisualElement>("ReductionDetails");
         reductionImage = root.Q<VisualElement>("ReductionColor");
         clotheMaterialName = root.Q<Label>("MaterialName");
         clotheMaterialDescription = root.Q<Label>("MaterialDescription");
@@ -62,17 +77,29 @@ public class DetailScreen : MonoBehaviour
 
     public void ActiveLoad()
     {
+
+        clotheImage.UnregisterCallback<ClickEvent>(OnImageClick);
         regionName.style.color = GameManager.Instance.actualRegion.darkColor;
-        regionName.text = GameManager.Instance.actualRegion.regionName;
+        regionName.text = GameManager.Instance.actualRegion.regionName.ToUpper();
 
         clotheName.text = GameManager.Instance.actualClothe.clotheName;
         clotheSize.style.backgroundImage = new StyleBackground(GameManager.Instance.actualClothe.isUniqueSize ? uniqueSize : allSize);
         clotheDescription.text = GameManager.Instance.actualClothe.description;
+
+        if(GameManager.Instance.actualClothe.ahorro == null || GameManager.Instance.actualClothe.ahorro == "")
+        {
+            reductionDetaisl.style.display = DisplayStyle.None;
+        }
+        else
+        {
+            reductionDetaisl.style.display = DisplayStyle.Flex;
+        }
+
         clotheReduction.text = GameManager.Instance.actualClothe.ahorro;
         reductionImage.style.backgroundColor = GameManager.Instance.actualRegion.darkColor;
         clotheMaterialContainer.style.backgroundColor = GameManager.Instance.actualRegion.accentColor;
         clotheMaterialName.style.unityBackgroundImageTintColor = GameManager.Instance.actualRegion.darkColor;
-
+        clotheMaterialImage.style.unityBackgroundImageTintColor = GameManager.Instance.actualRegion.darkColor;
         switch (GameManager.Instance.actualClothe.materialType)
         {
             case MaterialType.Linen:
@@ -119,10 +146,30 @@ public class DetailScreen : MonoBehaviour
             clotheImage.RegisterCallback<PointerMoveEvent>(OnPointerMove);
             clotheImage.RegisterCallback<PointerUpEvent>(OnPointerUp);
         }
-        else
+        if (!GameManager.Instance.actualClothe.is3D)
         {
-            clotheImage.style.backgroundImage = new StyleBackground(GameManager.Instance.actualClothe.menuImage);
+            spriteGallery = new List<Sprite>(GameManager.Instance.actualClothe.imagenes);
+            currentSpriteIndex = 0;
+            clotheImage.UnregisterCallback<ClickEvent>(OnImageClick);
+
+            if (spriteGallery != null && spriteGallery.Count > 0)
+            {
+                clotheImage.style.backgroundImage = new StyleBackground(spriteGallery[currentSpriteIndex]);
+                clotheImage.RegisterCallback<ClickEvent>(OnImageClick);
+
+                if (autoImageCycleCoroutine != null)
+                    StopCoroutine(autoImageCycleCoroutine);
+
+
+            }
+            else
+            {
+                clotheImage.style.backgroundImage = new StyleBackground(GameManager.Instance.actualClothe.menuImage);
+            }
         }
+
+
+
     }
 
     private void ClearContainer()
@@ -142,10 +189,31 @@ public class DetailScreen : MonoBehaviour
             autoRotateCoroutine = null;
         }
 
+        if (autoImageCycleCoroutine != null)
+        {
+            StopCoroutine(autoImageCycleCoroutine);
+            autoImageCycleCoroutine = null;
+        }
+
+        clotheImage.UnregisterCallback<ClickEvent>(OnImageClick);
+
+
+
         dragging = false;
         rotationY = 0f;
         elasticRotation = 0f;
     }
+    private void OnImageClick(ClickEvent evt)
+    {
+        if (spriteGallery == null || spriteGallery.Count == 0) return;
+
+        currentSpriteIndex = (currentSpriteIndex + 1) % spriteGallery.Count;
+
+        StartCoroutine(AnimateImageChange(spriteGallery[currentSpriteIndex]));
+        evt.StopPropagation();
+    }
+
+
 
     private void OnPointerDown(PointerDownEvent evt)
     {
@@ -226,4 +294,22 @@ public class DetailScreen : MonoBehaviour
 
         autoRotateCoroutine = null;
     }
+
+
+    private System.Collections.IEnumerator AnimateImageChange(Sprite nextSprite)
+    {
+        // Fade out
+        clotheImage.style.transitionDuration = new List<TimeValue> { new TimeValue(0.3f) };
+        clotheImage.style.opacity = 0f;
+        yield return new WaitForSeconds(0.3f);
+
+        // Change image
+        clotheImage.style.backgroundImage = new StyleBackground(nextSprite);
+        // Fade in
+        clotheImage.style.opacity = 1f;
+    }
+
+    
+
+
 }

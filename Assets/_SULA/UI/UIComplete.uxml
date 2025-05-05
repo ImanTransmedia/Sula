@@ -14,7 +14,7 @@
     </engine:VisualElement>
     <engine:VisualElement name="ClothesScreen" focusable="true" class="show hide-down" style="position: absolute; flex-direction: column;">
         <engine:Label text="COLLECTION" name="collection" style="-unity-font-definition: url(&quot;project://database/Assets/_SULA/Fonts/Futura%20Book%20font.ttf?fileID=12800000&amp;guid=60c2d7bb953b81541ad23b12d697d7bb&amp;type=3#Futura Book font&quot;); -unity-text-align: middle-center; font-size: 60px; top: 350px; left: auto;" />
-        <engine:VisualElement name="ScrollContainer" focusable="false" style="flex-grow: 1; background-image: url(&quot;project://database/Assets/_SULA/Assets/2D/Sprites/drawer_big.png?fileID=2800000&amp;guid=5c66f5c0b53f41641950fa1f0c64ff9e&amp;type=3#drawer_big&quot;); bottom: 0; height: 950px; -unity-background-image-tint-color: rgb(231, 241, 255); top: auto; max-height: 800px; transform-origin: center; translate: 0 0; position: absolute; width: 100%; left: -2px;">
+        <engine:VisualElement name="ScrollContainer" focusable="false" style="flex-grow: 1; background-image: url(&quot;project://database/Assets/_SULA/Assets/2D/Sprites/drawer_big.png?fileID=2800000&amp;guid=5c66f5c0b53f41641950fa1f0c64ff9e&amp;type=3#drawer_big&quot;); bottom: 0; height: 900px; -unity-background-image-tint-color: rgb(231, 241, 255); top: auto; max-height: 800px; transform-origin: center; translate: 0 0; position: absolute; width: 100%; left: -2px;">
             <engine:Button name="SettingsButton" class="button" style="width: 100px; height: 100px; position: absolute; align-self: flex-end; top: 50px; right: 50px; border-top-left-radius: 100px; border-top-right-radius: 100px; border-bottom-right-radius: 100px; border-bottom-left-radius: 100px; background-color: rgb(42, 166, 197); border-left-width: 0; border-top-width: 0; border-right-width: 0; border-bottom-width: 0;">
                 <engine:VisualElement name="Image" style="flex-grow: 1; background-image: url(&quot;project://database/Assets/_SULA/Assets/2D/Sprites/Settings.png?fileID=2800000&amp;guid=9cf88d89583c5c144b5daf506c715ece&amp;type=3#Settings&quot;); background-size: 70% 70%;" />
             </engine:Button>
@@ -23,10 +23,17 @@
                 <engine:VisualElement name="GradientRight" enabled="true" picking-mode="Ignore" style="flex-grow: 1; background-image: url(&quot;project://database/Assets/_SULA/Assets/2D/Menu/GradientHorizontal2.png?fileID=2800000&amp;guid=d6ac7a3e98e7b2e4fbfcea57ce3a8fad&amp;type=3#GradientHorizontal2&quot;); -unity-background-image-tint-color: rgb(231, 241, 255); position: absolute; left: auto; width: 119px; height: 100%; right: 0; scale: 1 1;" />
                 <engine:VisualElement name="GradientLeft" enabled="true" picking-mode="Ignore" style="flex-grow: 1; background-image: url(&quot;project://database/Assets/_SULA/Assets/2D/Menu/GradientHorizontal.png?fileID=2800000&amp;guid=100fa9354c1e55f4e94c7589a5f9c783&amp;type=3#GradientHorizontal&quot;); -unity-background-image-tint-color: rgb(231, 241, 255); position: absolute; left: 0; width: 119px; height: 100%; right: 0;" />
             </engine:VisualElement>
-            <engine:ScrollView name="ItemScroll" mode="Horizontal" horizontal-scroller-visibility="Hidden" vertical-scroller-visibility="Hidden" touch-scroll-type="Unrestricted" nested-interaction-kind="StopScrolling" class="infinite-scroll" />
+            <engine:ScrollView name="ItemScroll" mode="Horizontal" horizontal-scroller-visibility="Hidden" vertical-scroller-visibility="Hidden" touch-scroll-type="Unrestricted" nested-interaction-kind="StopScrolling" class="infinite-scroll" style="height: 650px; margin-bottom: 0; bottom: 30px;" />
         </engine:VisualElement>
         <engine:VisualElement name="Logo" style="flex-grow: 1; top: -52px; left: auto; right: auto; background-image: url(&quot;project://database/Assets/_SULA/Assets/2D/Sprites/sula_black.png?fileID=2800000&amp;guid=fdb1f35b6749201479ae2bd20be70238&amp;type=3#sula_black&quot;); height: 30px; width: 100%; max-height: 150px; -unity-background-scale-mode: scale-to-fit;" />
         <engine:Button name="HelpButton" class="button" style="width: 125px; height: 125px; position: absolute; align-self: flex-end; top: 70px; right: 70px; border-top-left-radius: 100px; border-top-right-radius: 100px; border-bottom-right-radius: 100px; border-bottom-left-radius: 100px; background-color: rgba(255, 255, 255, 0); border-left-width: 0; border-top-width: 0; border-right-width: 0; border-bottom-width: 0; background-image: url(&quot;project://database/Assets/_SULA/Assets/2D/Sprites/help.png?fileID=2800000&amp;guid=396434ef9aae7f44388b4f104235384a&amp;type=3#help&quot;); -unity-background-image-tint-color: rgb(42, 166, 197);" />
+    </engine:VisualElement>
+    <engine:VisualElement name="DotsContainer" picking-mode="Ignore" class="show hide-down" style="flex-grow: 1; height: 100px; top: 450px; align-items: center; justify-content: center; flex-direction: row; margin-left: 150px; margin-right: 150px; width: auto; align-self: auto; align-content: auto; left: 0; right: 0; bottom: auto; opacity: 1;">
+        <engine:VisualElement name="Dot0" picking-mode="Ignore" class="dot" />
+        <engine:VisualElement name="Dot1" picking-mode="Ignore" class="dot" />
+        <engine:VisualElement name="Dot2" picking-mode="Ignore" class="dot" />
+        <engine:VisualElement name="Dot3" picking-mode="Ignore" class="dot" />
+        <engine:VisualElement name="Dot4" picking-mode="Ignore" class="dot" />
     </engine:VisualElement>
     <engine:VisualElement name="OurStoryScreen" class="show hide-left" style="background-color: rgba(0, 0, 0, 0);">
         <engine:VisualElement name="Background" style="flex-grow: 1; position: absolute; height: 100%; width: 100%; background-image: url(&quot;project://database/Assets/_SULA/Assets/2D/Menu/01.Galapagos.png?fileID=2800000&amp;guid=f4d2dd2300346da4ba07cf7839b9dd89&amp;type=3#01.Galapagos&quot;); background-size: 250% 250%; background-position-x: right -200px; background-position-y: top 0;">
@@ -143,6 +150,13 @@
                     <engine:VisualElement name="Separator" style="flex-grow: 1; top: 0; height: 50px;" />
                 </engine:VisualElement>
                 <engine:VisualElement name="Separator" style="flex-grow: 1; top: 0; height: 50px;" />
+                <engine:VisualElement name="OurStDots" picking-mode="Ignore" class="show" style="flex-grow: 1; height: 100px; top: 450px; align-items: center; justify-content: center; flex-direction: row; margin-left: 150px; margin-right: 150px; width: auto; align-self: auto; align-content: auto; left: 0; right: 0; bottom: auto; opacity: 1;">
+                    <engine:VisualElement name="Dot0" picking-mode="Ignore" class="dot" style="background-color: rgb(42, 166, 197);" />
+                    <engine:VisualElement name="Dot1" class="dot" />
+                    <engine:VisualElement name="Dot2" class="dot" />
+                    <engine:VisualElement name="Dot3" class="dot" />
+                    <engine:VisualElement name="Dot4" class="dot" />
+                </engine:VisualElement>
             </engine:VisualElement>
         </engine:ScrollView>
     </engine:VisualElement>
@@ -170,6 +184,13 @@
                     <engine:Label text="Sula is committed to the reduction of carbon emissions and acts towards bringing healthy climate change. This is why our clothing is produced following ethical manufacturing practices, including the use of sustainable fabrics with organic or recycled materials." name="Description" style="width: 65%; font-size: 25px; -unity-font-definition: url(&quot;project://database/Assets/_SULA/Fonts/Futura%20Book%20font.ttf?fileID=12800000&amp;guid=60c2d7bb953b81541ad23b12d697d7bb&amp;type=3#Futura Book font&quot;); -unity-text-align: middle-left; white-space: normal; padding-left: 50px;" />
                 </engine:VisualElement>
                 <engine:VisualElement name="CarbonMini" style="flex-grow: 1; height: 70%; background-image: url(&quot;project://database/Assets/_SULA/Assets/2D/Render%20Textures/RTEX%20Video%203.renderTexture?fileID=8400000&amp;guid=f241387751c08a04e8c77cab10ea82a6&amp;type=2#RTEX Video 3&quot;); -unity-background-scale-mode: scale-and-crop; border-top-left-radius: 0; border-top-right-radius: 0; border-bottom-right-radius: 50px; border-bottom-left-radius: 50px; -unity-slice-left: -1; -unity-slice-top: -1; -unity-slice-right: -1; -unity-slice-bottom: -1;" />
+            </engine:VisualElement>
+            <engine:VisualElement name="OurStDots" picking-mode="Ignore" class="show" style="flex-grow: 1; height: 100px; top: 450px; align-items: center; justify-content: center; flex-direction: row; margin-left: 150px; margin-right: 150px; width: auto; align-self: auto; align-content: auto; left: 0; right: 0; bottom: auto; opacity: 1;">
+                <engine:VisualElement name="Dot0" picking-mode="Ignore" class="dot" style="background-color: rgba(42, 166, 197, 0);" />
+                <engine:VisualElement name="Dot1" class="dot" />
+                <engine:VisualElement name="Dot2" class="dot" />
+                <engine:VisualElement name="Dot3" class="dot" />
+                <engine:VisualElement name="Dot4" class="dot" style="background-color: rgb(42, 166, 197);" />
             </engine:VisualElement>
         </engine:ScrollView>
         <engine:VisualElement name="ArtisansVideo" class="full-artisans artisans" style="position: absolute;" />
@@ -201,6 +222,10 @@
             </engine:VisualElement>
         </engine:VisualElement>
     </engine:VisualElement>
+    <engine:VisualElement name="FilterScreen" enabled="true" focusable="true" class="show hide-panel">
+        <engine:VisualElement name="ReturnFilterPanel" style="flex-grow: 1; background-color: rgba(0, 0, 0, 0.62);" />
+        <engine:VisualElement name="FilterPanel" focusable="true" style="flex-grow: 1; position: absolute; width: 90%; height: 500px; background-image: url(&quot;project://database/Assets/_SULA/Assets/2D/Sprites/panel.png?fileID=2800000&amp;guid=75e1eb8a50ad119489676b8f9ba0b198&amp;type=3#panel&quot;); -unity-background-image-tint-color: rgb(231, 241, 255); margin-top: 50px; margin-right: 50px; margin-bottom: 50px; margin-left: 50px; max-height: 1000px; left: 0; right: 0; top: 545px; align-items: center; justify-content: center; align-content: center; padding-top: 200px; padding-right: 200px; padding-bottom: 200px; padding-left: 200px; flex-direction: row; border-top-left-radius: 50px; border-top-right-radius: 50px; border-bottom-right-radius: 50px; border-bottom-left-radius: 50px;" />
+    </engine:VisualElement>
     <engine:VisualElement name="DetailsScreen" class="show hide-down" style="flex-grow: 1; height: auto;">
         <engine:ScrollView nested-interaction-kind="ForwardScrolling" horizontal-scroller-visibility="Hidden" vertical-scroller-visibility="Hidden" touch-scroll-type="Elastic" name="DetailScroll" style="height: 1920px;">
             <engine:VisualElement style="flex-grow: 1; width: 100%; background-image: url(&quot;project://database/Assets/_SULA/Assets/2D/Sprites/logo_black.png?fileID=2800000&amp;guid=96d700c24f7ab2d48a9ed0011e5cd1fd&amp;type=3#logo_black&quot;); height: 150px; -unity-background-scale-mode: scale-to-fit; margin-top: 50px;" />
@@ -215,12 +240,14 @@
                 <engine:Label text="SIZE" style="top: 0; -unity-text-align: middle-left; font-size: 60px; -unity-font-definition: url(&quot;project://database/Assets/_SULA/Fonts/futura%20medium%20bt.ttf?fileID=12800000&amp;guid=6bc41e0f58108fd489c36225caa9e6ca&amp;type=3#futura medium bt&quot;); -unity-font-style: normal; color: rgb(0, 0, 0); height: auto; width: 100%;" />
                 <engine:VisualElement name="Sizes" style="flex-grow: 1; background-image: url(&quot;project://database/Assets/_SULA/Assets/2D/Sprites/TALLAS-8%201.png?fileID=2800000&amp;guid=d6071c43086ddf141ac9df95c7da88f4&amp;type=3#TALLAS-8 1&quot;); -unity-background-scale-mode: scale-to-fit; height: 150px;" />
                 <engine:Label text="Made from recycled polyester. With built-in antibacterial properties and UV protection of SPF 35protection. Made in Ecuador." name="clotheDescription" style="top: 0; -unity-text-align: upper-left; font-size: 50%; -unity-font-definition: url(&quot;project://database/Assets/_SULA/Fonts/futura%20medium%20bt.ttf?fileID=12800000&amp;guid=6bc41e0f58108fd489c36225caa9e6ca&amp;type=3#futura medium bt&quot;); -unity-font-style: normal; color: rgb(0, 0, 0); height: auto; width: 100%; flex-wrap: wrap; flex-direction: column; white-space: normal; margin-top: 50px;" />
-                <engine:Label text="Reduction" style="top: 0; -unity-text-align: upper-left; font-size: 60%; -unity-font-definition: url(&quot;project://database/Assets/_SULA/Fonts/futura%20medium%20bt.ttf?fileID=12800000&amp;guid=6bc41e0f58108fd489c36225caa9e6ca&amp;type=3#futura medium bt&quot;); -unity-font-style: normal; color: rgb(0, 0, 0); height: auto; width: 100%; flex-wrap: wrap; flex-direction: column; white-space: normal; margin-top: 50px;" />
-                <engine:VisualElement style="flex-grow: 1; flex-direction: row; align-items: center;">
-                    <engine:VisualElement name="ReductionColor" style="flex-grow: 1; background-size: contain; background-image: none; width: auto; height: 300px; -unity-background-scale-mode: scale-to-fit; margin-top: 30px; margin-right: 30px; margin-bottom: 30px; margin-left: 0; padding-top: 0; padding-right: 0; padding-bottom: 0; padding-left: 0; background-color: rgb(42, 166, 197); border-top-width: 50px; border-right-width: 50px; border-bottom-width: 50px; border-left-width: 50px; border-top-left-radius: 50px; border-top-right-radius: 50px; border-bottom-right-radius: 50px; border-bottom-left-radius: 50px; background-position-y: center 0;">
-                        <engine:VisualElement style="flex-grow: 1; background-image: url(&quot;project://database/Assets/_SULA/Assets/2D/Sprites/recycled.png?fileID=2800000&amp;guid=37f4ca04205712048b5c6d599487bb54&amp;type=3#recycled&quot;); -unity-background-scale-mode: scale-to-fit;" />
+                <engine:VisualElement name="ReductionDetails" style="flex-grow: 1; display: none;">
+                    <engine:Label text="Reduction" style="top: 0; -unity-text-align: upper-left; font-size: 60%; -unity-font-definition: url(&quot;project://database/Assets/_SULA/Fonts/futura%20medium%20bt.ttf?fileID=12800000&amp;guid=6bc41e0f58108fd489c36225caa9e6ca&amp;type=3#futura medium bt&quot;); -unity-font-style: normal; color: rgb(0, 0, 0); height: auto; width: 100%; flex-wrap: wrap; flex-direction: column; white-space: normal; margin-top: 50px;" />
+                    <engine:VisualElement style="flex-grow: 1; flex-direction: row; align-items: center;">
+                        <engine:VisualElement name="ReductionColor" style="flex-grow: 1; background-size: contain; background-image: none; width: auto; height: 300px; -unity-background-scale-mode: scale-to-fit; margin-top: 30px; margin-right: 30px; margin-bottom: 30px; margin-left: 0; padding-top: 0; padding-right: 0; padding-bottom: 0; padding-left: 0; background-color: rgb(42, 166, 197); border-top-width: 50px; border-right-width: 50px; border-bottom-width: 50px; border-left-width: 50px; border-top-left-radius: 50px; border-top-right-radius: 50px; border-bottom-right-radius: 50px; border-bottom-left-radius: 50px; background-position-y: center 0;">
+                            <engine:VisualElement style="flex-grow: 1; background-image: url(&quot;project://database/Assets/_SULA/Assets/2D/Sprites/recycled.png?fileID=2800000&amp;guid=37f4ca04205712048b5c6d599487bb54&amp;type=3#recycled&quot;); -unity-background-scale-mode: scale-to-fit;" />
+                        </engine:VisualElement>
+                        <engine:Label text="Each Sula buff upcycles 2-3 PET bottles, cutting CO2 emissions by 1.5 kg per unit." name="ReductionDescription" style="top: 0; -unity-text-align: middle-left; font-size: 35%; -unity-font-definition: url(&quot;project://database/Assets/_SULA/Fonts/futura%20medium%20bt.ttf?fileID=12800000&amp;guid=6bc41e0f58108fd489c36225caa9e6ca&amp;type=3#futura medium bt&quot;); -unity-font-style: normal; color: rgb(0, 0, 0); height: auto; width: 60%; flex-wrap: wrap; flex-direction: column; white-space: normal;" />
                     </engine:VisualElement>
-                    <engine:Label text="Each Sula buff upcycles 2-3 PET bottles, cutting CO2 emissions by 1.5 kg per unit." name="ReductionDescription" style="top: 0; -unity-text-align: middle-left; font-size: 35%; -unity-font-definition: url(&quot;project://database/Assets/_SULA/Fonts/futura%20medium%20bt.ttf?fileID=12800000&amp;guid=6bc41e0f58108fd489c36225caa9e6ca&amp;type=3#futura medium bt&quot;); -unity-font-style: normal; color: rgb(0, 0, 0); height: auto; width: 60%; flex-wrap: wrap; flex-direction: column; white-space: normal;" />
                 </engine:VisualElement>
             </engine:VisualElement>
             <engine:Label text="MATERIALS" style="top: 0; -unity-text-align: middle-left; font-size: 60px; -unity-font-definition: url(&quot;project://database/Assets/_SULA/Fonts/futura%20medium%20bt.ttf?fileID=12800000&amp;guid=6bc41e0f58108fd489c36225caa9e6ca&amp;type=3#futura medium bt&quot;); -unity-font-style: normal; color: rgb(0, 0, 0); height: auto; width: auto; margin-left: 50px; margin-top: 50px; margin-bottom: 50px;" />
@@ -260,7 +287,8 @@
                     </engine:VisualElement>
                 </engine:VisualElement>
             </engine:VisualElement>
-            <engine:Label text="Return to clothes" name="ReturnButton" style="top: 0; -unity-text-align: middle-center; font-size: 50px; -unity-font-definition: url(&quot;project://database/Assets/_SULA/Fonts/futura%20medium%20bt.ttf?fileID=12800000&amp;guid=6bc41e0f58108fd489c36225caa9e6ca&amp;type=3#futura medium bt&quot;); -unity-font-style: bold; color: rgb(0, 0, 0); height: auto; width: 100%; margin-bottom: 50px; white-space: normal; align-items: center; margin-top: 50px;" />
+            <engine:Label text="Return to clothes" name="ReturnButton" style="top: 0; -unity-text-align: middle-center; font-size: 50px; -unity-font-definition: url(&quot;project://database/Assets/_SULA/Fonts/futura%20medium%20bt.ttf?fileID=12800000&amp;guid=6bc41e0f58108fd489c36225caa9e6ca&amp;type=3#futura medium bt&quot;); -unity-font-style: bold; color: rgb(0, 0, 0); height: auto; width: 100%; margin-bottom: 100px; white-space: normal; align-items: center; margin-top: 300px;" />
+            <engine:VisualElement name="LowAnimation" enabled="true" picking-mode="Ignore" style="flex-grow: 1; position: absolute; width: 600px; height: 600px; bottom: 0; align-self: center; rotate: 0; background-color: rgba(255, 0, 0, 0); right: auto; top: auto; -unity-background-scale-mode: scale-to-fit;" />
         </engine:ScrollView>
     </engine:VisualElement>
     <engine:VisualElement name="RighAnimation" enabled="true" picking-mode="Ignore" class="hide-right" style="flex-grow: 1; position: absolute; width: 600px; height: 800px; bottom: auto; align-self: center; rotate: 0; background-color: rgba(255, 0, 0, 0); right: 0; top: 400px;" />

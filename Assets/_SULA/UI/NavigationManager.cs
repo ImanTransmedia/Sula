@@ -31,6 +31,8 @@ public class NavigationManager : MonoBehaviour
     [SerializeField] private GameObject UIComponent;
 
     [SerializeField] private InfiniteScroll infiniteScroll;
+    [SerializeField] private FilterOption filterOptions;
+
 
     [SerializeField] private VideoPlayer videoPlayer;
 
@@ -48,6 +50,8 @@ public class NavigationManager : MonoBehaviour
     private VisualElement detailContainer;
     private DetailScreen detailReference;
 
+
+
     private VisualElement rightAnimation;
     private VisualElement leftAnimation;
 
@@ -56,10 +60,58 @@ public class NavigationManager : MonoBehaviour
     private ScrollView ourStoryScroll;
     private ScrollView detailsScroll;
 
-
+    private VisualElement dotsContainer;
 
     private Coroutine animationHintCoroutine;
     private float animationHintDelay = 5f;
+
+
+    private List<VisualElement> dots = new List<VisualElement>();
+
+
+    private void UpdateDots(ScreenOptions screen)
+    {
+
+
+        Color darkColor = GameManager.Instance.actualRegion != null 
+            ? screen == ScreenOptions.Artisans || screen == ScreenOptions.OurStory
+            ? GameManager.Instance.regions[0].darkColor
+            : GameManager.Instance.actualRegion.darkColor
+            : GameManager.Instance.regions[0].darkColor;
+
+        int index = screen switch
+        {
+            ScreenOptions.Galapagos => 2,
+            ScreenOptions.Amazonia => 3,
+            ScreenOptions.Artisans => 4,
+            ScreenOptions.Andes => 1,
+            ScreenOptions.OurStory => 0,
+            _ => -1,
+        };
+
+        for (int i = 0; i < dots.Count; i++)
+        {
+            var dot = dots[i];
+
+            // Aplicar color de borde dinámico
+            dot.style.borderTopColor = darkColor;
+            dot.style.borderBottomColor = darkColor;
+            dot.style.borderLeftColor = darkColor;
+            dot.style.borderRightColor = darkColor;
+            dot.style.unityBackgroundImageTintColor = Color.clear;
+
+            if (i == index)
+            {
+                dot.AddToClassList("active");
+                dot.style.backgroundColor = darkColor;
+            }
+            else
+            {
+                dot.RemoveFromClassList("active");
+                dot.style.backgroundColor = Color.clear;
+            }
+        }
+    }
 
 
     private void Start()
@@ -101,6 +153,30 @@ public class NavigationManager : MonoBehaviour
 
         ResetInactivityTimer();
 
+
+       dotsContainer = root.Q<VisualElement>("DotsContainer");
+
+        if (dotsContainer == null)
+        {
+            Debug.LogError("No se encontró el contenedor de puntos (DotsContainer). Revisa el UXML.");
+            return;
+        }
+
+        for (int i = 0; i < 5; i++)
+        {
+            var dot = dotsContainer.Q<VisualElement>($"Dot{i}");
+            if (dot != null)
+            {
+                dots.Add(dot);
+            }
+            else
+            {
+                Debug.LogWarning($"No se encontró el punto Dot{i} dentro de DotsContainer.");
+            }
+        }
+
+        UpdateDots(ScreenOptions.Start);
+
     }
 
     public void ResetReturn()
@@ -120,6 +196,8 @@ public class NavigationManager : MonoBehaviour
         artisansContainer.AddToClassList("hide-right");
         detailContainer.ClearClassList();
         detailContainer.AddToClassList("hide-down");
+        dotsContainer.ClearClassList();
+        dotsContainer.AddToClassList("hide-down");
 
     }
 
@@ -132,10 +210,16 @@ public class NavigationManager : MonoBehaviour
         galapagosContainer.AddToClassList("show");
         clotheContainer.ClearClassList();
         clotheContainer.AddToClassList("show");
-        actualScren= ScreenOptions.Galapagos;
+        dotsContainer.ClearClassList();
+        dotsContainer.AddToClassList("show");
+        actualScren = ScreenOptions.Galapagos;
         GameManager.Instance.actualRegion = GameManager.Instance.regions[0];
         ColorManager.Instance.UpdateColors();
         infiniteScroll.FillInstance(new List<Clothes>(GameManager.Instance.actualRegion.clothes));
+        filterOptions.UpdateList();
+        UpdateDots(actualScren);
+
+
 
     }
 
@@ -214,6 +298,10 @@ public class NavigationManager : MonoBehaviour
         amazoniaContainer.AddToClassList("show");
         actualScren = ScreenOptions.Amazonia;
         GameManager.Instance.actualRegion = GameManager.Instance.regions[2];
+        filterOptions.UpdateList();
+        UpdateDots(actualScren);
+
+
     }
 
     public void GalapagosToAndes()
@@ -223,6 +311,9 @@ public class NavigationManager : MonoBehaviour
         andesContainer.AddToClassList("show");
         actualScren = ScreenOptions.Andes;
         GameManager.Instance.actualRegion = GameManager.Instance.regions[1];
+        filterOptions.UpdateList();
+        UpdateDots(actualScren);
+
 
     }
 
@@ -232,6 +323,8 @@ public class NavigationManager : MonoBehaviour
         clotheContainer.AddToClassList("hide-up");
         detailContainer.ClearClassList();
         detailContainer.AddToClassList("show");
+        dotsContainer.ClearClassList();
+        dotsContainer.AddToClassList("hide-up");
         actualScren = ScreenOptions.Details;
         GameManager.Instance.actualRegion = GameManager.Instance.regions[0];
         detailReference.ActiveLoad();
@@ -248,6 +341,11 @@ public class NavigationManager : MonoBehaviour
         galapagosContainer.AddToClassList("show");
         actualScren = ScreenOptions.Galapagos;
         GameManager.Instance.actualRegion = GameManager.Instance.regions[0];
+        filterOptions.UpdateList();
+        UpdateDots(actualScren);
+
+
+
     }
     public void AndesToOurStory()
     {
@@ -258,20 +356,27 @@ public class NavigationManager : MonoBehaviour
         actualScren = ScreenOptions.OurStory;
         if (ourStoryScroll != null)
             ourStoryScroll.scrollOffset = Vector2.zero;
+        UpdateDots(actualScren);
+
     }
 
     public void AndesToDetails()
     {
         andesContainer.AddToClassList("hide-up");
         clotheContainer.AddToClassList("hide-up");
+        dotsContainer.AddToClassList("hide-up");
+
         detailContainer.ClearClassList();
         detailContainer.AddToClassList("show");
         actualScren = ScreenOptions.Details;
         GameManager.Instance.actualRegion = GameManager.Instance.regions[1];
+        filterOptions.UpdateList();
+
         detailReference.ActiveLoad();
 
         if (detailsScroll != null)
             detailsScroll.scrollOffset = Vector2.zero;
+
     }
 
     // AMAZONIA
@@ -283,6 +388,9 @@ public class NavigationManager : MonoBehaviour
         galapagosContainer.AddToClassList("show");
         actualScren = ScreenOptions.Galapagos;
         GameManager.Instance.actualRegion = GameManager.Instance.regions[0];
+        filterOptions.UpdateList();
+        UpdateDots(actualScren);
+
 
     }
 
@@ -295,6 +403,8 @@ public class NavigationManager : MonoBehaviour
 
         if (artisansScroll != null)
             artisansScroll.scrollOffset = Vector2.zero;
+        UpdateDots(actualScren);
+
     }
 
 
@@ -302,6 +412,8 @@ public class NavigationManager : MonoBehaviour
     {
         amazoniaContainer.AddToClassList("hide-up");
         clotheContainer.AddToClassList("hide-up");
+        dotsContainer.AddToClassList("hide-up");
+
         detailContainer.ClearClassList();
         detailContainer.AddToClassList("show");
         actualScren = ScreenOptions.Details;
@@ -324,6 +436,8 @@ public class NavigationManager : MonoBehaviour
         clotheContainer.AddToClassList("show");
         actualScren = ScreenOptions.Andes;
         GameManager.Instance.actualRegion = GameManager.Instance.regions[1];
+        UpdateDots(actualScren);
+
     }
 
     public void ArtisansToAmazonia()
@@ -335,6 +449,8 @@ public class NavigationManager : MonoBehaviour
         clotheContainer.AddToClassList("show");
         actualScren = ScreenOptions.Amazonia;
         GameManager.Instance.actualRegion = GameManager.Instance.regions[2];
+        UpdateDots(actualScren);
+
     }
 
     // DETAILS
@@ -368,6 +484,10 @@ public class NavigationManager : MonoBehaviour
         detailContainer.AddToClassList("hide-down");
         galapagosContainer.ClearClassList();
         galapagosContainer.AddToClassList("show");
+        dotsContainer.ClearClassList();
+        dotsContainer.AddToClassList("show");
+
+
         clotheContainer.ClearClassList();
         clotheContainer.AddToClassList("show");
         actualScren = ScreenOptions.Galapagos;
@@ -381,6 +501,8 @@ public class NavigationManager : MonoBehaviour
         andesContainer.AddToClassList("show");
         clotheContainer.ClearClassList();
         clotheContainer.AddToClassList("show");
+        dotsContainer.ClearClassList();
+        dotsContainer.AddToClassList("show");
         actualScren = ScreenOptions.Andes;
         GameManager.Instance.actualRegion = GameManager.Instance.regions[1];
     }
@@ -392,6 +514,8 @@ public class NavigationManager : MonoBehaviour
         amazoniaContainer.AddToClassList("show");
         clotheContainer.ClearClassList();
         clotheContainer.AddToClassList("show");
+        dotsContainer.ClearClassList();
+        dotsContainer.AddToClassList("show");
         actualScren = ScreenOptions.Amazonia;
         GameManager.Instance.actualRegion = GameManager.Instance.regions[2];
     }
@@ -477,8 +601,6 @@ public class NavigationManager : MonoBehaviour
         }
         ColorManager.Instance.UpdateColors();
         infiniteScroll.FillInstance(new List<Clothes>(GameManager.Instance.actualRegion.clothes));
-
-
     }
 
     public void GoLeft(ScreenOptions actualScreen)
@@ -543,12 +665,13 @@ public class NavigationManager : MonoBehaviour
 
         HideAnimationHints();
 
-        if (actualScren != ScreenOptions.Start)
+        if (actualScren != ScreenOptions.Start && actualScren != ScreenOptions.Artisans)
         {
             inactivityCoroutine = StartCoroutine(StartInactivityTimer());
             animationHintCoroutine = StartCoroutine(StartAnimationHintTimer());
         }
     }
+
 
     private System.Collections.IEnumerator StartAnimationHintTimer()
     {
@@ -599,7 +722,7 @@ public class NavigationManager : MonoBehaviour
 
         if (actualScren != ScreenOptions.Start)
         {
-            Debug.Log("Inactividad detectada. Regresando a inicio...");
+            Debug.Log("Inactividad deteFctada. Regresando a inicio...");
             BackToStart();
             ResetReturn();
         }

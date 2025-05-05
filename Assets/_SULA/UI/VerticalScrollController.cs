@@ -65,14 +65,13 @@ public class VerticalScrollController : MonoBehaviour
     private void ClampScroll(ScrollView scrollView)
     {
         float topMargin = 0;
-        float bottomMargin = 200f;
+        float bottomMargin = 0f;
 
         float maxY = scrollView.contentContainer.layout.height - scrollView.layout.height;
         maxY = Mathf.Max(0, maxY); // evitar negativos
 
         Vector2 offset = scrollView.scrollOffset;
 
-        // Permitimos que se pase un poco por arriba (negativo) y un poco por abajo (extra)
         float clampedY = Mathf.Clamp(offset.y, topMargin, maxY + bottomMargin);
 
         scrollView.scrollOffset = new Vector2(0, clampedY);

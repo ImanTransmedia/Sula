@@ -5,6 +5,6 @@
         <engine:VisualElement name="logo" class="logo">
             <engine:VisualElement name="LeafElement" class="leafs" style="-unity-background-image-tint-color: rgb(102, 207, 235);" />
         </engine:VisualElement>
-        <engine:Label name="Name" class="item-name" style="height: 30%; white-space: normal;" />
+        <engine:Label name="Name" class="item-name" style="height: 30%; white-space: normal; margin-bottom: 50px;" />
     </engine:VisualElement>
 </engine:UXML>

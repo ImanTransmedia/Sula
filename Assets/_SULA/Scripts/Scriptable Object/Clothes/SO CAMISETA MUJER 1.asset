@@ -12,7 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e206e3dbca2bcdb4f8ff4e5aaa3802b7, type: 3}
   m_Name: SO CAMISETA MUJER 1
   m_EditorClassIdentifier: 
-  clotheName: WHALE SHARK          T-SHIRT
+  clotheName: WHALE SHARK    T-SHIRT
   is3D: 0
   menuImage: {fileID: 21300000, guid: 8b60c1ede6533144a8e79de57ec3c337, type: 3}
   imagenes:
@@ -26,3 +26,4 @@ MonoBehaviour:
     reduces CO2 emissions by 1.5 kg per t-shirt
   materialType: 0
   filterOptions: 010000000c000000
+  isUniqueSize: 0

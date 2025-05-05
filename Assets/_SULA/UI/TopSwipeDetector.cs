@@ -3,13 +3,13 @@ using UnityEngine.UIElements;
 
 public class TopSwipeDetector : MonoBehaviour
 {
-    [SerializeField] private float SwipeThreshold = 50f; // Umbral mínimo de desplazamiento para considerarlo "swipe"
+    [SerializeField] private float SwipeThreshold = 200f; // Umbral mínimo de desplazamiento para considerarlo "swipe"
     private const float MaxTimeForSwipe = 0.5f; // Tiempo máximo entre el inicio y el final del "swipe"
     private Vector2 _startPosition;
     private float _startTime;
     private bool _isDraggingFromTop = false;
 
-    [SerializeField]private float dragThreshold = 500f;
+    [SerializeField]private float dragThreshold = 150f;
 
 
     private VisualElement root;

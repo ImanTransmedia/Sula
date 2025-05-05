@@ -1214,6 +1214,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   edgeThreshold: 150
   topThreshold: 200
+  bottomThreshold: 200
 --- !u!4 &472262123
 Transform:
   m_ObjectHideFlags: 0
@@ -1555,6 +1556,7 @@ MonoBehaviour:
   uiDocument: {fileID: 1916053447}
   UIComponent: {fileID: 1916053445}
   infiniteScroll: {fileID: 1916053453}
+  filterOptions: {fileID: 1916053452}
   videoPlayer: {fileID: 1013737736}
   actualScren: 0
 --- !u!4 &703512591
@@ -2739,7 +2741,7 @@ Light:
   m_Type: 2
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_Intensity: 0.5
-  m_Range: 1.5
+  m_Range: 2
   m_SpotAngle: 30
   m_InnerSpotAngle: 21.80208
   m_CookieSize: 10
@@ -2958,8 +2960,8 @@ Light:
   serializedVersion: 11
   m_Type: 2
   m_Color: {r: 1, g: 1, b: 1, a: 1}
-  m_Intensity: 0.5
-  m_Range: 1
+  m_Intensity: 0.3
+  m_Range: 2
   m_SpotAngle: 113.110855
   m_InnerSpotAngle: 21.688908
   m_CookieSize: 10
@@ -3000,8 +3002,8 @@ Light:
   m_Lightmapping: 1
   m_LightShadowCasterMode: 0
   m_AreaSize: {x: 4.5, y: 5.94}
-  m_BounceIntensity: 1
-  m_ColorTemperature: 20000
+  m_BounceIntensity: 0.5
+  m_ColorTemperature: 17761
   m_UseColorTemperature: 1
   m_BoundingSphereOverride: {x: 0, y: 0, z: 0, w: 0}
   m_UseBoundingSphereOverride: 0
@@ -4698,12 +4700,15 @@ GameObject:
   - component: {fileID: 1916053447}
   - component: {fileID: 1916053448}
   - component: {fileID: 1916053449}
+  - component: {fileID: 1916053461}
   - component: {fileID: 1916053450}
   - component: {fileID: 1916053451}
   - component: {fileID: 1916053452}
   - component: {fileID: 1916053453}
   - component: {fileID: 1916053454}
+  - component: {fileID: 1916053459}
   - component: {fileID: 1916053455}
+  - component: {fileID: 1916053460}
   - component: {fileID: 1916053456}
   - component: {fileID: 1916053457}
   - component: {fileID: 1916053458}
@@ -4981,6 +4986,75 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   uiDocument: {fileID: 1916053447}
   infiniteScroll: {fileID: 0}
+--- !u!114 &1916053459
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1916053445}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d4ee26d28f4f9e649aa5135e5ce5c495, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+--- !u!114 &1916053460
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1916053445}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7bdd924390105c24785ed05f65433a59, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  frames:
+  - {fileID: 2800000, guid: fb2b18ec81db8ab43b148e5b6f3f6e6d, type: 3}
+  - {fileID: 2800000, guid: 3dc255a02ce9da841be1856d9de08640, type: 3}
+  - {fileID: 2800000, guid: a26e6a3d378e9a9469e271d6550d21a3, type: 3}
+  - {fileID: 2800000, guid: bc2f42f1d96d79a409f5bab0eb45fb53, type: 3}
+  - {fileID: 2800000, guid: 531a181bc141a9e4da84d02e66bd6d37, type: 3}
+  - {fileID: 2800000, guid: 88f34193179766b43ad34e683fc30161, type: 3}
+  - {fileID: 2800000, guid: 4a66f11a833a9824ab2940d8c5259777, type: 3}
+  - {fileID: 2800000, guid: 068a39b4d2589f944979489c4cc57460, type: 3}
+  - {fileID: 2800000, guid: 8a5cbfeb090fd0648851e76b9b69e114, type: 3}
+  - {fileID: 2800000, guid: 3c4918c8cbb14eb4687f2ac2e0c0a0a5, type: 3}
+  - {fileID: 2800000, guid: 66e08b3b0780df44ca317646d75f0339, type: 3}
+  - {fileID: 2800000, guid: af31d1d03ea530e469ddc6d8cb5f5697, type: 3}
+  - {fileID: 2800000, guid: f70d0ea4cde2f88438b029d399998a2d, type: 3}
+  - {fileID: 2800000, guid: 34cc1487ea0dc9c48aac6340c890a50e, type: 3}
+  - {fileID: 2800000, guid: 4b2d7791f864e324b9b688307e5642d6, type: 3}
+  - {fileID: 2800000, guid: 8611420d604e3414b90b724947b7ebb5, type: 3}
+  - {fileID: 2800000, guid: 2bc37c615bdfa974d8998ea2408d983e, type: 3}
+  - {fileID: 2800000, guid: 913e4ff4e3f1f054eb500751f8549ade, type: 3}
+  - {fileID: 2800000, guid: 82b64d563d962144ea0365bcbc28a53e, type: 3}
+  - {fileID: 2800000, guid: 38ca0a3f0ffca634cb90a303d09ba9bb, type: 3}
+  - {fileID: 2800000, guid: 14b7668df832bed47bb3fdf4bc4fd2c6, type: 3}
+  - {fileID: 2800000, guid: d2262971ef616354a8d6f967ef0223d5, type: 3}
+  - {fileID: 2800000, guid: 162cfb284476e8447af7ec3013e7b7d4, type: 3}
+  - {fileID: 2800000, guid: b08d9388a86e1944083621d7e8871fb9, type: 3}
+  - {fileID: 2800000, guid: 286733e2ca4fac24c905794ca6824ddc, type: 3}
+  - {fileID: 2800000, guid: 80c656f9b0c050247b79453370b9f1ca, type: 3}
+  - {fileID: 2800000, guid: 80abbd3c74176c94891a81d010e4bf40, type: 3}
+  frameDuration: 0.05
+--- !u!114 &1916053461
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1916053445}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 110ae39f4318e8541b4d7e7c65da060d, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  uiDocument: {fileID: 1916053447}
+  scrollViewName: DetailScroll
+  SwipeThreshold: 200
+  dragThreshold: 300
 --- !u!1 &1964419391
 GameObject:
   m_ObjectHideFlags: 0
@@ -5161,7 +5235,7 @@ MonoBehaviour:
     m_Bits: 0
   m_VolumeTrigger: {fileID: 0}
   m_VolumeFrameworkUpdateModeOption: 2
-  m_RenderPostProcessing: 1
+  m_RenderPostProcessing: 0
   m_Antialiasing: 2
   m_AntialiasingQuality: 2
   m_StopNaN: 0
