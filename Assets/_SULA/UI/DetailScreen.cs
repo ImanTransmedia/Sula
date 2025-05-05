@@ -7,6 +7,7 @@ public class DetailScreen : MonoBehaviour
     private VisualElement root;
     private Label regionName;
     private Label clotheName;
+    private VisualElement clotheImage;
     private VisualElement clotheSize;
     private Label clotheDescription;
     private Label clotheReduction;
@@ -23,6 +24,7 @@ public class DetailScreen : MonoBehaviour
     [SerializeField] private Sprite allSize;
     // LINEN COTTON POLYAMIDE POLIESTER
     [SerializeField] private Materials[] materialDataList;
+    [SerializeField] private RenderTexture renderTex;
 
     [SerializeField] private GameObject prendaContainer;
 
@@ -32,6 +34,7 @@ public class DetailScreen : MonoBehaviour
 
         regionName = root.Q<Label>("DetailRegionName");
         clotheName = root.Q<Label>("ClotheName");
+        clotheImage = root.Q<VisualElement>("PrendaTexture");
         clotheSize = root.Q<VisualElement>("Sizes");
         clotheDescription = root.Q<Label>("clotheDescription");
         clotheReduction = root.Q<Label>("ReductionDescription");
@@ -97,20 +100,27 @@ public class DetailScreen : MonoBehaviour
         ClearContainer();
 
 
-        var prendaActual = GameManager.Instance.actualClothe.name;
-
-        Debug.Log("Prenda actual: " + prendaActual);
-
-        GameObject instancia = Instantiate(GameManager.Instance.actualClothe.prefab, prendaContainer.transform);
-        instancia.transform.localPosition = Vector3.zero;
-        var targetLayer = "RenderObjects";
-        instancia.layer = LayerMask.NameToLayer(targetLayer);
-        Renderer[] renderers = instancia.GetComponentsInChildren<Renderer>();
-        foreach (Renderer renderer in renderers)
+        if (GameManager.Instance.actualClothe.is3D)
         {
-            renderer.gameObject.layer = LayerMask.NameToLayer(targetLayer);
-        }
+            var prendaActual = GameManager.Instance.actualClothe.name;
+            // Fix for CS1503: Convert RenderTexture to Background using Background.FromRenderTexture
+            clotheImage.style.backgroundImage = new StyleBackground(Background.FromRenderTexture(renderTex));
+            Debug.Log("Prenda actual: " + prendaActual);
 
+            GameObject instancia = Instantiate(GameManager.Instance.actualClothe.prefab, prendaContainer.transform);
+            instancia.transform.localPosition = Vector3.zero;
+            var targetLayer = "RenderObjects";
+            instancia.layer = LayerMask.NameToLayer(targetLayer);
+            Renderer[] renderers = instancia.GetComponentsInChildren<Renderer>();
+            foreach (Renderer renderer in renderers)
+            {
+                renderer.gameObject.layer = LayerMask.NameToLayer(targetLayer);
+            }
+        }
+        else
+        {
+            clotheImage.style.backgroundImage = new StyleBackground(GameManager.Instance.actualClothe.menuImage);
+        }
     }
 
     private void ClearContainer()

@@ -4975,6 +4975,8 @@ MonoBehaviour:
   - {fileID: 11400000, guid: 51134245a526f334f9804d32cf4a0d1e, type: 2}
   - {fileID: 11400000, guid: 90bfd8037f9ee154ea99a977b3796b8f, type: 2}
   - {fileID: 11400000, guid: 940f91413b21a104fa958b8d2fc3f4f6, type: 2}
+  renderTex: {fileID: 8400000, guid: 52f549ee0fcab9f43992be08883d4de8, type: 2}
+  prendaContainer: {fileID: 1911202796}
 --- !u!1 &1964419391
 GameObject:
   m_ObjectHideFlags: 0
