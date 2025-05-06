@@ -19,10 +19,11 @@ MonoBehaviour:
   - {fileID: 21300000, guid: fd0acb0ff7ea388439a9461cba1b5c0f, type: 3}
   - {fileID: 21300000, guid: 6563b03df7c22904cacd01e75bb9c786, type: 3}
   prefab: {fileID: 0}
-  description: Made from 100% certified organic cotton. . Made in Ecuador. Thick
-    fabric for cold weahter
+  description: Made from 100% certified organic cotton. Made in Ecuador. Thick fabric
+    for cold weahter
   ahorro: Compared to a conventional hoodie, our sustainable hoodie saves 2,500 liters
     of water.                              Our hoodie made with organic cotton or
     recycled materials helps reduce CO2 emissions by 3 kg per hoodie
   materialType: 0
   filterOptions: 000000000100000005000000
+  isUniqueSize: 0

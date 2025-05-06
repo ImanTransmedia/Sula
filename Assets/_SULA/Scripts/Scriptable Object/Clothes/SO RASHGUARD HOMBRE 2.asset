@@ -12,7 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e206e3dbca2bcdb4f8ff4e5aaa3802b7, type: 3}
   m_Name: SO RASHGUARD HOMBRE 2
   m_EditorClassIdentifier: 
-  clotheName: Reptilia Rashguard
+  clotheName: REPTILIA RASHGUARD
   is3D: 1
   menuImage: {fileID: 21300000, guid: 7f3917926059b2e4b9b31c08d67912ba, type: 3}
   imagenes: []
@@ -25,3 +25,4 @@ MonoBehaviour:
     by 2.5 kg per rashguard produced
   materialType: 2
   filterOptions: 0000000004000000
+  isUniqueSize: 0

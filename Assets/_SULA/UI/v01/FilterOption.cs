@@ -1,6 +1,5 @@
 using System.Collections.Generic;
 using System.Linq;
-using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.UIElements;
 
@@ -16,12 +15,14 @@ public class FilterOption : MonoBehaviour
     [SerializeField] private Color borderColor;
     [SerializeField] private float borderWidth = 3f;
 
-    private ScrollView scrollView;
+    [SerializeField] private InfiniteScroll infiniteScroll;
+
+    private VisualElement genderFilterPanel;
+    private VisualElement categoryFilterPanel;
+
     private List<Button> buttons = new List<Button>();
     private Dictionary<Button, FilterNames> filterNames = new Dictionary<Button, FilterNames>();
     private Dictionary<Button, bool> buttonStates = new Dictionary<Button, bool>();
-
-    [SerializeField] private InfiniteScroll infiniteScroll;
 
     private Button hombreButton;
     private Button mujerButton;
@@ -29,27 +30,23 @@ public class FilterOption : MonoBehaviour
     private bool hombreSelected = false;
     private bool mujerSelected = false;
 
-
-    private VisualElement filterPopPanel;
-
     private void Start()
     {
         infiniteScroll = GetComponent<InfiniteScroll>();
 
-        defaultBackgroundColor = GameManager.Instance.actualRegion.accentColor;
-        selectedBackgroundColor = GameManager.Instance.actualRegion.darkColor;
-        fontSelected = GameManager.Instance.actualRegion.accentColor;
-        fontDefault = GameManager.Instance.actualRegion.darkColor;
-        borderColor = GameManager.Instance.actualRegion.darkColor;
+        UpdateColorsFromRegion();
         OnEnable();
     }
 
     private void OnEnable()
     {
         var root = uiDocument.rootVisualElement;
-        scrollView = root.Q<ScrollView>("FilterScroll");
 
-        scrollView.Clear();
+        genderFilterPanel = root.Q<VisualElement>("FilterContainer");
+        categoryFilterPanel = root.Q<VisualElement>("FilterPanel");
+
+        genderFilterPanel.Clear();
+        categoryFilterPanel.Clear();
         buttons.Clear();
         filterNames.Clear();
         buttonStates.Clear();
@@ -61,48 +58,39 @@ public class FilterOption : MonoBehaviour
 
         var buttonTypesList = System.Enum.GetValues(typeof(FilterNames)).Cast<FilterNames>().ToList();
 
+        // Clear All
         clearAllButton = new Button { text = "Clear All" };
         clearAllButton.AddToClassList("button-item");
         SetButtonDefaultStyle(clearAllButton);
         SetButtonSelectedStyle(clearAllButton);
         clearAllButton.clicked += ClearAllFilters;
-        clearAllButton.RegisterCallback<PointerDownEvent>(evt => { }, TrickleDown.TrickleDown);
+        genderFilterPanel.Add(clearAllButton);
+        buttons.Add(clearAllButton);
 
-        scrollView.Add(clearAllButton);
-        buttons.Insert(0, clearAllButton);
+        // Gender Buttons
+        InitializeGenderButtons(genderFilterPanel);
 
+        // Other Filters
         foreach (var type in buttonTypesList)
         {
-            Button button;
-
             if (type == FilterNames.Men || type == FilterNames.Women || type == FilterNames.ClearAll)
                 continue;
 
-            else
-            {
-                button = new Button { text = type.ToString() };
-                filterNames[button] = type;
-                buttonStates[button] = false;
-                button.clicked += () => OnButtonClicked(button);
-            }
-
+            var button = new Button { text = type.ToString() };
             button.AddToClassList("button-item");
             SetButtonDefaultStyle(button);
-            button.RegisterCallback<PointerDownEvent>(evt => { }, TrickleDown.TrickleDown);
 
-            scrollView.Add(button);
+            filterNames[button] = type;
+            buttonStates[button] = false;
+            button.clicked += () => OnButtonClicked(button);
+
+            categoryFilterPanel.Add(button);
             buttons.Add(button);
         }
-
-        filterPopPanel = root.Q<VisualElement>("FilterPanel");
-
-        InitializeGenderButtons(filterPopPanel);
     }
 
-    public void InitializeGenderButtons(VisualElement container)
+    private void InitializeGenderButtons(VisualElement container)
     {
-        container.Clear();
-
         hombreButton = new Button { text = "Men" };
         mujerButton = new Button { text = "Women" };
 
@@ -114,7 +102,6 @@ public class FilterOption : MonoBehaviour
             hombreSelected = !hombreSelected;
             UpdateButtonStyle(hombreButton, hombreSelected);
 
-            // Desactivar Clear All si se selecciona género
             if ((hombreSelected || mujerSelected) && clearAllButton != null)
                 UpdateButtonStyle(clearAllButton, false);
 
@@ -126,7 +113,6 @@ public class FilterOption : MonoBehaviour
             mujerSelected = !mujerSelected;
             UpdateButtonStyle(mujerButton, mujerSelected);
 
-            // Desactivar Clear All si se selecciona género
             if ((hombreSelected || mujerSelected) && clearAllButton != null)
                 UpdateButtonStyle(clearAllButton, false);
 
@@ -134,16 +120,11 @@ public class FilterOption : MonoBehaviour
         };
 
         hombreButton.AddToClassList("button-item");
-        SetButtonDefaultStyle(hombreButton);
-
         mujerButton.AddToClassList("button-item");
-        SetButtonDefaultStyle(mujerButton);
 
         container.Add(hombreButton);
         container.Add(mujerButton);
     }
-
-
 
     private void OnButtonClicked(Button clickedButton)
     {
@@ -151,47 +132,21 @@ public class FilterOption : MonoBehaviour
         buttonStates[clickedButton] = isSelected;
         UpdateButtonStyle(clickedButton, isSelected);
 
-        // Si se selecciona cualquier filtro normal, desactiva Clear All
         if (isSelected && clearAllButton != null)
             UpdateButtonStyle(clearAllButton, false);
 
         UpdateList();
     }
 
-    private void OnGenderButtonClicked(FilterNames gender)
-    {
-        if (gender == FilterNames.Men)
-        {
-            hombreSelected = !hombreSelected;
-            if (hombreButton != null)
-                UpdateButtonStyle(hombreButton, hombreSelected);
-        }
-        else if (gender == FilterNames.Women)
-        {
-            mujerSelected = !mujerSelected;
-            if (mujerButton != null)
-                UpdateButtonStyle(mujerButton, mujerSelected);
-        }
-
-        // Si se selecciona cualquier género, desactiva Clear All
-        if ((hombreSelected || mujerSelected) && clearAllButton != null)
-            UpdateButtonStyle(clearAllButton, false);
-
-        UpdateList();
-    }
-
-
     private void ClearAllFilters()
     {
         bool wasSelected = clearAllButton.style.backgroundColor == selectedBackgroundColor;
         bool nowSelected = !wasSelected;
 
-        // Actualiza su estado
         UpdateButtonStyle(clearAllButton, nowSelected);
 
         if (nowSelected)
         {
-            // Si se selecciona, desactiva todos los demás
             foreach (var button in buttonStates.Keys.ToList())
             {
                 buttonStates[button] = false;
@@ -205,18 +160,19 @@ public class FilterOption : MonoBehaviour
             if (mujerButton != null) UpdateButtonStyle(mujerButton, false);
         }
 
-        Debug.Log("Botón Clear All clickeado. Estado: " + (nowSelected ? "seleccionado" : "no seleccionado"));
+        Debug.Log("Clear All clicked. State: " + (nowSelected ? "selected" : "not selected"));
         UpdateList();
     }
-
 
     private void UpdateButtonStyle(Button button, bool isSelected)
     {
         UpdateColorsFromRegion();
-                button.style.borderLeftColor = borderColor;
+
+        button.style.borderLeftColor = borderColor;
         button.style.borderRightColor = borderColor;
         button.style.borderTopColor = borderColor;
         button.style.borderBottomColor = borderColor;
+
         if (isSelected)
         {
             button.style.backgroundColor = selectedBackgroundColor;
@@ -246,22 +202,41 @@ public class FilterOption : MonoBehaviour
     private void SetButtonSelectedStyle(Button button)
     {
         button.style.backgroundColor = selectedBackgroundColor;
-        button.style.borderLeftColor = borderColor;
-        button.style.borderRightColor = borderColor;
-        button.style.borderTopColor = borderColor;
-        button.style.borderBottomColor = borderColor;
-        button.style.borderLeftWidth = borderWidth;
-        button.style.borderRightWidth = borderWidth;
-        button.style.borderTopWidth = borderWidth;
-        button.style.borderBottomWidth = borderWidth;
         button.style.color = fontSelected;
+    }
+
+    private void UpdateColorsFromRegion()
+    {
+        defaultBackgroundColor = GameManager.Instance.actualRegion.accentColor;
+        selectedBackgroundColor = GameManager.Instance.actualRegion.darkColor;
+        fontSelected = GameManager.Instance.actualRegion.accentColor;
+        fontDefault = GameManager.Instance.actualRegion.darkColor;
+        borderColor = GameManager.Instance.actualRegion.darkColor;
+    }
+
+    private void RefreshButtonStyles()
+    {
+        foreach (var button in buttons)
+        {
+            bool isSelected = false;
+            if (button == clearAllButton)
+                isSelected = clearAllButton.style.backgroundColor == selectedBackgroundColor;
+            else if (filterNames.ContainsKey(button))
+                isSelected = buttonStates.ContainsKey(button) && buttonStates[button];
+
+            UpdateButtonStyle(button, isSelected);
+        }
+
+        if (hombreButton != null)
+            UpdateButtonStyle(hombreButton, hombreSelected);
+        if (mujerButton != null)
+            UpdateButtonStyle(mujerButton, mujerSelected);
     }
 
     public void UpdateList()
     {
         List<Clothes> allClothes = new List<Clothes>(GameManager.Instance.actualRegion.clothes);
 
-        // Ignorar ClearAll en la lógica de filtros
         List<FilterNames> selectedFilters = buttonStates
             .Where(pair => pair.Value && filterNames.ContainsKey(pair.Key))
             .Select(pair => filterNames[pair.Key])
@@ -295,34 +270,4 @@ public class FilterOption : MonoBehaviour
         UpdateColorsFromRegion();
         RefreshButtonStyles();
     }
-
-
-    private void UpdateColorsFromRegion()
-    {
-        defaultBackgroundColor = GameManager.Instance.actualRegion.accentColor;
-        selectedBackgroundColor = GameManager.Instance.actualRegion.darkColor;
-        fontSelected = GameManager.Instance.actualRegion.accentColor;
-        fontDefault = GameManager.Instance.actualRegion.darkColor;
-        borderColor = GameManager.Instance.actualRegion.darkColor;
-    }
-
-    private void RefreshButtonStyles()
-    {
-        foreach (var button in buttons)
-        {
-            bool isSelected = false;
-            if (button == clearAllButton)
-                isSelected = clearAllButton.style.backgroundColor == selectedBackgroundColor;
-            else if (filterNames.ContainsKey(button))
-                isSelected = buttonStates.ContainsKey(button) && buttonStates[button];
-
-            UpdateButtonStyle(button, isSelected);
-        }
-
-        if (hombreButton != null)
-            UpdateButtonStyle(hombreButton, hombreSelected);
-        if (mujerButton != null)
-            UpdateButtonStyle(mujerButton, mujerSelected);
-    }
-
 }

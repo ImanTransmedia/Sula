@@ -27,8 +27,6 @@ public class ColorManager : MonoBehaviour
     //----------------------------------------------------
     [SerializeField] private UIDocument uiDocument;
     private VisualElement root;
-    private VisualElement gradientleft;
-    private VisualElement gradientright;
     private VisualElement clothesPanel;
     private VisualElement helpButton;
     private VisualElement settingsButton;
@@ -40,16 +38,11 @@ public class ColorManager : MonoBehaviour
     private VisualElement arrow2;
     private VisualElement arrow3;
     private VisualElement filterPanel;
-    private VisualElement button;
-    private VisualElement buttonSelected;
-    private VisualElement leaflement;
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     private VisualElement regionName;
     void Start()
     {
         root = uiDocument.rootVisualElement;
-        gradientleft = root.Q<VisualElement>("GradientLeft");
-        gradientright = root.Q<VisualElement>("GradientRight");
         clothesPanel = root.Q<VisualElement>("ScrollContainer");
         helpButton = root.Q<VisualElement>("HelpButton");
         settingsButton = root.Q<VisualElement>("SettingsButton");
@@ -74,8 +67,6 @@ public class ColorManager : MonoBehaviour
     public void UpdateColors()
     {
         // Update the colors of the UI elements
-        gradientleft.style.unityBackgroundImageTintColor = GameManager.Instance.actualRegion.accentColor;
-        gradientright.style.unityBackgroundImageTintColor = GameManager.Instance.actualRegion.accentColor;
         clothesPanel.style.unityBackgroundImageTintColor = GameManager.Instance.actualRegion.accentColor;
         helpButton.style.unityBackgroundImageTintColor = GameManager.Instance.actualRegion.darkColor;
         settingsButton.style.backgroundColor = GameManager.Instance.actualRegion.darkColor;

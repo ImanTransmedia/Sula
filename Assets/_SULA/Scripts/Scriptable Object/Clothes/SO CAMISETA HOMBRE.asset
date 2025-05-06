@@ -12,7 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e206e3dbca2bcdb4f8ff4e5aaa3802b7, type: 3}
   m_Name: SO CAMISETA HOMBRE
   m_EditorClassIdentifier: 
-  clotheName: HAMMERHEAD-SHARK T-SHIRT
+  clotheName: HAMMERHEAD-SHARK                      T-SHIRT
   is3D: 1
   menuImage: {fileID: 21300000, guid: cd0c37e8bae35ec42ad9d4f58367a731, type: 3}
   imagenes: []
@@ -24,3 +24,4 @@ MonoBehaviour:
     reduces CO2 emissions by 1.5 kg per t-shirt
   materialType: 0
   filterOptions: 000000000c000000
+  isUniqueSize: 0

@@ -29,7 +29,6 @@ public class HorizontalScrollController : MonoBehaviour, ICustomScrollHandler
     void OnEnable()
     {
         var root = uiDocument.rootVisualElement;
-        RegisterScroll(root.Q<ScrollView>("FilterScroll"));
         RegisterScroll(root.Q<ScrollView>("ItemScroll"));
 
         if (infiniteScroll == null)
