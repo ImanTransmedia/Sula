@@ -16,12 +16,15 @@ public class InstructionsController : MonoBehaviour
 
         instructionsPanel = root.Q<VisualElement>("InstructionsScreen");
 
-        instructionsButton = root.Q<VisualElement>("HelpButton");
-        instructionsButton.RegisterCallback<ClickEvent>(evt =>
+        var allHelpButtons = root.Query<VisualElement>().Where(e => e.name == "HelpButton").ToList();
+
+        foreach (var btn in allHelpButtons)
         {
-            Debug.Log("HitHelp");
-            instructionsPanel.ToggleInClassList("hide-panel");
-        });
+            btn.RegisterCallback<ClickEvent>(evt => {
+                instructionsPanel.ToggleInClassList("hide-panel");
+            });
+        }
+
 
         returnPanel = root.Q<VisualElement>("ReturnPanel");
         returnPanel.RegisterCallback<ClickEvent>(evt =>

@@ -12,6 +12,12 @@ public class PointerZoneManager : MonoBehaviour
 
     private DragZoneType currentZone = DragZoneType.None;
 
+
+    public static class PointerControl
+    {
+        public static bool IsPointerLocked = false;
+    }
+
     private void Awake()
     {
         if (Instance != null && Instance != this)

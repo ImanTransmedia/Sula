@@ -47,13 +47,8 @@ public class DetailScreen : MonoBehaviour
     private Coroutine autoImageCycleCoroutine;
     private float imageCycleDelay = 3f;
 
-
-
     void Start()
     {
-
-        
-
         root = GetComponent<UIDocument>().rootVisualElement;
         regionName = root.Q<Label>("DetailRegionName");
         clotheName = root.Q<Label>("ClotheName");
@@ -69,6 +64,7 @@ public class DetailScreen : MonoBehaviour
         clotheMaterialContainer = root.Q<VisualElement>("MaterialsContainer");
         washInstructionsContainer = root.Q<VisualElement>("WashingContainer");
         returnButton = root.Q<VisualElement>("ReturnButton");
+
         returnButton.RegisterCallback<ClickEvent>(evt =>
         {
             NavigationManager.Instance.ReturnFrom(ScreenOptions.Details);
@@ -77,7 +73,6 @@ public class DetailScreen : MonoBehaviour
 
     public void ActiveLoad()
     {
-
         clotheImage.UnregisterCallback<ClickEvent>(OnImageClick);
         regionName.style.color = GameManager.Instance.actualRegion.darkColor;
         regionName.text = GameManager.Instance.actualRegion.regionName.ToUpper();
@@ -86,20 +81,14 @@ public class DetailScreen : MonoBehaviour
         clotheSize.style.backgroundImage = new StyleBackground(GameManager.Instance.actualClothe.isUniqueSize ? uniqueSize : allSize);
         clotheDescription.text = GameManager.Instance.actualClothe.description;
 
-        if(GameManager.Instance.actualClothe.ahorro == null || GameManager.Instance.actualClothe.ahorro == "")
-        {
-            reductionDetaisl.style.display = DisplayStyle.None;
-        }
-        else
-        {
-            reductionDetaisl.style.display = DisplayStyle.Flex;
-        }
-
+        reductionDetaisl.style.display = string.IsNullOrEmpty(GameManager.Instance.actualClothe.ahorro) ? DisplayStyle.None : DisplayStyle.Flex;
         clotheReduction.text = GameManager.Instance.actualClothe.ahorro;
+
         reductionImage.style.backgroundColor = GameManager.Instance.actualRegion.darkColor;
         clotheMaterialContainer.style.backgroundColor = GameManager.Instance.actualRegion.accentColor;
         clotheMaterialName.style.unityBackgroundImageTintColor = GameManager.Instance.actualRegion.darkColor;
         clotheMaterialImage.style.unityBackgroundImageTintColor = GameManager.Instance.actualRegion.darkColor;
+
         switch (GameManager.Instance.actualClothe.materialType)
         {
             case MaterialType.Linen:
@@ -135,9 +124,7 @@ public class DetailScreen : MonoBehaviour
             instancia.layer = LayerMask.NameToLayer("RenderObjects");
 
             foreach (Renderer renderer in instancia.GetComponentsInChildren<Renderer>())
-            {
                 renderer.gameObject.layer = LayerMask.NameToLayer("RenderObjects");
-            }
 
             if (autoRotate && autoRotateCoroutine == null)
                 autoRotateCoroutine = StartCoroutine(StartAutoRotate(instancia.transform));
@@ -146,85 +133,59 @@ public class DetailScreen : MonoBehaviour
             clotheImage.RegisterCallback<PointerMoveEvent>(OnPointerMove);
             clotheImage.RegisterCallback<PointerUpEvent>(OnPointerUp);
         }
-        if (!GameManager.Instance.actualClothe.is3D)
+        else
         {
             spriteGallery = new List<Sprite>(GameManager.Instance.actualClothe.imagenes);
             currentSpriteIndex = 0;
-            clotheImage.UnregisterCallback<ClickEvent>(OnImageClick);
 
             if (spriteGallery != null && spriteGallery.Count > 0)
             {
                 clotheImage.style.backgroundImage = new StyleBackground(spriteGallery[currentSpriteIndex]);
                 clotheImage.RegisterCallback<ClickEvent>(OnImageClick);
-
-                if (autoImageCycleCoroutine != null)
-                    StopCoroutine(autoImageCycleCoroutine);
-
-
             }
             else
             {
                 clotheImage.style.backgroundImage = new StyleBackground(GameManager.Instance.actualClothe.menuImage);
             }
         }
-
-
-
     }
 
     private void ClearContainer()
     {
         foreach (Transform child in prendaContainer.transform)
-        {
             Destroy(child.gameObject);
-        }
 
         clotheImage.UnregisterCallback<PointerDownEvent>(OnPointerDown);
         clotheImage.UnregisterCallback<PointerMoveEvent>(OnPointerMove);
         clotheImage.UnregisterCallback<PointerUpEvent>(OnPointerUp);
-
-        if (autoRotateCoroutine != null)
-        {
-            StopCoroutine(autoRotateCoroutine);
-            autoRotateCoroutine = null;
-        }
-
-        if (autoImageCycleCoroutine != null)
-        {
-            StopCoroutine(autoImageCycleCoroutine);
-            autoImageCycleCoroutine = null;
-        }
-
         clotheImage.UnregisterCallback<ClickEvent>(OnImageClick);
 
+        if (autoRotateCoroutine != null) StopCoroutine(autoRotateCoroutine);
+        if (autoImageCycleCoroutine != null) StopCoroutine(autoImageCycleCoroutine);
 
+        autoRotateCoroutine = null;
+        autoImageCycleCoroutine = null;
 
         dragging = false;
         rotationY = 0f;
         elasticRotation = 0f;
     }
+
     private void OnImageClick(ClickEvent evt)
     {
         if (spriteGallery == null || spriteGallery.Count == 0) return;
-
         currentSpriteIndex = (currentSpriteIndex + 1) % spriteGallery.Count;
-
         StartCoroutine(AnimateImageChange(spriteGallery[currentSpriteIndex]));
         evt.StopPropagation();
     }
-
-
 
     private void OnPointerDown(PointerDownEvent evt)
     {
         dragging = true;
         lastPos = evt.position;
 
-        if (autoRotateCoroutine != null)
-        {
-            StopCoroutine(autoRotateCoroutine);
-            autoRotateCoroutine = null;
-        }
+        if (autoRotateCoroutine != null) StopCoroutine(autoRotateCoroutine);
+        autoRotateCoroutine = null;
 
         if (prendaContainer.transform.childCount > 0)
         {
@@ -261,8 +222,7 @@ public class DetailScreen : MonoBehaviour
 
         if (autoRotate)
         {
-            if (autoRotateCoroutine != null)
-                StopCoroutine(autoRotateCoroutine);
+            if (autoRotateCoroutine != null) StopCoroutine(autoRotateCoroutine);
             autoRotateCoroutine = StartCoroutine(StartAutoRotate(obj));
         }
 
@@ -282,34 +242,24 @@ public class DetailScreen : MonoBehaviour
         if (!dragging && obj != null)
         {
             obj.DOLocalMoveZ(zoomInZ, zoomDuration).SetEase(Ease.InOutSine);
-
             while (!dragging && obj != null)
             {
                 obj.Rotate(Vector3.up, autoRotationSpeed * Time.deltaTime, Space.Self);
                 yield return null;
             }
-
             obj.DOLocalMoveZ(0f, zoomDuration).SetEase(Ease.OutExpo);
         }
 
         autoRotateCoroutine = null;
     }
 
-
     private System.Collections.IEnumerator AnimateImageChange(Sprite nextSprite)
     {
-        // Fade out
         clotheImage.style.transitionDuration = new List<TimeValue> { new TimeValue(0.3f) };
         clotheImage.style.opacity = 0f;
         yield return new WaitForSeconds(0.3f);
 
-        // Change image
         clotheImage.style.backgroundImage = new StyleBackground(nextSprite);
-        // Fade in
         clotheImage.style.opacity = 1f;
     }
-
-    
-
-
 }
